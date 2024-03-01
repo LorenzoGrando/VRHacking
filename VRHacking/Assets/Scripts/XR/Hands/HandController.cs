@@ -18,10 +18,11 @@ public class HandController : MonoBehaviour
 
     void Update()
     {
-
+        ReadHandInputs();
     }
 
     private void ReadHandInputs() {
-        
+        hand.UpdateGripValue(controller.selectAction.action.ReadValue<float>());
+        hand.UpdateTriggerValue(controller.activateAction.action.ReadValue<float>());
     }
 }

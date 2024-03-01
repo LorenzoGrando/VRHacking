@@ -22,8 +22,12 @@ public class Hand : MonoBehaviour
     private const string triggerParameter = "TriggerParameter";
 
     #endregion
+
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    [Range(0,1.5f)]
+    private float animationSpeed;
 
     void Start() {
         animator = GetComponent<Animator>();
@@ -42,12 +46,23 @@ public class Hand : MonoBehaviour
     }
 
     private void AnimateHand() {
+        gripInterpolator = InterpolateAnimationValue(gripInterpolator, gripTarget);
+        triggerInterpolator = InterpolateAnimationValue(triggerInterpolator, triggerTarget);
 
+        UpdateAnimatorParameters();
     }
 
-    private void TryInterpolateAnimation(float currentValue, float targetValue) {
+    private float InterpolateAnimationValue(float currentValue, float targetValue) {
+        //If not alredy in location, interpolates by speed and returns, otherwise just return current value;
         if(currentValue != targetValue) {
-            
+            currentValue = Mathf.MoveTowards(currentValue, targetValue, animationSpeed);
         }
+
+        return currentValue;
+    }
+
+    private void UpdateAnimatorParameters() {
+        animator.SetFloat(gripParameter, gripInterpolator);
+        animator.SetFloat(triggerParameter, triggerInterpolator);
     }
 }
