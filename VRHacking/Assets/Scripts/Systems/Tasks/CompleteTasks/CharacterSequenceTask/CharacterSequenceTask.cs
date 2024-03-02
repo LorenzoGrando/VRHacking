@@ -32,7 +32,8 @@ public class CharacterSequenceTask : HackTask
 
     #region Character Sequence 
 
-    protected struct CharacterSequenceData {
+    #region Parameters
+    public struct CharacterSequenceData {
         public string characters;
         public int numberInOrder;
     }
@@ -44,6 +45,13 @@ public class CharacterSequenceTask : HackTask
 
     private List<CharacterSequenceData> orderedSequence;
     private List<CharacterSequenceData> shuffledSequence;
+    
+    private int currentOrderValue;
+
+    #endregion
+
+    [SerializeField]
+    CharacterSequenceDisplay display;
 
     void Start()
     {
@@ -60,8 +68,10 @@ public class CharacterSequenceTask : HackTask
     }
 
     private void GenerateTargetSequence(int stringSize) {
+        //Reset Values
         orderedSequence.Clear();
         shuffledSequence.Clear();
+        currentOrderValue = 0;
 
 
         for(int i = 0; i < stringSize; i++) {
@@ -105,6 +115,18 @@ public class CharacterSequenceTask : HackTask
         //max exclusive
         int lenght = rnd.Next(2,4);
         return lenght;
+    }
+
+    public bool TryActivateChar(CharacterSequenceData data){
+        if(currentOrderValue != data.numberInOrder) {
+            return false;
+        }
+
+        currentOrderValue++;
+
+        CheckTaskCompleted();
+
+        return true;
     }
 
     #endregion
