@@ -93,6 +93,8 @@ public class CharacterSequenceTask : HackTask
 
         shuffledSequence.Shuffle();
 
+        display.InitiateDisplay(orderedSequence, shuffledSequence);
+
         //Debugging
         string finalString = "";
         string orderedChars = "";
@@ -124,7 +126,9 @@ public class CharacterSequenceTask : HackTask
 
         currentOrderValue++;
 
-        CheckTaskCompleted();
+        display.UpdateDisplay(currentOrderValue);
+
+        //CheckTaskCompleted();
 
         return true;
     }

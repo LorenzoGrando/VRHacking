@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class CharacterSequenceButton : MonoBehaviour
 {
@@ -10,13 +11,25 @@ public class CharacterSequenceButton : MonoBehaviour
     private CharacterSequenceTask.CharacterSequenceData thisButtonData;
     private bool hasActivatedProperly;
 
+    [SerializeField]
+    private TextMeshProUGUI textRef;
+    [SerializeField]
+
     void Start()
     {
         if (task == null)
-            task = GetComponentInParent<CharacterSequenceTask>();
+            task = FindObjectOfType<CharacterSequenceTask>();
+        
+        if(textRef == null)
+            textRef = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    void OnButtonPressed() {
+    public void InitializeButton(CharacterSequenceTask.CharacterSequenceData data) {
+        thisButtonData = data;
+        textRef.text = data.characters;
+    }
+
+    public void OnButtonPressed() {
         if(!hasActivatedProperly) {
             if(task.TryActivateChar(thisButtonData)) {
                 hasActivatedProperly = true;
