@@ -21,7 +21,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
 
         GenerateButtons(shuffledList);
 
-        UpdateDisplay(0);
+        UpdateDisplay(-1);
     }
 
     public void UpdateDisplay(int orderValue) {
@@ -29,7 +29,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
         string remainingChars = "";
 
         for(int i = 0; i < orderedData.Count; i++) {
-            if(i < orderValue) {
+            if(i <= orderValue) {
                 correctChars += orderedData[i].characters;
             }
             else {

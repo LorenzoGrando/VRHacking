@@ -71,7 +71,7 @@ public class CharacterSequenceTask : HackTask
         //Reset Values
         orderedSequence.Clear();
         shuffledSequence.Clear();
-        currentOrderValue = 0;
+        currentOrderValue = -1;
 
 
         for(int i = 0; i < stringSize; i++) {
@@ -120,17 +120,19 @@ public class CharacterSequenceTask : HackTask
     }
 
     public bool TryActivateChar(CharacterSequenceData data){
-        if(currentOrderValue != data.numberInOrder) {
-            return false;
+        bool validButton = currentOrderValue == data.numberInOrder - 1;
+        if(validButton) {
+            currentOrderValue++;
         }
-
-        currentOrderValue++;
+        else {
+            currentOrderValue = -1;
+        }
 
         display.UpdateDisplay(currentOrderValue);
 
         //CheckTaskCompleted();
 
-        return true;
+        return validButton;
     }
 
     #endregion

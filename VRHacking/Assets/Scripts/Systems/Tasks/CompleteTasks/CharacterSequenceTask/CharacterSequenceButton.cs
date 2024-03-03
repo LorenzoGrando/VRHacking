@@ -30,14 +30,6 @@ public class CharacterSequenceButton : MonoBehaviour
     }
 
     public void OnButtonPressed() {
-        if(!hasActivatedProperly) {
-            if(task.TryActivateChar(thisButtonData)) {
-                hasActivatedProperly = true;
-            }
-
-            else {
-                //Do Error Effect
-            }
-        }
+        task.TryActivateChar(thisButtonData);
     }
 }
