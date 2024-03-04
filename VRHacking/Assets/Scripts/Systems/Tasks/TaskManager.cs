@@ -23,8 +23,6 @@ public class TaskManager : MonoBehaviour
         currentData = gameData;
         remainingTasksInSequence = lenght;
 
-        Debug.Log("Called sequence");
-
         StartNewTask();
     }
 
@@ -42,8 +40,6 @@ public class TaskManager : MonoBehaviour
         availableTasks[index].OnTaskCompleted += TaskCompleted;
 
         lastPerformedTaskIndex = index;
-
-        Debug.Log("Called task");
     }
 
     private void TaskCompleted() {

@@ -1460,6 +1460,55 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &869494263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 869494264}
+  - component: {fileID: 869494265}
+  m_Layer: 0
+  m_Name: HackerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &869494264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869494263}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1774461583}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &869494265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869494263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1899fab562041964c9b05e67e2b48e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackers:
+  - {fileID: 11400000, guid: 07584a3982452064da8076bc65ce029b, type: 2}
+  baseSequenceSize: 15
+  baseTaskCompletionTime: 0
+  baseBugUploadTime: 0
 --- !u!1001 &899485079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1973,6 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskManager: {fileID: 2002679078}
+  hackerManager: {fileID: 869494265}
 --- !u!1 &1228300495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,6 +2850,7 @@ Transform:
   m_Children:
   - {fileID: 1219130968}
   - {fileID: 2002679077}
+  - {fileID: 869494264}
   - {fileID: 901917156}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
