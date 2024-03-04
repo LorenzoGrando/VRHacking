@@ -8,16 +8,23 @@ public class CharacterSequenceTask : HackTask
 
     protected override void ResetTask()
     {
-        throw new NotImplementedException();
+        InitializeValues();
+        display.ResetDisplay();
     }
-    protected override void StartTask()
+    public override void StartTask(GameSettings.GameSettingsData settingsData)
     {
-        throw new NotImplementedException();
+        this.gameSettingsData = settingsData;
+        ResetTask();
+        GenerateTargetSequence(GenerateSequenceSize());
     }
 
     protected override bool CheckTaskCompleted()
     {
-        throw new NotImplementedException();
+        if(currentOrderValue == orderedSequence.Count - 1) {
+            return true;
+        }
+
+        return false;
     }
 
     protected override void CompleteTask()
@@ -25,6 +32,7 @@ public class CharacterSequenceTask : HackTask
         //Other possible behaviour (anims, etc)
 
         //Will fire completion event
+        prefabObject.SetActive(false);
         base.CompleteTask();
     }
 
@@ -32,7 +40,7 @@ public class CharacterSequenceTask : HackTask
 
     #region Character Sequence 
 
-    #region Parameters
+    #region Internal Parameters
     public struct CharacterSequenceData {
         public string characters;
         public int numberInOrder;
@@ -53,18 +61,18 @@ public class CharacterSequenceTask : HackTask
     [SerializeField]
     CharacterSequenceDisplay display;
 
-    void Start()
-    {
-        InitializeValues();
-        GenerateTargetSequence(6);
-    }
-
     private void InitializeValues() {
         if(rnd == null) {
             rnd = new System.Random();
         }
         orderedSequence = new List<CharacterSequenceData>();
         shuffledSequence = new List<CharacterSequenceData>();
+    }
+
+    private int GenerateSequenceSize() {
+        //At max difficulty (2), max possible value is 9;
+        int sequenceSize = Mathf.CeilToInt(UnityEngine.Random.Range(3, 4.5f) * gameSettingsData.difficulty);
+        return sequenceSize;
     }
 
     private void GenerateTargetSequence(int stringSize) {
@@ -94,28 +102,12 @@ public class CharacterSequenceTask : HackTask
         shuffledSequence.Shuffle();
 
         display.InitiateDisplay(orderedSequence, shuffledSequence);
-
-        //Debugging
-        string finalString = "";
-        string orderedChars = "";
-        string shuffledChars = "";
-        for(int o = 0; o < orderedSequence.Count; o++) {
-            orderedChars += $"{o}. {orderedSequence[o].characters}, ";
-            shuffledChars += $"{o}. {shuffledSequence[o].characters}, ";
-            finalString += orderedSequence[o].characters;
-        }
-        Debug.Log("Final Generated String: " + finalString);
-        Debug.Log("Generated Order:");
-        
-        Debug.Log(orderedChars);
-        Debug.Log("Shuffled Spiral Order:");
-        Debug.Log(shuffledChars);
     }
 
     private int GenerateSingleCharLenght() {
         //TODO: Make it more likely to generate 3-letter strings on higher difficulties
         //max exclusive
-        int lenght = rnd.Next(2,4);
+        int lenght = Mathf.Clamp(Mathf.RoundToInt(2 * gameSettingsData.difficulty), 2, 3);
         return lenght;
     }
 
@@ -130,7 +122,9 @@ public class CharacterSequenceTask : HackTask
 
         display.UpdateDisplay(currentOrderValue);
 
-        //CheckTaskCompleted();
+        if(CheckTaskCompleted()) {
+            CompleteTask();
+        }
 
         return validButton;
     }

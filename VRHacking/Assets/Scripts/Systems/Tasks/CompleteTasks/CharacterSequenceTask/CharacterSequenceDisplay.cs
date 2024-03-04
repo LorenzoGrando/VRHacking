@@ -17,6 +17,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
     private List<CharacterSequenceTask.CharacterSequenceData> orderedData;
     
     public void InitiateDisplay(List<CharacterSequenceTask.CharacterSequenceData> orderedList, List<CharacterSequenceTask.CharacterSequenceData> shuffledList) {
+        gameObject.SetActive(true);
         orderedData = orderedList;
 
         GenerateButtons(shuffledList);
@@ -55,6 +56,12 @@ public class CharacterSequenceDisplay : MonoBehaviour
             if(randomStart == buttonsArrayLenght) {
                 randomStart = 0;
             }
+        }
+    }
+
+    public void ResetDisplay() {
+        foreach(CharacterSequenceButton button in characterButtons) {
+            button.gameObject.SetActive(false);
         }
     }
 }
