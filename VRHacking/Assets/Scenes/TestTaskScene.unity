@@ -1507,8 +1507,8 @@ MonoBehaviour:
   hackers:
   - {fileID: 11400000, guid: 07584a3982452064da8076bc65ce029b, type: 2}
   baseSequenceSize: 15
-  baseTaskCompletionTime: 0
-  baseBugUploadTime: 0
+  baseTaskCompletionTime: 7
+  baseBugUploadTime: 10
 --- !u!1001 &899485079
 PrefabInstance:
   m_ObjectHideFlags: 0

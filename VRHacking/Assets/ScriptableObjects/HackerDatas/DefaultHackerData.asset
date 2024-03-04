@@ -15,6 +15,6 @@ MonoBehaviour:
   callsign: 
   description: 
   icon: {fileID: 0}
-  efficiency: 0
-  aggressiveness: 0
+  efficiency: 1
+  aggressiveness: 1
   behaviour: 0
