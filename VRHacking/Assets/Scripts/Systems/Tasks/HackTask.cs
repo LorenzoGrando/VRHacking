@@ -9,11 +9,12 @@ public abstract class HackTask : MonoBehaviour
 
     [SerializeField]
     protected GameObject prefabObject;
+    protected GameSettings.GameSettingsData gameSettingsData;
 
     //Reset task values and canvas to initial ones
     protected abstract void ResetTask();
 
-    protected abstract void StartTask();
+    public abstract void StartTask(GameSettings.GameSettingsData settingsData);
 
     //Implement specific method for checking if task is done
     protected abstract bool CheckTaskCompleted();

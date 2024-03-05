@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private TaskManager taskManager;
+    [SerializeField]
+    private HackerManager hackerManager;
+
     void Start()
     {
-        
-    }
+        GameSettings.InitializeData();
+        GameSettings.GameSettingsData gameSettingsData = GameSettings.GetGameData();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        taskManager.BeginTaskSequence(gameSettingsData);
+
+        hackerManager.InitializeHackerData(gameSettingsData);
+        hackerManager.BeginHackerSequence();
+
+        Debug.Log("Called game");
     }
 }

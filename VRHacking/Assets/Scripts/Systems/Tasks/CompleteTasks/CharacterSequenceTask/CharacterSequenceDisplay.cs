@@ -17,11 +17,12 @@ public class CharacterSequenceDisplay : MonoBehaviour
     private List<CharacterSequenceTask.CharacterSequenceData> orderedData;
     
     public void InitiateDisplay(List<CharacterSequenceTask.CharacterSequenceData> orderedList, List<CharacterSequenceTask.CharacterSequenceData> shuffledList) {
+        gameObject.SetActive(true);
         orderedData = orderedList;
 
         GenerateButtons(shuffledList);
 
-        UpdateDisplay(0);
+        UpdateDisplay(-1);
     }
 
     public void UpdateDisplay(int orderValue) {
@@ -29,11 +30,17 @@ public class CharacterSequenceDisplay : MonoBehaviour
         string remainingChars = "";
 
         for(int i = 0; i < orderedData.Count; i++) {
-            if(i < orderValue) {
+            if(i <= orderValue) {
                 correctChars += orderedData[i].characters;
             }
             else {
                 remainingChars += orderedData[i].characters;
+            }
+        }
+
+        if(orderValue <= 0) {
+            foreach(CharacterSequenceButton button in characterButtons) {
+                button.ResetStatus();
             }
         }
 
@@ -55,6 +62,13 @@ public class CharacterSequenceDisplay : MonoBehaviour
             if(randomStart == buttonsArrayLenght) {
                 randomStart = 0;
             }
+        }
+    }
+
+    public void ResetDisplay() {
+        foreach(CharacterSequenceButton button in characterButtons) {
+            button.ResetStatus();
+            button.gameObject.SetActive(false);
         }
     }
 }

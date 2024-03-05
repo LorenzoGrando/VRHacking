@@ -4,40 +4,35 @@ using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 
-public class CharacterSequenceButton : MonoBehaviour
+public class CharacterSequenceButton : PokeButtonUI
 {
     [SerializeField]
     private CharacterSequenceTask task;
     private CharacterSequenceTask.CharacterSequenceData thisButtonData;
     private bool hasActivatedProperly;
 
-    [SerializeField]
-    private TextMeshProUGUI textRef;
-    [SerializeField]
-
     void Start()
     {
-        if (task == null)
+       if (task == null)
             task = FindObjectOfType<CharacterSequenceTask>();
-        
-        if(textRef == null)
-            textRef = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void InitializeButton(CharacterSequenceTask.CharacterSequenceData data) {
+        if(textRef == null) {
+            textRef = GetComponentInChildren<TextMeshProUGUI>();
+        }
         thisButtonData = data;
         textRef.text = data.characters;
     }
 
-    public void OnButtonPressed() {
+    public override void OnButtonPressed() {
         if(!hasActivatedProperly) {
-            if(task.TryActivateChar(thisButtonData)) {
-                hasActivatedProperly = true;
-            }
-
-            else {
-                //Do Error Effect
-            }
+            task.TryActivateChar(thisButtonData);
         }
+        hasActivatedProperly = true;
+    }
+
+    public void ResetStatus() {
+        hasActivatedProperly = false;
     }
 }
