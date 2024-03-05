@@ -6,10 +6,13 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public event Action OnPlayerTasksCompleted;
-    public HackTask[] availableTasks;
+    [SerializeField]
+    private HackTask[] availableTasks;
     private int lastPerformedTaskIndex;
     private int numberOfAvailableTasks;
 
+    [SerializeField]
+    private int baseSequenceLenght;
     private int remainingTasksInSequence;
 
     private GameSettings.GameSettingsData currentData;
@@ -19,11 +22,17 @@ public class TaskManager : MonoBehaviour
         numberOfAvailableTasks = availableTasks.Length;
     }
 
-    public void BeginTaskSequence(int lenght, GameSettings.GameSettingsData gameData) {
+    public void BeginTaskSequence(GameSettings.GameSettingsData gameData) {
         currentData = gameData;
-        remainingTasksInSequence = lenght;
+        remainingTasksInSequence = CalculateLenght();
 
         StartNewTask();
+    }
+
+    private int CalculateLenght() {
+        int result = baseSequenceLenght + Mathf.RoundToInt((currentData.difficulty - 1) * baseSequenceLenght/2);
+
+        return result;
     }
 
     private void StartNewTask() {
@@ -47,7 +56,7 @@ public class TaskManager : MonoBehaviour
         availableTasks[lastPerformedTaskIndex].OnTaskCompleted -= TaskCompleted;
         remainingTasksInSequence--;
 
-        if(remainingTasksInSequence == 0) {
+        if(remainingTasksInSequence <= 0) {
             FinishTaskSequence();
         }
         else {

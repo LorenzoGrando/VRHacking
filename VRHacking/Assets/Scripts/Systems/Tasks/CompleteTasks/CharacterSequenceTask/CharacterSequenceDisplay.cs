@@ -38,6 +38,12 @@ public class CharacterSequenceDisplay : MonoBehaviour
             }
         }
 
+        if(orderValue <= 0) {
+            foreach(CharacterSequenceButton button in characterButtons) {
+                button.ResetStatus();
+            }
+        }
+
         mainSequenceTextRef.text = $"<color={correctColor}>{correctChars}</color><color={defaultColor}>{remainingChars}</color>";
     }
 
@@ -61,6 +67,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
 
     public void ResetDisplay() {
         foreach(CharacterSequenceButton button in characterButtons) {
+            button.ResetStatus();
             button.gameObject.SetActive(false);
         }
     }

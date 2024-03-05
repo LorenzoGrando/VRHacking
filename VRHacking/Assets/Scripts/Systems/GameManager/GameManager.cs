@@ -15,11 +15,11 @@ public class GameManager : MonoBehaviour
         GameSettings.GameSettingsData gameSettingsData = GameSettings.GetGameData();
 
 
-        taskManager.BeginTaskSequence(3, gameSettingsData);
+        taskManager.BeginTaskSequence(gameSettingsData);
 
         hackerManager.InitializeHackerData(gameSettingsData);
         hackerManager.BeginHackerSequence();
-        
+
         Debug.Log("Called game");
     }
 }
