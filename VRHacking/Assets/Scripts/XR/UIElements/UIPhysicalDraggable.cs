@@ -38,6 +38,9 @@ public class UIPhysicalDraggable : MonoBehaviour
         interactorTransform = args.interactorObject.GetAttachTransform(args.interactableObject);
         isSelected = true;
         isOnMomentum = false;
+
+        //Make the object render of top of other canvas elements in same canvas
+        transform.SetAsLastSibling();
     }
 
     public void OnSelectExitEvent(SelectExitEventArgs args) {

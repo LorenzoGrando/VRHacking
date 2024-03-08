@@ -4,6 +4,7 @@ using UnityEngine;
 public class HackerManager : MonoBehaviour
 {
     public event Action OnHackerTasksCompleted;
+    public event Action<HackerData> OnHackerBugUploaded;
 
     [SerializeField]
     private HackerData[] hackers;
@@ -116,7 +117,9 @@ public class HackerManager : MonoBehaviour
 
     private void CompleteBugUpload() {
         Debug.Log("Uploaded Bug!");
-
+        OnHackerBugUploaded?.Invoke(activeHacker);
+        OnHackerBugUploaded?.Invoke(activeHacker);
+        
         CalculateNextBugUpload();
     }
 

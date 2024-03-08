@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private HackerManager hackerManager;
 
+    [SerializeField]
+    private PlayerBugManager playerBugManager;
+
     void Start()
     {
         GameSettings.InitializeData();
@@ -20,6 +23,19 @@ public class GameManager : MonoBehaviour
         hackerManager.InitializeHackerData(gameSettingsData);
         hackerManager.BeginHackerSequence();
 
+        playerBugManager.InitializeBugData(gameSettingsData);
+
+        hackerManager.OnHackerBugUploaded += CommunicateBugStart;
+
         Debug.Log("Called game");
+    }
+
+    void OnDisable()
+    {
+        hackerManager.OnHackerBugUploaded -= CommunicateBugStart;
+    }
+
+    private void CommunicateBugStart(HackerData hackerData) {
+        playerBugManager.StartBugRequest(hackerData);
     }
 }
