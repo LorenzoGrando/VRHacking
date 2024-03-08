@@ -9,6 +9,8 @@ public class HandController : MonoBehaviour
     private ActionBasedController controller;
     [SerializeField]
     private Hand hand;
+    [SerializeField]
+    private XRPokeInteractor pokeInteractor;
 
     void Start()
     {
@@ -22,7 +24,17 @@ public class HandController : MonoBehaviour
     }
 
     private void ReadHandInputs() {
-        hand.UpdateGripValue(controller.selectAction.action.ReadValue<float>());
-        hand.UpdateTriggerValue(controller.activateAction.action.ReadValue<float>());
+        float gripValue = controller.selectAction.action.ReadValue<float>();
+        float triggerValue = controller.activateAction.action.ReadValue<float>();
+        hand.UpdateGripValue(gripValue);
+        hand.UpdateTriggerValue(triggerValue);
+    
+        UpdateInteractors(gripValue, triggerValue);
+    }
+
+    private void UpdateInteractors(float gripValue, float triggerValue) {
+        pokeInteractor.enabled = triggerValue > 0 ? true : false;
+
+        //grip
     }
 }
