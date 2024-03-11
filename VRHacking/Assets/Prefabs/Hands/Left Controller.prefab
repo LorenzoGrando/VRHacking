@@ -84,7 +84,7 @@ MonoBehaviour:
       m_Calls: []
   m_PokeDepth: 0.055
   m_PokeWidth: 0.0055
-  m_PokeSelectWidth: 0.0055
+  m_PokeSelectWidth: 0.00275
   m_PokeHoverRadius: 0.015
   m_PokeInteractionOffset: 0.0005
   m_PhysicsLayerMask:
@@ -418,6 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 0}
+  pokeInteractor: {fileID: 0}
 --- !u!1001 &4623524105963143504
 PrefabInstance:
   m_ObjectHideFlags: 0
