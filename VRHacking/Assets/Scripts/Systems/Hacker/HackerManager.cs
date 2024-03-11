@@ -118,7 +118,6 @@ public class HackerManager : MonoBehaviour
     private void CompleteBugUpload() {
         Debug.Log("Uploaded Bug!");
         OnHackerBugUploaded?.Invoke(activeHacker);
-        OnHackerBugUploaded?.Invoke(activeHacker);
         
         CalculateNextBugUpload();
     }

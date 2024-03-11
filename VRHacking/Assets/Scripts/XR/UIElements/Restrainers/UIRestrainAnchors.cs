@@ -39,6 +39,10 @@ public class UIRestrainAnchors : UIRestrainer
             hitBounds = true;
         }
 
+        if(hitBounds) {
+            FireHitEvent();
+        }
+
         return hitBounds;
     }
 

@@ -70,8 +70,8 @@ public class CharacterSequenceTask : HackTask
     }
 
     private int GenerateSequenceSize() {
-        //At max difficulty (2), max possible value is 9;
-        int sequenceSize = Mathf.CeilToInt(UnityEngine.Random.Range(3, 4.5f) * gameSettingsData.difficulty);
+        //At max difficulty (2), max possible value is 8;
+        int sequenceSize = Mathf.CeilToInt(UnityEngine.Random.Range(3, 4) * gameSettingsData.difficulty);
         return sequenceSize;
     }
 

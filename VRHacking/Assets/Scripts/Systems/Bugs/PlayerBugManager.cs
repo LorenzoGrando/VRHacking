@@ -71,7 +71,6 @@ public class PlayerBugManager : MonoBehaviour
 
     private PlayerBug SelectBugFromList(List<PlayerBug> availableBugs) {
         int index = UnityEngine.Random.Range(0, availableBugs.Count);
-        Debug.Log(availableBugs.Count);
         return availableBugs[index];
     }
 

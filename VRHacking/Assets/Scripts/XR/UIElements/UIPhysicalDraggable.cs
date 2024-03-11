@@ -44,7 +44,6 @@ public class UIPhysicalDraggable : MonoBehaviour
     }
 
     public void OnSelectExitEvent(SelectExitEventArgs args) {
-        Debug.Log("Fired Exit");
         interactorTransform = null;
         isSelected = false;
 

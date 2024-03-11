@@ -8,9 +8,10 @@ public class UIRestrainCanvas : UIRestrainer
     [SerializeField]
     private RectTransform canvasRect;
 
-    void Start()
+    void OnEnable()
     {
-        myRect = GetComponent<RectTransform>();
+        if(myRect == null)
+            myRect = GetComponent<RectTransform>();
         if(canvasRect == null) {
             canvasRect = GetComponentInParent<RectTransform>();
         }
@@ -18,28 +19,32 @@ public class UIRestrainCanvas : UIRestrainer
     public override bool TryRestrain(bool assignPosition) {
         bool hitBounds = false;
 
-        if(myRect.anchoredPosition.x - (myRect.rect.width/2 * myRect.localScale.x) > (canvasRect.rect.width)) {
+        if(myRect.anchoredPosition.x > (canvasRect.rect.width/2) - (myRect.rect.width/2 * myRect.localScale.x)) {
             if(assignPosition)
-                myRect.anchoredPosition = new Vector3(canvasRect.rect.width + (myRect.rect.width/2 * myRect.localScale.x), myRect.anchoredPosition.y, myRect.anchoredPosition3D.z);
+                myRect.anchoredPosition = new Vector3(canvasRect.rect.width/2 - (myRect.rect.width/2 * myRect.localScale.x), myRect.anchoredPosition.y, myRect.anchoredPosition3D.z);
             hitBounds = true;
         }
 
-        if(myRect.anchoredPosition.x + (myRect.rect.width/2 * myRect.localScale.x) < (-canvasRect.rect.width)) {
+        if(myRect.anchoredPosition.x  < (-canvasRect.rect.width/2) + (myRect.rect.width/2 * myRect.localScale.x)) {
             if(assignPosition)
-                myRect.anchoredPosition = new Vector3(-canvasRect.rect.width - (myRect.rect.width/2 * myRect.localScale.x), myRect.anchoredPosition.y, myRect.anchoredPosition3D.z);
+                myRect.anchoredPosition = new Vector3(-canvasRect.rect.width/2 + (myRect.rect.width/2 * myRect.localScale.x), myRect.anchoredPosition.y, myRect.anchoredPosition3D.z);
             hitBounds = true;
         }
 
-        if(myRect.anchoredPosition.y - (myRect.rect.height/2 * myRect.localScale.y) > (canvasRect.rect.height/2)) {
+        if(myRect.anchoredPosition.y > (canvasRect.rect.height/2) - (myRect.rect.height/2 * myRect.localScale.y)) {
             if(assignPosition)
-                myRect.anchoredPosition = new Vector3(myRect.anchoredPosition.x, canvasRect.rect.height/2 + (myRect.rect.height/2 * myRect.localScale.y),  myRect.anchoredPosition3D.z);
+                myRect.anchoredPosition = new Vector3(myRect.anchoredPosition.x, canvasRect.rect.height/2 - (myRect.rect.height/2 * myRect.localScale.y),  myRect.anchoredPosition3D.z);
             hitBounds = true;
         }
 
-        if(myRect.anchoredPosition.y + (myRect.rect.height/2 * myRect.localScale.y) < (-canvasRect.rect.height/2)) {
+        if(myRect.anchoredPosition.y  < (-canvasRect.rect.height/2) + (myRect.rect.height/2 * myRect.localScale.y)) {
             if(assignPosition)
-                myRect.anchoredPosition = new Vector3(myRect.anchoredPosition.x, -canvasRect.rect.height/2 - (myRect.rect.height/2 * myRect.localScale.y),  myRect.anchoredPosition3D.z);
+                myRect.anchoredPosition = new Vector3(myRect.anchoredPosition.x, -canvasRect.rect.height/2 + (myRect.rect.height/2 * myRect.localScale.y),  myRect.anchoredPosition3D.z);
             hitBounds = true;
+        }
+
+        if(hitBounds) {
+            FireHitEvent();
         }
 
         return hitBounds;
