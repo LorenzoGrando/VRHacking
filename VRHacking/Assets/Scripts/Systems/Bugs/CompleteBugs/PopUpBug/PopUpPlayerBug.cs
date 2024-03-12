@@ -108,7 +108,6 @@ public class PopUpPlayerBug : PlayerBug
 
     public void OnPopUpDestroyed() {
         numberActivePopUps--;
-        Debug.Log(numberActivePopUps);
         if(CheckBugCompleted()) {
             CompleteBug();
         }

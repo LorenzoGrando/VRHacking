@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
+using DG.Tweening;
 
 public class CharacterSequenceDisplay : MonoBehaviour
 {
+    public event Action OnLeaveAnimationFinish;
     [SerializeField]
     TextMeshProUGUI mainSequenceTextRef;
     private const string defaultColor = "#959595";
@@ -14,6 +16,8 @@ public class CharacterSequenceDisplay : MonoBehaviour
     [SerializeField]
     CharacterSequenceButton[] characterButtons;
 
+    [SerializeField]
+    private Vector3 targetTextScale;
     private List<CharacterSequenceTask.CharacterSequenceData> orderedData;
     
     public void InitiateDisplay(List<CharacterSequenceTask.CharacterSequenceData> orderedList, List<CharacterSequenceTask.CharacterSequenceData> shuffledList) {
@@ -21,8 +25,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
         orderedData = orderedList;
 
         GenerateButtons(shuffledList);
-
-        UpdateDisplay(-1);
+        DisplaySequenceCharacters();
     }
 
     public void UpdateDisplay(int orderValue) {
@@ -44,7 +47,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
             }
         }
 
-        mainSequenceTextRef.text = $"<color={correctColor}>{correctChars}</color><color={defaultColor}>{remainingChars}</color>";
+        mainSequenceTextRef.text = $"<color={correctColor}>{correctChars}</color>" + $"<color={defaultColor}>{remainingChars}</color>";
     }
 
     public void GenerateButtons(List<CharacterSequenceTask.CharacterSequenceData> characterList) {
@@ -65,10 +68,37 @@ public class CharacterSequenceDisplay : MonoBehaviour
         }
     }
 
+    public void DisplaySequenceCharacters() {
+        mainSequenceTextRef.transform.localScale = Vector3.zero;
+        mainSequenceTextRef.transform.DOScale(targetTextScale, .25f);
+
+        UpdateDisplay(-1)
+;    }
+    public void HideSequenceCharacters() {
+        mainSequenceTextRef.transform.DOScale(Vector3.zero, .5f);
+    }
+
+    public void HideButtons() {
+        bool isFirst = true;
+        HideSequenceCharacters();
+        foreach(CharacterSequenceButton button in characterButtons) {
+            button.DeactiveButton(isFirst, this);
+
+            if(isFirst)
+                isFirst = false;
+        }
+    }
+
     public void ResetDisplay() {
         foreach(CharacterSequenceButton button in characterButtons) {
             button.ResetStatus();
             button.gameObject.SetActive(false);
+        }
+    }
+
+    public void FireAnimCompletionEvent(bool isEntry) {
+        if(!isEntry) {
+            OnLeaveAnimationFinish?.Invoke();
         }
     }
 }

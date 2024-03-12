@@ -649,6 +649,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!1001 &116681405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -846,6 +848,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!1 &134382268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1824,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!114 &707825924 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5762583986787327013, guid: b55643fdb6ae21044a18363d9ccd06e3,
@@ -2104,6 +2110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.5
 --- !u!1 &748445774
 GameObject:
   m_ObjectHideFlags: 0
@@ -3113,6 +3121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!1 &901917153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3654,6 +3664,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!1 &1082289276
 GameObject:
   m_ObjectHideFlags: 0
@@ -4113,6 +4125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!224 &1420627439 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1715021813553766466, guid: 659464d6c8775714f801ebe47e22004a,
@@ -4758,6 +4772,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!1 &1656933278
 GameObject:
   m_ObjectHideFlags: 0
@@ -4819,6 +4835,7 @@ MonoBehaviour:
   - {fileID: 1038205882}
   - {fileID: 116681409}
   - {fileID: 744226770}
+  targetTextScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1706963883
 GameObject:
   m_ObjectHideFlags: 0
@@ -5799,6 +5816,7 @@ MonoBehaviour:
   - {fileID: 1505789698}
   - {fileID: 1505789698}
   baseSequenceLenght: 15
+  newTaskInvervalDuration: 1.25
 --- !u!1 &2041928386
 GameObject:
   m_ObjectHideFlags: 0
@@ -6115,6 +6133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   task: {fileID: 1505789698}
+  targetScale: {x: 0.1, y: 0.1, z: 0.1}
+  animDuration: 0.25
 --- !u!1001 &3403465182033359765
 PrefabInstance:
   m_ObjectHideFlags: 0

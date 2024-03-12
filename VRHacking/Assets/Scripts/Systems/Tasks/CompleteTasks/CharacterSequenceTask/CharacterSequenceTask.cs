@@ -32,7 +32,8 @@ public class CharacterSequenceTask : HackTask
         //Other possible behaviour (anims, etc)
 
         //Will fire completion event
-        prefabObject.SetActive(false);
+        display.HideButtons();
+        display.OnLeaveAnimationFinish += DeactivePrefabObject;
         base.CompleteTask();
     }
 
@@ -127,6 +128,10 @@ public class CharacterSequenceTask : HackTask
         }
 
         return validButton;
+    }
+
+    private void DeactivePrefabObject() {
+        prefabObject.SetActive(false);
     }
 
     #endregion

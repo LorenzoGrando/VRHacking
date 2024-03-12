@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TaskManager : MonoBehaviour
@@ -14,8 +15,12 @@ public class TaskManager : MonoBehaviour
     [SerializeField]
     private int baseSequenceLenght;
     private int remainingTasksInSequence;
+    
+    [SerializeField]
+    private float newTaskInvervalDuration;
 
     private GameSettings.GameSettingsData currentData;
+
 
     void Start()
     {
@@ -60,7 +65,7 @@ public class TaskManager : MonoBehaviour
             FinishTaskSequence();
         }
         else {
-            StartNewTask();
+            StartCoroutine(routine: WaitForNewTask());
         }
     }
 
@@ -68,7 +73,11 @@ public class TaskManager : MonoBehaviour
         OnPlayerTasksCompleted?.Invoke();
     }
 
-    private void UpdateDisplay() {
+    private IEnumerator WaitForNewTask() {
+        yield return new WaitForSeconds(newTaskInvervalDuration);
 
+        StartNewTask();
+
+        yield break;
     }
 }
