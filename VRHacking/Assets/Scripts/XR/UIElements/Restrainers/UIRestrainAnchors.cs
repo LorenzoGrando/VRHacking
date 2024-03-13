@@ -11,6 +11,11 @@ public class UIRestrainAnchors : UIRestrainer
     void Start() {
         myRect = GetComponent<RectTransform>();
     }
+
+    public void UpdateAnchors(Transform bottomLeftAnchor, Transform topRightAnchor) {
+        lowerLeftAnchor = bottomLeftAnchor;
+        upperRightAnchor = topRightAnchor;
+    }
     public override bool TryRestrain(bool assignPosition)
     {
         bool hitBounds = false;

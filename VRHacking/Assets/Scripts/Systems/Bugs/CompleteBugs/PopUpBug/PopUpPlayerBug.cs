@@ -79,7 +79,7 @@ public class PopUpPlayerBug : PlayerBug
 
     private IEnumerator SpawnPopUps(float amountToSpawn) {
         for(int i = 0; i < amountToSpawn; i++) {
-            Vector3 position = GenerarePositionInBounds();
+            Vector3 position = GeneratePositionInBounds();
             position.z = popUpObjects[i].transform.position.z;
             popUpObjects[i].transform.position = position;
             popUpObjects[i].gameObject.SetActive(true);
@@ -90,7 +90,7 @@ public class PopUpPlayerBug : PlayerBug
         yield break;
     }
 
-    private Vector2 GenerarePositionInBounds() {
+    private Vector2 GeneratePositionInBounds() {
         Vector2 rndPos = new Vector2();
         rndPos.x = UnityEngine.Random.Range(bottomLeftAnchor.position.x, topRightAnchor.position.x);
         rndPos.y = UnityEngine.Random.Range(bottomLeftAnchor.position.y, topRightAnchor.position.y);
