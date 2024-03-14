@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e6f061d015e034f9a744ecf9e3b9d9, type: 3}
   m_Name: DefaultHackerData
   m_EditorClassIdentifier: 
-  callsign: 
+  callsign: Ha-ka
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e45f8f823c093d941855bb23b53b9414, type: 3}
   efficiency: 1
   aggressiveness: 1
-  behaviour: 0
+  behaviour: 1

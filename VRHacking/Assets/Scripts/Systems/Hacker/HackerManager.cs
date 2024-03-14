@@ -7,12 +7,15 @@ public class HackerManager : MonoBehaviour
     public event Action<HackerData> OnHackerBugUploaded;
 
     [SerializeField]
+    private HackerMainDisplay display;
+    [SerializeField]
     private HackerData[] hackers;
     private HackerData activeHacker;
 
     private GameSettings.GameSettingsData gameSettings;
     
     #region Game Loop Parameters
+    private int sequenceSize;
     private int remainingTasksInSequence;
     [SerializeField]
     private int baseSequenceSize;
@@ -57,6 +60,8 @@ public class HackerManager : MonoBehaviour
             lastBugUploadTime = currentTime;
             CompleteBugUpload();
         }
+
+        SendProgressData();
     }
 
     public void InitializeHackerData(GameSettings.GameSettingsData gameSettings) {
@@ -65,6 +70,9 @@ public class HackerManager : MonoBehaviour
         SelectHackerByLevel(this.gameSettings.level);
 
         ResetValues();
+
+        display.InitiateCanvas();
+        display.UpdateHackerData(activeHacker);
     }
 
     private void ResetValues() {
@@ -87,7 +95,7 @@ public class HackerManager : MonoBehaviour
     }
 
     public void BeginHackerSequence() {
-        int sequenceSize = GenerateSequenceSize();
+        sequenceSize = GenerateSequenceSize();
         remainingTasksInSequence = sequenceSize;
 
         CalculateNextBugUpload();
@@ -103,7 +111,7 @@ public class HackerManager : MonoBehaviour
     private void CompleteTask() {
         Debug.Log("Completed Task!");
         remainingTasksInSequence--;
-
+        SendTaskCompletionData();
         if(remainingTasksInSequence <= 0) {
             OnHackerTasksCompleted?.Invoke();
             currentlyExecuting = false;
@@ -118,7 +126,6 @@ public class HackerManager : MonoBehaviour
     private void CompleteBugUpload() {
         Debug.Log("Uploaded Bug!");
         OnHackerBugUploaded?.Invoke(activeHacker);
-        
         CalculateNextBugUpload();
     }
 
@@ -143,4 +150,37 @@ public class HackerManager : MonoBehaviour
         bugUploadAdditionalModifier = Mathf.Clamp01(modifierValue);
         CalculateNextBugUpload();
     }
+
+    private void SendProgressData() {
+        float hackerBugUploadData = ClampedTimerData(lastBugUploadTime, Time.time, bugUploadInterval);
+        float hackerNextTaskData = ClampedTimerData(lastTaskCompletionTime, Time.time, taskCompletionInterval);
+
+        HackerMainDisplay.SliderData sliderData = new()
+        {
+            hackerBugUploadValue = hackerBugUploadData,
+            hackerNextTaskValue = hackerNextTaskData
+            
+        };
+
+        display.UpdateContinuousSliders(sliderData);
+    }
+
+    private float ClampedTimerData(float initial, float current, float interval) {
+        float currentTime = current - initial;
+
+        float remaningTime = (initial + interval) - current;
+
+        if(remaningTime <= 0)
+            return 0f;
+        
+        float clampedValue = currentTime / (currentTime + remaningTime);
+
+        return clampedValue;
+    }
+
+    private void SendTaskCompletionData() {
+        float value = Mathf.Lerp(0, 1, Mathf.Abs((float)remainingTasksInSequence - (float)sequenceSize)/(float)sequenceSize);
+        display.UpdateMainSlider(value);
+    }
+
 }
