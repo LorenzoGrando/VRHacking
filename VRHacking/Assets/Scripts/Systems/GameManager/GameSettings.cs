@@ -12,7 +12,7 @@ public static class GameSettings
     private static GameSettingsData currentGameData;
 
     public static void InitializeData() {
-        currentGameData.difficulty = 2;
+        currentGameData.difficulty = 1;
         currentGameData.level = 0;
     }
 
