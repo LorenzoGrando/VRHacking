@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainScreenDisplay : MonoBehaviour
+public class UIPinButton : MonoBehaviour
 {
     
 }

@@ -21,6 +21,10 @@ public class HackerMainDisplay : MonoBehaviour
     //Main Task Area
     [SerializeField]
     private GameObject mainTaskDisplayObject;
+    [SerializeField]
+    private UIPinManager copyAreaPins;
+    [SerializeField]
+    private UIPinManager referenceAreaPins;
 
     [Header("Hacker Bug Upload")]
     [SerializeField]
@@ -61,6 +65,7 @@ public class HackerMainDisplay : MonoBehaviour
         hackerTasksCompletedSlider.value = 0;
         playerBugUploadObject.gameObject.SetActive(false);
         buttonsObject.SetActive(true);
+        mainTaskDisplayObject.SetActive(false);
     }
     public void UpdateContinuousSliders(SliderData currentSliderData) {
         hackerBugUploadSlider.value = currentSliderData.hackerBugUploadValue;
@@ -77,8 +82,12 @@ public class HackerMainDisplay : MonoBehaviour
         hackerBehaviourText.text = Enum.GetName(typeof(HackerData.HackerBehaviour), (int)data.behaviour); 
     }
 
-    public void InitiateTask() {
+    public void InitiateTask(RectTransform[] referencePoints) {
+        buttonsObject.SetActive(false);
+        mainTaskDisplayObject.SetActive(true);
 
+        referenceAreaPins.UpdateActivePins(referencePoints);
+        copyAreaPins.ClearLines();
     }
 
     public void FinishTask() {
