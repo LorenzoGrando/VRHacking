@@ -142,12 +142,12 @@ public class HackerManager : MonoBehaviour
     }
 
     public void SetTaskCompletionModifier(float modifierValue) {
-        taskCompletionAdditionalModifier = Mathf.Clamp01(modifierValue);
+        taskCompletionAdditionalModifier = Mathf.Clamp(modifierValue, 1, 2);
         CalculateNextTaskCompletion();
     }
 
     public void SetBugUploadModifier(float modifierValue) {
-        bugUploadAdditionalModifier = Mathf.Clamp01(modifierValue);
+        bugUploadAdditionalModifier = Mathf.Clamp(modifierValue, 1, 2);
         CalculateNextBugUpload();
     }
 

@@ -6,9 +6,11 @@ public class UIBugUploadButton : MonoBehaviour
     private HackerMainDisplay hackerMainDisplay;
 
     [SerializeField]
-    private RectTransform[] thisPinConfig;
+    private GameObject[] thisPinConfig;
+    [SerializeField]
+    private HackerBug thisButtonBug;
 
     public void OnClick() {
-        hackerMainDisplay.InitiateTask(thisPinConfig);
+        hackerMainDisplay.InitiateTask(thisPinConfig, thisButtonBug);
     }
 }
