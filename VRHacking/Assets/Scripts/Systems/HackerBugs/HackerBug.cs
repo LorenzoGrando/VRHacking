@@ -13,6 +13,7 @@ public abstract class HackerBug : MonoBehaviour
     public float duration;
     public float modifier;
     public float cooldown;
+    public string description;
 
     [HideInInspector]
     public float progress;
@@ -26,6 +27,7 @@ public abstract class HackerBug : MonoBehaviour
     }
 
     public virtual void OnBugUpload() {
+        progress = 0;
         StartCoroutine(routine: ExecuteBugTimer());
         cooldownTimer = cooldown;
         StartCoroutine(routine:ExecuteBugCooldown());
@@ -49,7 +51,6 @@ public abstract class HackerBug : MonoBehaviour
     protected IEnumerator ExecuteBugUpload() {
         while(progress <= 0.98) {
             progress = ClampedTimerData(InitialUploadTime, Time.time, uploadTime);
-            Debug.Log(progress);
             yield return null;
         }
 

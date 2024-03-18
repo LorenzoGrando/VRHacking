@@ -18,6 +18,9 @@ public class UIPinManager : MonoBehaviour
     [SerializeField]
     private GameObject startMarker;
 
+    [SerializeField]
+    private GameObject activePinMarker;
+
     void OnEnable()
     {
         RenderLine();
@@ -53,6 +56,11 @@ public class UIPinManager : MonoBehaviour
             activePoints.Add(point);
 
             RenderLine();
+            if(!activePinMarker.activeSelf)
+                activePinMarker.SetActive(true);
+
+
+            activePinMarker.transform.position = activePoints[^1].transform.position;
             OnNewPinAdded?.Invoke();
         }
     }
@@ -74,11 +82,15 @@ public class UIPinManager : MonoBehaviour
 
         activePoints.RemoveRange(targetIndex, activePoints.Count - targetIndex);
         RenderLine();
+        if(activePoints.Count > 0)
+            activePinMarker.transform.position = activePoints[^1].transform.position;
+        else
+            activePinMarker.SetActive(false);
     }
 
     public void ClearLines() {
         activePoints = new List<GameObject>();
-        
+        activePinMarker.SetActive(false);
         RenderLine();
     }
 
