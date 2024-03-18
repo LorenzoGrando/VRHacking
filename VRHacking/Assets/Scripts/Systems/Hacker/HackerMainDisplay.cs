@@ -75,7 +75,7 @@ public class HackerMainDisplay : MonoBehaviour
 
         if(executingBug != null) {
             playerBugUploadSlider.value = executingBug.progress;
-            if(playerBugUploadSlider.value >= 0.95) {
+            if(playerBugUploadSlider.value >= 0.98) {
                 FinishUpload();
             }
         }
