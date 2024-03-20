@@ -500,7 +500,7 @@ PrefabInstance:
         type: 3}
       propertyPath: thisButtonBug
       value: 
-      objectReference: {fileID: 1501138303}
+      objectReference: {fileID: 493730036}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetPosition.y
@@ -739,7 +739,7 @@ PrefabInstance:
     - target: {fileID: 8934384780883716218, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: m_text
-      value: System Crash
+      value: PORT BLOCKAGE
       objectReference: {fileID: 0}
     - target: {fileID: 8934384780883716218, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
@@ -3642,6 +3642,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &279759814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 279759815}
+  - component: {fileID: 279759816}
+  m_Layer: 5
+  m_Name: TaskRollbackBug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &279759815
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279759814}
+  m_LocalRotation: {x: -0, y: 0.000000029802315, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 712557919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &279759816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279759814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73db1d4bd5895545ad6a9fc5d469094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackerManager: {fileID: 869494265}
+  uploadTime: 5.5
+  duration: 0.1
+  modifier: 3
+  cooldown: 60
+  description: Reduce hacker's completed tasks by 2.
+  progress: 0
+  cooldownTimer: 0
 --- !u!1 &347548851
 GameObject:
   m_ObjectHideFlags: 0
@@ -4840,6 +4896,62 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &493730034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 493730035}
+  - component: {fileID: 493730036}
+  m_Layer: 5
+  m_Name: BugBlockerBug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &493730035
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493730034}
+  m_LocalRotation: {x: -0, y: 0.000000029802315, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 712557919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &493730036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493730034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668920b3c07fae24ba8618722769e430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackerManager: {fileID: 869494265}
+  uploadTime: 4
+  duration: 0.1
+  modifier: 0
+  cooldown: 45
+  description: Blocks the next bug uploaded by the hacker.
+  progress: 0
+  cooldownTimer: 0
 --- !u!1 &504357159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5653,6 +5765,62 @@ RectTransform:
   m_AnchoredPosition: {x: 3.39, y: 22.1}
   m_SizeDelta: {x: 1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &670074701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 670074702}
+  - component: {fileID: 670074703}
+  m_Layer: 5
+  m_Name: AggresivenessBug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &670074702
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670074701}
+  m_LocalRotation: {x: -0, y: 0.000000029802315, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 712557919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &670074703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670074701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2befc02dbb323f49b6fc54d136b32bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackerManager: {fileID: 869494265}
+  uploadTime: 3
+  duration: 15
+  modifier: 1.35
+  cooldown: 25
+  description: Decrease hacker's bug upload efficiency by 35%.
+  progress: 0
+  cooldownTimer: 0
 --- !u!1 &671604107
 GameObject:
   m_ObjectHideFlags: 0
@@ -5812,6 +5980,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1501138302}
+  - {fileID: 670074702}
+  - {fileID: 279759815}
+  - {fileID: 493730035}
   m_Father: {fileID: 671604108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7098,7 +7269,7 @@ PrefabInstance:
         type: 3}
       propertyPath: thisButtonBug
       value: 
-      objectReference: {fileID: 1501138303}
+      objectReference: {fileID: 670074703}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetPosition.y
@@ -7138,17 +7309,17 @@ PrefabInstance:
         type: 3}
       propertyPath: thisPinConfig.Array.data[2]
       value: 
-      objectReference: {fileID: 1606132178}
+      objectReference: {fileID: 621603028}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: thisPinConfig.Array.data[3]
       value: 
-      objectReference: {fileID: 754731633}
+      objectReference: {fileID: 1606132178}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: thisPinConfig.Array.data[4]
       value: 
-      objectReference: {fileID: 2097507311}
+      objectReference: {fileID: 595900200}
     - target: {fileID: 3477258199835449871, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -7337,7 +7508,7 @@ PrefabInstance:
     - target: {fileID: 8934384780883716218, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: m_text
-      value: System Crash
+      value: Scramble connection
       objectReference: {fileID: 0}
     - target: {fileID: 8934384780883716218, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
@@ -9249,7 +9420,7 @@ PrefabInstance:
         type: 3}
       propertyPath: thisButtonBug
       value: 
-      objectReference: {fileID: 1501138303}
+      objectReference: {fileID: 279759816}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetPosition.y
@@ -11262,8 +11433,8 @@ MonoBehaviour:
   hackerManager: {fileID: 869494265}
   uploadTime: 2.5
   duration: 15
-  modifier: 1.25
-  cooldown: 15
+  modifier: 1.35
+  cooldown: 30
   description: Decrease hacker's task completion speed by 25%
   progress: 0
   cooldownTimer: 0
@@ -15691,6 +15862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934384780883716218, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
+        type: 3}
+      propertyPath: m_text
+      value: Pop-Ups
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
