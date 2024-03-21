@@ -8,16 +8,26 @@ public class UILineRenderer : Graphic
 {
     private Vector2[] points;
     [SerializeField]
+    private float targetThickness;
     private float thickness;
     [SerializeField]
     private bool centerOnCanvas;
+
     public void SetParameters(Vector2[] pointsArray) {
         points = pointsArray;
         SetVerticesDirty();
     }
+
+    public void SetThickness(float interpolatorValue) {
+        thickness = Mathf.Lerp(0, targetThickness, interpolatorValue);
+        SetVerticesDirty();
+    }
+
+    public void SetExactThickness(float value) {
+        thickness = value;
+    }
     protected override void OnPopulateMesh(VertexHelper vh)
     {
-        Debug.Log("Drew Line");
         vh.Clear();
 
         //cant make a line off of a single point

@@ -385,9 +385,10 @@ MonoBehaviour:
   buttonNameText: {fileID: 4284261035180319797}
   cooldownHolder: {fileID: 4423261989052078406}
   cooldownText: {fileID: 1633409468143347197}
+  targetLocalScale: {x: 0.025, y: 0.025, z: 0.025}
   descritionHolder: {fileID: 4138844157476108848}
   descriptionTextObject: {fileID: 7614463773781670561}
-  targetLocalScale: {x: 1, y: 1, z: 1}
+  targetDescriptionScale: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 10.88, z: 0}
   animDuration: 0.5
 --- !u!1 &4138844157476108848

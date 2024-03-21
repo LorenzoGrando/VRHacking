@@ -27,15 +27,19 @@ public class UIBugUploadButton : MonoBehaviour
     private Button thisButton;
     private bool isOnCooldown;
 
+    [Header("Animation")]
+    [SerializeField]
+    private Vector3 targetLocalScale;
+
     [Header("Description")]
     [SerializeField]
     private GameObject descritionHolder;
     [SerializeField]
     private TextMeshProUGUI descriptionTextObject;
-    private Tween scaleTween;
-    private Tween positionTween;
+    private Tween descriptionScaleTween;
+    private Tween descriptionPositionTween;
     [SerializeField]
-    private Vector3 targetLocalScale;
+    private Vector3 targetDescriptionScale;
     [SerializeField]
     private Vector3 targetPosition;
     [SerializeField]
@@ -81,17 +85,17 @@ public class UIBugUploadButton : MonoBehaviour
         descritionHolder.transform.localPosition = Vector3.zero;
         descritionHolder.transform.localScale = Vector3.zero;
 
-        ClearTweens();
+        ClearDescriptionTweens();
 
-        scaleTween = descritionHolder.transform.DOScale(targetLocalScale, animDuration).SetEase(Ease.OutQuart);
-        positionTween = descritionHolder.transform.DOLocalMove(targetPosition, animDuration / 2).SetEase(Ease.OutQuart);
+        descriptionScaleTween = descritionHolder.transform.DOScale(targetDescriptionScale, animDuration).SetEase(Ease.OutQuart);
+        descriptionPositionTween = descritionHolder.transform.DOLocalMove(targetPosition, animDuration / 2).SetEase(Ease.OutQuart);
     }
 
     public void OnUnhover(HoverExitEventArgs hoverExitEventArgs) {
-        ClearTweens();
+        ClearDescriptionTweens();
 
-        scaleTween = descritionHolder.transform.DOScale(Vector3.zero, animDuration  / 2).OnComplete(() => descritionHolder.SetActive(false)).SetEase(Ease.InQuart);
-        positionTween = descritionHolder.transform.DOLocalMove(Vector3.zero + new Vector3(0, 1.5f, 0), animDuration / 2).SetEase(Ease.InQuart);
+        descriptionScaleTween = descritionHolder.transform.DOScale(Vector3.zero, animDuration  / 2).OnComplete(() => descritionHolder.SetActive(false)).SetEase(Ease.InQuart);
+        descriptionPositionTween = descritionHolder.transform.DOLocalMove(Vector3.zero + new Vector3(0, 1.5f, 0), animDuration / 2).SetEase(Ease.InQuart);
     }
 
     public void StartCooldown() {
@@ -114,15 +118,28 @@ public class UIBugUploadButton : MonoBehaviour
         buttonNameText.SetActive(true);
     }
 
-    private void ClearTweens() {
-        if(scaleTween != null) {
-            scaleTween.Kill();
-            scaleTween = null;
+    private void ClearDescriptionTweens() {
+        if(descriptionScaleTween != null) {
+            descriptionScaleTween.Kill();
+            descriptionScaleTween = null;
         }
 
-        if(positionTween != null) {
-            positionTween.Kill();
-            positionTween = null;
+        if(descriptionPositionTween != null) {
+            descriptionPositionTween.Kill();
+            descriptionPositionTween = null;
         }
+    }
+
+    public Tween AnimateButton(bool isInit, float duration) {
+        Tween returnTween;
+        if(isInit) {
+            returnTween = transform.DOScale(Vector3.zero, duration);
+        }
+        else {
+            transform.localScale = Vector3.zero;
+            returnTween = transform.DOScale(targetLocalScale, duration);
+        }
+
+        return returnTween;
     }
 }
