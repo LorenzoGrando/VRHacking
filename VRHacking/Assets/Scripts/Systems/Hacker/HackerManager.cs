@@ -31,6 +31,7 @@ public class HackerManager : MonoBehaviour
     private float taskCompletionAdditionalModifier;
     private float bugUploadAdditionalModifier;
 
+    private bool blockNextBug;
 
     private bool currentlyExecuting;
     #endregion
@@ -81,6 +82,8 @@ public class HackerManager : MonoBehaviour
         lastBugUploadTime = 0;
         lastTaskCompletionTime = 0;
 
+        blockNextBug = false;
+
         currentlyExecuting = false;
     }
 
@@ -124,8 +127,15 @@ public class HackerManager : MonoBehaviour
     }
 
     private void CompleteBugUpload() {
-        Debug.Log("Uploaded Bug!");
-        OnHackerBugUploaded?.Invoke(activeHacker);
+        
+        if(!blockNextBug) {
+            Debug.Log("Uploaded Bug!");
+            OnHackerBugUploaded?.Invoke(activeHacker);
+        }
+        else {
+            Debug.Log("Bug was Blocked!");
+            blockNextBug = false;
+        }
         CalculateNextBugUpload();
     }
 
@@ -142,12 +152,12 @@ public class HackerManager : MonoBehaviour
     }
 
     public void SetTaskCompletionModifier(float modifierValue) {
-        taskCompletionAdditionalModifier = Mathf.Clamp01(modifierValue);
+        taskCompletionAdditionalModifier = Mathf.Clamp(modifierValue, 1, 2);
         CalculateNextTaskCompletion();
     }
 
     public void SetBugUploadModifier(float modifierValue) {
-        bugUploadAdditionalModifier = Mathf.Clamp01(modifierValue);
+        bugUploadAdditionalModifier = Mathf.Clamp(modifierValue, 1, 2);
         CalculateNextBugUpload();
     }
 
@@ -181,6 +191,16 @@ public class HackerManager : MonoBehaviour
     private void SendTaskCompletionData() {
         float value = Mathf.Lerp(0, 1, Mathf.Abs((float)remainingTasksInSequence - (float)sequenceSize)/(float)sequenceSize);
         display.UpdateMainSlider(value);
+    }
+
+    public void ModifyCompletedTasks(int modifier) {
+        remainingTasksInSequence += modifier;
+        Mathf.Clamp(remainingTasksInSequence, 0, sequenceSize);
+        SendTaskCompletionData();
+    }
+
+    public void TriggerBlockNextBug() {
+        blockNextBug = true;
     }
 
 }
