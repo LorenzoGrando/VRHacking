@@ -43,6 +43,7 @@ public class UIPinManager : MonoBehaviour
 
         if(startMarker != null) {
             startMarker.SetActive(true);
+            startMarker.transform.position = points[0].transform.position;
         }
 
         RenderLine(activePoints.ToArray());

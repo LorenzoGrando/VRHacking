@@ -514,17 +514,17 @@ PrefabInstance:
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.x
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.y
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.z
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
@@ -2369,7 +2369,7 @@ MonoBehaviour:
   m_Color: {r: 0.5885042, g: 1, b: 0.47358483, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  thickness: 0.15
+  targetThickness: 0.15
   centerOnCanvas: 1
 --- !u!222 &176969229
 CanvasRenderer:
@@ -5002,7 +5002,7 @@ MonoBehaviour:
   m_Color: {r: 0.5885042, g: 1, b: 0.47358483, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  thickness: 0.15
+  targetThickness: 0.15
   centerOnCanvas: 1
 --- !u!222 &504357161
 CanvasRenderer:
@@ -7364,17 +7364,17 @@ PrefabInstance:
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.x
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.y
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.z
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
@@ -9528,17 +9528,17 @@ PrefabInstance:
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.x
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.y
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.z
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
@@ -14575,7 +14575,7 @@ MonoBehaviour:
   - {fileID: 121662847}
   - {fileID: 183501723}
   - {fileID: 1766025430}
-  targetPinScale: {x: 0, y: 0, z: 0}
+  targetPinScale: {x: 0.1, y: 0.1, z: 0.1}
   activePoints: []
   activeBug: {fileID: 0}
   startMarker: {fileID: 0}
@@ -15041,6 +15041,7 @@ GameObject:
   - component: {fileID: 2041928389}
   - component: {fileID: 2041928388}
   - component: {fileID: 2041928391}
+  - component: {fileID: 2041928392}
   m_Layer: 5
   m_Name: Total Canvas
   m_TagString: Untagged
@@ -15154,6 +15155,28 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &2041928392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041928386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef27a598e0cba14d8e55663fd1d8c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackerBugs:
+  - {fileID: 1501138303}
+  - {fileID: 670074703}
+  - {fileID: 279759816}
+  - {fileID: 493730036}
+  bugVisualizers:
+  - {fileID: 1491998884}
+  - {fileID: 787568558}
+  - {fileID: 223709020}
+  - {fileID: 973495672}
 --- !u!1 &2063041855
 GameObject:
   m_ObjectHideFlags: 0
@@ -15901,17 +15924,17 @@ PrefabInstance:
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.x
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.y
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: targetLocalScale.z
-      value: 1.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
