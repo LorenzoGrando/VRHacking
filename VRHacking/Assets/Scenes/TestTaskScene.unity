@@ -15028,6 +15028,7 @@ MonoBehaviour:
   - {fileID: 9668492}
   baseSequenceLenght: 15
   newTaskInvervalDuration: 1.25
+  mainScreenDisplay: {fileID: 2041928392}
 --- !u!1 &2041928386
 GameObject:
   m_ObjectHideFlags: 0
@@ -15167,6 +15168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eef27a598e0cba14d8e55663fd1d8c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskSlider: {fileID: 998560222}
   hackerBugs:
   - {fileID: 1501138303}
   - {fileID: 670074703}

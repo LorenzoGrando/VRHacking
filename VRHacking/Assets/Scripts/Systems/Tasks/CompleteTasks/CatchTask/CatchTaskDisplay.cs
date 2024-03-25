@@ -23,14 +23,14 @@ public class CatchTaskDisplay : MonoBehaviour
     [SerializeField]
     private float scaleTextDuration;
 
-    GameSettings.GameSettingsData data;
+    GameSettingsData data;
     public void ResetDisplay() {
         sliderObject.ResetToDefaultPosition();
         sliderObject.transform.localScale = Vector3.zero;
         descriptionText.transform.localScale = Vector3.zero;
     }
 
-    public void InitiateDisplay(GameSettings.GameSettingsData data) {
+    public void InitiateDisplay(GameSettingsData data) {
         this.data = data;
         gameObject.SetActive(true);
         ScaleDisplay(true);

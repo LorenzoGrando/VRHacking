@@ -14,12 +14,17 @@ public class TaskManager : MonoBehaviour
 
     [SerializeField]
     private int baseSequenceLenght;
+    private int generatedSequenceSize;
     private int remainingTasksInSequence;
     
     [SerializeField]
     private float newTaskInvervalDuration;
 
-    private GameSettings.GameSettingsData currentData;
+    private GameSettingsData currentData;
+
+    [Space(5)]
+    [SerializeField]
+    private MainScreenDisplay mainScreenDisplay;
 
 
     void Start()
@@ -27,9 +32,10 @@ public class TaskManager : MonoBehaviour
         numberOfAvailableTasks = availableTasks.Length;
     }
 
-    public void BeginTaskSequence(GameSettings.GameSettingsData gameData) {
+    public void BeginTaskSequence(GameSettingsData gameData) {
         currentData = gameData;
         remainingTasksInSequence = CalculateLenght();
+        generatedSequenceSize = remainingTasksInSequence;
 
         StartNewTask();
     }
@@ -60,6 +66,8 @@ public class TaskManager : MonoBehaviour
         //Remove from event reaction
         availableTasks[lastPerformedTaskIndex].OnTaskCompleted -= TaskCompleted;
         remainingTasksInSequence--;
+
+        mainScreenDisplay.UpdateTaskSlider(Mathf.Lerp(0, 1, Mathf.Abs((float)remainingTasksInSequence - (float)generatedSequenceSize)/(float)generatedSequenceSize));
 
         if(remainingTasksInSequence <= 0) {
             FinishTaskSequence();

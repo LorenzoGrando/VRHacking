@@ -12,7 +12,7 @@ public class HackerManager : MonoBehaviour
     private HackerData[] hackers;
     private HackerData activeHacker;
 
-    private GameSettings.GameSettingsData gameSettings;
+    private GameSettingsData gameSettings;
     
     #region Game Loop Parameters
     private int sequenceSize;
@@ -65,7 +65,7 @@ public class HackerManager : MonoBehaviour
         SendProgressData();
     }
 
-    public void InitializeHackerData(GameSettings.GameSettingsData gameSettings) {
+    public void InitializeHackerData(GameSettingsData gameSettings) {
         this.gameSettings = gameSettings;
 
         SelectHackerByLevel(this.gameSettings.level);

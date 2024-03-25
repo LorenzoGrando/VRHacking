@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class MainScreenDisplay : MonoBehaviour
 {
+    [Header("Task Slider")]
+    [SerializeField]
+    private Slider taskSlider;
+    [Header("Visualizers")]
     [SerializeField]
     private HackerBug[] hackerBugs;
     [SerializeField]
@@ -21,6 +25,12 @@ public class MainScreenDisplay : MonoBehaviour
             hackerBug.OnCooldownStart += UpdatedVisualizers;
             hackerBug.OnCooldownEndTimer += UpdatedVisualizers;
         }
+
+        ResetValues();
+    }
+
+    private void ResetValues() {
+        taskSlider.value = 0;
     }
 
     public void UpdatedVisualizers() {
@@ -33,5 +43,9 @@ public class MainScreenDisplay : MonoBehaviour
                 bugVisualizers[i].color = Color.green;
             }
         }
+    }
+
+    public void UpdateTaskSlider(float value) {
+        taskSlider.value = value;
     }
 }

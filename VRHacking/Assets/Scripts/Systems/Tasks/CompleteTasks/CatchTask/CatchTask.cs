@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 public class CatchTask : HackTask
 {
     #region Generic Task Methods
-    public override void StartTask(GameSettings.GameSettingsData settingsData)
+    public override void StartTask(GameSettingsData settingsData)
     {
         ResetTask();
         this.gameSettingsData = settingsData;
