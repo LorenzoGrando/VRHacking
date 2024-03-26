@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HackerManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class HackerManager : MonoBehaviour
     [SerializeField]
     private HackerData[] hackers;
     private HackerData activeHacker;
+    private List<int> usedHackerIndexes;
 
     private GameSettingsData gameSettings;
     
@@ -68,7 +70,10 @@ public class HackerManager : MonoBehaviour
     public void InitializeHackerData(GameSettingsData gameSettings) {
         this.gameSettings = gameSettings;
 
-        SelectHackerByLevel(this.gameSettings.level);
+        if(gameSettings.thisGameMode == GameSettingsData.GameMode.Campaign)
+            SelectHackerByLevel(this.gameSettings.level);
+        else
+            SelectUnchosenHacker();
 
         ResetValues();
 
@@ -89,6 +94,21 @@ public class HackerManager : MonoBehaviour
 
     private void SelectHackerByLevel(int levelIndex) {
         activeHacker = hackers[levelIndex];
+    }
+
+    private void SelectUnchosenHacker() {
+        //Regenerates Indexes
+        if(usedHackerIndexes == null || usedHackerIndexes.Count <= 0) {
+            usedHackerIndexes = new List<int>();
+            for(int i = 0; i < hackers.Length; i++) {
+                usedHackerIndexes.Add(i);
+            }
+        }
+
+
+        int index = UnityEngine.Random.Range(0, usedHackerIndexes.Count);
+        activeHacker = hackers[index];
+        usedHackerIndexes.RemoveAt(index);
     }
 
     private int GenerateSequenceSize() {

@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7dcbf16d56cc14bb06131f60743f72, type: 3}
-  m_Name: Settings_Endless
+  m_Script: {fileID: 11500000, guid: 23e6f061d015e034f9a744ecf9e3b9d9, type: 3}
+  m_Name: EfficientHackerData
   m_EditorClassIdentifier: 
-  thisGameMode: 2
-  difficulty: 1
-  level: 0
-  defeatedHackers: 0
-  maximumDifficultyByHackerAmount: 10
-  newInvasionMaxIntervalTime: 6.5
+  callsign: Eff-HAKA
+  description: 
+  icon: {fileID: 21300000, guid: f8ecc54972abacc46a93f671b0602139, type: 3}
+  efficiency: 0.75
+  aggressiveness: 1.25
+  behaviour: 1
