@@ -9,6 +9,8 @@ public class CharacterSequenceDisplay : MonoBehaviour
 {
     public event Action OnLeaveAnimationFinish;
     [SerializeField]
+    private GameObject displayHolder;
+    [SerializeField]
     TextMeshProUGUI mainSequenceTextRef;
     private const string defaultColor = "#959595";
     private const string correctColor = "#56E554";
@@ -21,7 +23,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
     private List<CharacterSequenceTask.CharacterSequenceData> orderedData;
     
     public void InitiateDisplay(List<CharacterSequenceTask.CharacterSequenceData> orderedList, List<CharacterSequenceTask.CharacterSequenceData> shuffledList) {
-        gameObject.SetActive(true);
+        displayHolder.SetActive(true);
         orderedData = orderedList;
 
         GenerateButtons(shuffledList);
@@ -99,6 +101,7 @@ public class CharacterSequenceDisplay : MonoBehaviour
     public void FireAnimCompletionEvent(bool isEntry) {
         if(!isEntry) {
             OnLeaveAnimationFinish?.Invoke();
+            displayHolder.SetActive(false);
         }
     }
 }

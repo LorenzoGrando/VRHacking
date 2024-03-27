@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HackerManager : MonoBehaviour
@@ -11,8 +12,9 @@ public class HackerManager : MonoBehaviour
     [SerializeField]
     private HackerData[] hackers;
     private HackerData activeHacker;
+    private List<int> usedHackerIndexes;
 
-    private GameSettings.GameSettingsData gameSettings;
+    private GameSettingsData gameSettings;
     
     #region Game Loop Parameters
     private int sequenceSize;
@@ -65,10 +67,13 @@ public class HackerManager : MonoBehaviour
         SendProgressData();
     }
 
-    public void InitializeHackerData(GameSettings.GameSettingsData gameSettings) {
+    public void InitializeHackerData(GameSettingsData gameSettings) {
         this.gameSettings = gameSettings;
 
-        SelectHackerByLevel(this.gameSettings.level);
+        if(gameSettings.thisGameMode == GameSettingsData.GameMode.Campaign)
+            SelectHackerByLevel(this.gameSettings.level);
+        else
+            SelectUnchosenHacker();
 
         ResetValues();
 
@@ -89,6 +94,21 @@ public class HackerManager : MonoBehaviour
 
     private void SelectHackerByLevel(int levelIndex) {
         activeHacker = hackers[levelIndex];
+    }
+
+    private void SelectUnchosenHacker() {
+        //Regenerates Indexes
+        if(usedHackerIndexes == null || usedHackerIndexes.Count <= 0) {
+            usedHackerIndexes = new List<int>();
+            for(int i = 0; i < hackers.Length; i++) {
+                usedHackerIndexes.Add(i);
+            }
+        }
+
+
+        int index = UnityEngine.Random.Range(0, usedHackerIndexes.Count);
+        activeHacker = hackers[index];
+        usedHackerIndexes.RemoveAt(index);
     }
 
     private int GenerateSequenceSize() {
@@ -118,7 +138,6 @@ public class HackerManager : MonoBehaviour
         if(remainingTasksInSequence <= 0) {
             OnHackerTasksCompleted?.Invoke();
             currentlyExecuting = false;
-            Debug.Log("Hacker wins!");
         }
         
         else {
@@ -201,6 +220,10 @@ public class HackerManager : MonoBehaviour
 
     public void TriggerBlockNextBug() {
         blockNextBug = true;
+    }
+
+    public void OnEndDispute() {
+        display.DisableCanvas();
     }
 
 }

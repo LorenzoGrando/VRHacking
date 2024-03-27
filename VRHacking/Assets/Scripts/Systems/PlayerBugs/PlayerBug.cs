@@ -9,11 +9,11 @@ public abstract class PlayerBug : MonoBehaviour
 
     [SerializeField]
     protected GameObject prefabObject;
-    protected GameSettings.GameSettingsData gameSettingsData;
+    protected GameSettingsData gameSettingsData;
 
     protected abstract void ResetBug();
 
-    public abstract void StartBug(GameSettings.GameSettingsData data);
+    public abstract void StartBug(GameSettingsData data);
 
     public abstract bool CheckBugCompleted();
 

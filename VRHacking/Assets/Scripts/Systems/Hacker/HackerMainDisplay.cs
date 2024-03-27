@@ -64,6 +64,13 @@ public class HackerMainDisplay : MonoBehaviour
         ResetValues();
         displayHolder.SetActive(true);
     }
+
+    public void DisableCanvas() {
+        foreach(UIBugUploadButton button in buttons) {
+            button.EndCooldown();
+        }
+        displayHolder.SetActive(false);
+    }
     
     private void ResetValues() {
         hackerBugUploadSlider.value = 0;

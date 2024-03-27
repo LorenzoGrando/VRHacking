@@ -27,6 +27,7 @@ public class CatchTaskSlider : MonoBehaviour
     }
 
     public void ChangeColliderStatus(bool newStatus) {
-        col.enabled = newStatus;
+        if(col != null)
+            col.enabled = newStatus;
     }
  }

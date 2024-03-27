@@ -54,7 +54,7 @@ public class PopUpPlayerBug : PlayerBug
         }
     }
 
-    public override void StartBug(GameSettings.GameSettingsData data)
+    public override void StartBug(GameSettingsData data)
     {
         ResetBug();
         gameSettingsData = data;

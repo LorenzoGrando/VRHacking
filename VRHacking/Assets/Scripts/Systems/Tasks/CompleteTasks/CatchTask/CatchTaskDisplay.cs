@@ -8,6 +8,8 @@ using DG.Tweening;
 public class CatchTaskDisplay : MonoBehaviour
 {
     public event Action OnScalingAnimComplete;
+    [SerializeField]
+    private GameObject displayHolder;
     [Header("Slider Anim Info")]
     [SerializeField]
     private CatchTaskSlider sliderObject;
@@ -23,16 +25,16 @@ public class CatchTaskDisplay : MonoBehaviour
     [SerializeField]
     private float scaleTextDuration;
 
-    GameSettings.GameSettingsData data;
+    GameSettingsData data;
     public void ResetDisplay() {
         sliderObject.ResetToDefaultPosition();
         sliderObject.transform.localScale = Vector3.zero;
         descriptionText.transform.localScale = Vector3.zero;
     }
 
-    public void InitiateDisplay(GameSettings.GameSettingsData data) {
+    public void InitiateDisplay(GameSettingsData data) {
         this.data = data;
-        gameObject.SetActive(true);
+        displayHolder.SetActive(true);
         ScaleDisplay(true);
     }
 
@@ -69,7 +71,10 @@ public class CatchTaskDisplay : MonoBehaviour
         OnScalingAnimComplete?.Invoke();
     }
 
-    public void HideDisplay() {
+    public void HideDisplay(bool anim) {
+        if(!anim) {
+            displayHolder.SetActive(false);
+        }
         ScaleDisplay(false);
     }
 }

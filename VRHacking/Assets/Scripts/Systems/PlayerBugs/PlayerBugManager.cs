@@ -13,13 +13,13 @@ public class PlayerBugManager : MonoBehaviour
 
     private PlayerBug currentBug;
     private Queue<HackerData> bugRequestQueue;
-    private GameSettings.GameSettingsData gameSettingsData;
+    private GameSettingsData gameSettingsData;
 
     private Coroutine intervalRoutine;
     [SerializeField]
     private float bugDisplayIntervalDuration;
 
-    public void InitializeBugData(GameSettings.GameSettingsData data) {
+    public void InitializeBugData(GameSettingsData data) {
         gameSettingsData = data;
         bugRequestQueue = new Queue<HackerData>();
     }
