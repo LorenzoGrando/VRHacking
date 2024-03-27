@@ -11,6 +11,11 @@ public class CharacterSequenceTask : HackTask
         InitializeValues();
         display.ResetDisplay();
     }
+
+    public override void HideTask()
+    {
+        display.HideButtons();
+    }
     public override void StartTask(GameSettingsData settingsData)
     {
         this.gameSettingsData = settingsData;

@@ -41,9 +41,14 @@ public class CatchTask : HackTask
         display.ResetDisplay();
     }
 
+    public override void HideTask()
+    {
+        display.HideDisplay(false);
+    }
+
     protected override void CompleteTask()
     {
-        display.gameObject.SetActive(false);
+        display.HideDisplay(false);
         base.CompleteTask();
     }
 
@@ -115,7 +120,7 @@ public class CatchTask : HackTask
 
             slider.OnCollectCatchable -= OnCollectCatchable;
             display.OnScalingAnimComplete += AwaitEndAnim;
-            display.HideDisplay();
+            display.HideDisplay(true);
         }
     }
 

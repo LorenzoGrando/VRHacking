@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameSettingsData : ScriptableObject
 {
     public enum GameMode {
-        Null, Campaign, Endless
+        Null, Campaign, Endless, Tutorial
     }
     public GameMode thisGameMode;
     [Range(1,2)]

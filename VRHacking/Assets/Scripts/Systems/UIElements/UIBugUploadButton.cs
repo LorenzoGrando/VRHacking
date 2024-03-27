@@ -114,6 +114,7 @@ public class UIBugUploadButton : MonoBehaviour
         }
         isOnCooldown = false;
         thisButton.interactable = true;
+        thisButtonBug.cooldownTimer = 0;
         cooldownHolder.SetActive(false);
         buttonNameText.SetActive(true);
     }

@@ -4,10 +4,11 @@ using UnityEngine;
 public static class GameSettings
 {
     private static GameSettingsData currentGameData;
+    private const string constPath = "ScriptableObjects/Settings_";
 
-    public static void InitializeData() {
-        if(currentGameData == null)
-            currentGameData = Resources.Load<GameSettingsData>("ScriptableObjects/Settings_Endless");
+    public static void InitializeData(GameSettingsData.GameMode mode) {
+        string path = constPath + Enum.GetName(typeof(GameSettingsData.GameMode), mode);
+        currentGameData = Resources.Load<GameSettingsData>(path);
 
         currentGameData.difficulty = 1;
         currentGameData.level = 0;

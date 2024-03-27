@@ -138,7 +138,6 @@ public class HackerManager : MonoBehaviour
         if(remainingTasksInSequence <= 0) {
             OnHackerTasksCompleted?.Invoke();
             currentlyExecuting = false;
-            Debug.Log("Hacker wins!");
         }
         
         else {
@@ -221,6 +220,10 @@ public class HackerManager : MonoBehaviour
 
     public void TriggerBlockNextBug() {
         blockNextBug = true;
+    }
+
+    public void OnEndDispute() {
+        display.DisableCanvas();
     }
 
 }

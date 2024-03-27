@@ -57,6 +57,7 @@ public class TaskManager : MonoBehaviour
             }
         }
         availableTasks[index].StartTask(currentData);
+        Debug.Log(availableTasks[index].gameObject.name);
         availableTasks[index].OnTaskCompleted += TaskCompleted;
 
         lastPerformedTaskIndex = index;
@@ -87,5 +88,17 @@ public class TaskManager : MonoBehaviour
         StartNewTask();
 
         yield break;
+    }
+
+    public void OnEndDispute() {
+        availableTasks[lastPerformedTaskIndex].OnTaskCompleted -= TaskCompleted;
+        HideAllTasks();
+        StopAllCoroutines();
+    }
+
+    public void HideAllTasks() {
+        foreach(HackTask task in availableTasks) {
+            task.HideTask();
+        }
     }
 }

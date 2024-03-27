@@ -14,6 +14,8 @@ public abstract class HackTask : MonoBehaviour
     //Reset task values and canvas to initial ones
     protected abstract void ResetTask();
 
+    public abstract void HideTask();
+
     public abstract void StartTask(GameSettingsData settingsData);
 
     //Implement specific method for checking if task is done

@@ -39,7 +39,6 @@ public abstract class HackerBug : MonoBehaviour
     public virtual void OnCooldownEnd() {
         OnCooldownEndTimer?.Invoke();
     }
-
     protected IEnumerator ExecuteBugTimer() {
         yield return new WaitForSeconds(duration);
 
