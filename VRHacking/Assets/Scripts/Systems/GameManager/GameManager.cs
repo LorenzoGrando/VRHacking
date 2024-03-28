@@ -77,18 +77,26 @@ public class GameManager : MonoBehaviour
     }
 
     public void CallNewDispute() {
-        //TODO: Initialize and reset displays
-        if(invasionIntervalRoutine != null) {
-            StopCoroutine(invasionIntervalRoutine);
-        }
+        TryEndInvasionInterval();
 
         BeginNewSystemDispute(gameSettings);
         mainDisplay.StartGameDisplay();
     }
 
     public void StartMenu() {
+        TryEndInvasionInterval();
+
         taskManager.HideAllTasks();
         mainDisplay.StartMenu();
+    }
+
+    private bool TryEndInvasionInterval() {
+        bool wasActive = false;
+        if(invasionIntervalRoutine != null) {
+            StopCoroutine(invasionIntervalRoutine);
+            wasActive = true;
+        }
+        return wasActive;
     }
 
     public void StartMode(int enumValue) {
