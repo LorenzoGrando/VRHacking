@@ -62,6 +62,12 @@ public class HackerMainDisplay : MonoBehaviour
 
     public void InitiateCanvas() {
         ResetValues();
+        for(int i = 0; i < buttons.Length; i++) {
+            float buttonAnimDuration = 0.5f;
+            buttons[i].AnimateButton(false, buttonAnimDuration).SetEase(Ease.OutBack);
+
+            buttonAnimDuration += 0.1f;
+        } 
         displayHolder.SetActive(true);
     }
 
