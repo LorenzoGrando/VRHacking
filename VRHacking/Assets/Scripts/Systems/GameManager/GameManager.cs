@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
     private TaskManager taskManager;
     [SerializeField]
     private HackerManager hackerManager;
+    private HackerMainDisplay hackerDisplay;
 
     [SerializeField]
     private PlayerBugManager playerBugManager;
+    [SerializeField]
+    private DialogueManager dialogueManager;
 
     private GameSettingsData gameSettings;
 
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartMenu();
+        hackerDisplay = hackerManager.display;
     }
 
     void OnDisable()
@@ -32,12 +36,20 @@ public class GameManager : MonoBehaviour
         playerBugManager.StartBugRequest(hackerData);
     }
 
+    private void CommunicateMessageTrigger(DialogueRequestData dialogueRequest) {
+        dialogueManager.OnRequestMessage(dialogueRequest);
+    }
+
     private void BeginNewSystemDispute(GameSettingsData gameSettingsData) {
         taskManager.BeginTaskSequence(gameSettingsData);
         taskManager.OnPlayerTasksCompleted += CallWonGame;
 
-        hackerManager.InitializeHackerData(gameSettingsData);
+        HackerData sequenceHacker = hackerManager.InitializeHackerData(gameSettingsData);
         hackerManager.BeginHackerSequence();
+
+        dialogueManager.ResetDialogueData();
+        dialogueManager.UpdateHackerDialogue(sequenceHacker.hackerDialogue);
+        SetupMessageTriggers(init: true);
 
         playerBugManager.InitializeBugData(gameSettingsData);
 
@@ -45,6 +57,19 @@ public class GameManager : MonoBehaviour
         hackerManager.OnHackerTasksCompleted += CallLostGame;
 
         Debug.Log("Called game");
+    }
+
+    private void SetupMessageTriggers(bool init) {
+        if(init) {
+            taskManager.OnTaskEfficiencyMessageTrigger += CommunicateMessageTrigger;
+            hackerManager.OnMessageTrigger += CommunicateMessageTrigger;
+            hackerDisplay.OnMessageTrigger += CommunicateMessageTrigger;
+        }
+        else {
+            taskManager.OnTaskEfficiencyMessageTrigger -= CommunicateMessageTrigger;
+            hackerManager.OnMessageTrigger -= CommunicateMessageTrigger;
+            hackerDisplay.OnMessageTrigger -= CommunicateMessageTrigger;
+        }
     }
 
     public void FinishSystemDispute(bool playerWon) {
@@ -64,6 +89,13 @@ public class GameManager : MonoBehaviour
                 invasionIntervalRoutine = StartCoroutine(NextInvasionTimer(gameSettings.newInvasionMaxIntervalTime));
             }
         }
+
+        SetupMessageTriggers(init: false);
+        DialogueRequestData requestData = new DialogueRequestData {
+            type = DialogueAsset.DialogueType.Hacker,
+            source = playerWon ? DialogueAsset.DialogueSource.PlayerWon : DialogueAsset.DialogueSource.PlayerLost
+        };
+        CommunicateMessageTrigger(requestData);
 
         mainDisplay.OnEndDispute(gameSettings.thisGameMode, playerWon);
     }

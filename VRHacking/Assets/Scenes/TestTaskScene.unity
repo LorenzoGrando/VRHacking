@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 9668490}
+  taskQuicknessTimeThreshold: 0
   display: {fileID: 9668493}
   slider: {fileID: 206080270}
   spawnPositions:
@@ -11349,6 +11350,7 @@ MonoBehaviour:
   taskManager: {fileID: 2002679078}
   hackerManager: {fileID: 869494265}
   playerBugManager: {fileID: 70830866}
+  dialogueManager: {fileID: 996684328}
 --- !u!1 &1228300495
 GameObject:
   m_ObjectHideFlags: 0
@@ -13334,6 +13336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 1656933278}
+  taskQuicknessTimeThreshold: 0
   display: {fileID: 1505789700}
 --- !u!222 &1505789699
 CanvasRenderer:

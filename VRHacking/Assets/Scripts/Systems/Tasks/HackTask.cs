@@ -11,6 +11,9 @@ public abstract class HackTask : MonoBehaviour
     protected GameObject prefabObject;
     protected GameSettingsData gameSettingsData;
 
+    [SerializeField]
+    public float taskQuicknessTimeThreshold;
+
     //Reset task values and canvas to initial ones
     protected abstract void ResetTask();
 

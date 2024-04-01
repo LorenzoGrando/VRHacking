@@ -14,6 +14,8 @@ public class HackerMainDisplay : MonoBehaviour
     }
 
     #endregion
+    public event Action<DialogueRequestData> OnMessageTrigger;
+
     [Header("Canvas")]
     [SerializeField]
     private GameObject displayHolder;
@@ -146,6 +148,12 @@ public class HackerMainDisplay : MonoBehaviour
         Debug.Log("Finished upload");
         executingBug = null;
         DisplaySlider(false);
+
+        DialogueRequestData requestData = new DialogueRequestData {
+            type = DialogueAsset.DialogueType.Hacker,
+            source = DialogueAsset.DialogueSource.HackerBugUploaded
+        };
+        OnMessageTrigger?.Invoke(requestData);
     }
 
     private void DisplayTaskSequence(bool isInit) {

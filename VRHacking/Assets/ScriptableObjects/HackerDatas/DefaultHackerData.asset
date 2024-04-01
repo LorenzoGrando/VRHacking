@@ -18,3 +18,4 @@ MonoBehaviour:
   efficiency: 1
   aggressiveness: 1
   behaviour: 1
+  hackerDialogue: {fileID: 11400000, guid: e6f6079bf8ea6774e8cf59adb8f9bba2, type: 2}

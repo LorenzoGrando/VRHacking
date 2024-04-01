@@ -16,18 +16,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     private DialogueAsset systemDialogue;
     private DialogueAsset currentHackerDialogue;
-    
-    void Start()
-    {
-        ResetDialogueData();
-        currentHackerDialogue = systemDialogue;
-        DialogueRequestData testRequest = new DialogueRequestData {
-            type = DialogueAsset.DialogueType.Hacker,
-            source = DialogueAsset.DialogueSource.Greeting
-        };
 
-        OnRequestMessage(testRequest);
-    }
     public void ResetDialogueData() {
         StopAllCoroutines();
 
