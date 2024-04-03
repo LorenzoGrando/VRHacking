@@ -9950,6 +9950,89 @@ RectTransform:
   m_AnchoredPosition: {x: 7.5, y: 7.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1083964758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 27625a7b75e283247ba4068dcf99dce6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1386129959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1083964762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083964758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae4b7df05d67b646a2a617d37da2acb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: a4090d3efe7fd7f4aa3defec17252fb6, type: 2}
+  inOutAnimDuration: 6
+  holdErrorAnimDuration: 5
+  baseColor: {r: 0, g: 1, b: 0.8980392, a: 1}
+  errorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0.0058050156, a: 1}
+    key1: {r: 1, g: 0, b: 0.3165202, a: 1}
+    key2: {r: 1, g: 0, b: 0.084965706, a: 0}
+    key3: {r: 1, g: 0, b: 0.4215927, a: 0}
+    key4: {r: 1, g: 0, b: 0.082191944, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 13801
+    ctime2: 30763
+    ctime3: 45566
+    ctime4: 65535
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
+  returnGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.38011432, b: 0, a: 1}
+    key1: {r: 1, g: 0, b: 0.029707909, a: 1}
+    key2: {r: 1, g: 0, b: 0.5793638, a: 0}
+    key3: {r: 0.7516546, g: 0, b: 1, a: 0}
+    key4: {r: 0, g: 0.042500496, b: 1, a: 0}
+    key5: {r: 0, g: 1, b: 0.8980392, a: 0}
+    key6: {r: 0, g: 1, b: 0.6568985, a: 0}
+    key7: {r: 0, g: 1, b: 0.8980392, a: 0}
+    ctime0: 0
+    ctime1: 5012
+    ctime2: 18735
+    ctime3: 28758
+    ctime4: 40478
+    ctime5: 55898
+    ctime6: 62066
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 8
+    m_NumAlphaKeys: 2
+  temp: 0
 --- !u!1 &1093336146
 GameObject:
   m_ObjectHideFlags: 0
@@ -12178,7 +12261,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27625a7b75e283247ba4068dcf99dce6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1083964762}
   m_SourcePrefab: {fileID: 100100000, guid: 27625a7b75e283247ba4068dcf99dce6, type: 3}
 --- !u!1001 &1414140949
 PrefabInstance:
