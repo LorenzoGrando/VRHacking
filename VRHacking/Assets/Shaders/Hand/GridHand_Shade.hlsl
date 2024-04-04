@@ -44,6 +44,13 @@ float _EmissionStrength;
 float4 _EmissionColor;
 float _EmissionMulByBaseColor;
 
+float _UseDisplacement;
+float _DisplacementFrequency;
+float _DisplacementAmplitude;
+float _DisplacementTravelSpeed;
+float _DisplacementInterpolator;
+float _DisplacementLaterality;
+
 CBUFFER_END
 
 float4 TransformShadowCasterPositionCS(float3 positionWS, float3 normalWS)
@@ -59,6 +66,15 @@ float4 TransformShadowCasterPositionCS(float3 positionWS, float3 normalWS)
     return positionCS;
 }
 
+float TriWaveDisplacement(float frequency, float amplitude, float speed, float3 pos, float interpolator)
+{
+    frequency = lerp(0, frequency, interpolator);
+    amplitude = lerp(0, amplitude, interpolator);
+    speed = lerp(0, speed, interpolator);
+
+    return (abs((2 * frequency * pos.z + (speed * _Time)) % 2 - 1) * amplitude) - (amplitude/2);
+}
+
             
 Varyings vert(Attributes i)
 {
@@ -68,20 +84,28 @@ Varyings vert(Attributes i)
     UNITY_SETUP_INSTANCE_ID(input);                
     UNITY_TRANSFER_INSTANCE_ID(input, output);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+
+    o.uv = i.uv;
+    
+    //Vertex Displacement
+    if(_UseDisplacement > 0)
+    {
+        float4 offset = 0;
+        offset.y = TriWaveDisplacement(_DisplacementFrequency, _DisplacementAmplitude, _DisplacementTravelSpeed, i.positionOS, _DisplacementInterpolator);
+        offset.x = offset.y / _DisplacementLaterality;
+        i.positionOS += offset;
+    }
                 
     VertexPositionInputs vertexPositions = GetVertexPositionInputs(i.positionOS.xyz);
     VertexNormalInputs normalInputs = GetVertexNormalInputs(i.normalOS);
     
-    
-    
-
     #ifdef _APPLY_SHADOW_BIAS
         o.positionCS = TransformShadowCasterPositionCS(vertexPositions.positionWS, normalInputs.normalWS);
     #else
         o.positionCS = vertexPositions.positionCS;
     #endif
     
-    o.uv = i.uv;
+    
     o.uvGrid = TRANSFORM_TEX(i.uv, _GridTex);
     o.uvGrid.y += _Time.x * _ScrollSpeed;
     o.positionWS = vertexPositions.positionWS;
@@ -109,7 +133,7 @@ SurfaceData SetupSurfaceData(float3 albedo, float3 specular, float3 emission, ha
     surfaceData.specular = specular;
 
     float3 emissionResult = lerp(emission * _EmissionColor, emission * _BaseColor, _EmissionMulByBaseColor);
-    emissionResult /= _EmissionStrength;
+    emissionResult *= _EmissionStrength;
     surfaceData.emission = emissionResult;
     surfaceData.smoothness = _Smoothness;
 

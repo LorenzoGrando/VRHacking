@@ -12,9 +12,17 @@ Shader "Custom/GridHand"
         
         [Header(Lighting)]
         _Smoothness ("Smoothness", Range(0,1)) = 0
-        _EmissionStrength ("Emission Strenght", Range(1, 5)) = 1
+        _EmissionStrength ("Emission Strenght", Range(0.1, 1)) = 1
         _EmissionColor ("Emission Color", Color) = (1,1,1,1)
         [Toggle]_EmissionMulByBaseColor ("  Use Base Color Instead", Range(0,1)) = 0
+        
+        [Header(Displacement)]
+        _UseDisplacement ("Use Displacement", Range(0,1)) = 1
+        _DisplacementFrequency("Displacement Frequency", Float) = 10
+        _DisplacementAmplitude("Displacement Amplitude", Range(0,1)) = 0.5
+        _DisplacementTravelSpeed("Displacement Travel Speed", Float) = 1
+        _DisplacementLaterality("Displacement Lateral Influence", Range(0.5,1)) = 1
+        _DisplacementInterpolator("DisplacementInterpolator", Range(0, 1)) = 0
     }
     
     SubShader
