@@ -127,13 +127,16 @@ Material:
     - _EmissionMulByBaseColor: 1
     - _EmissionStrength: 1
     - _EnvironmentReflections: 1
+    - _Falloff: 1.28
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _LengthScale: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
+    - _RadialScale: 1
     - _ReceiveShadows: 1
     - _ScrollSpeed: 12.5
     - _Smoothness: 1

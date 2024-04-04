@@ -60,19 +60,19 @@ float4 TransformShadowCasterPositionCS(float3 positionWS, float3 normalWS)
     #if UNITY_REVERSED_Z
         positionCS.z = min(positionCS.z, UNITY_NEAR_CLIP_VALUE);
     #else   
-        positionCS.z = max(positionCS.Z, UNITY_NEAR_CLIP_VALUE);
+        positionCS.z = max(positionCS.z, UNITY_NEAR_CLIP_VALUE);
     #endif
     
     return positionCS;
 }
 
-float TriWaveDisplacement(float frequency, float amplitude, float speed, float3 pos, float interpolator)
+float TriWaveDisplacement(float frequency, float amplitude, float speed, float4 pos, float interpolator)
 {
     frequency = lerp(0, frequency, interpolator);
     amplitude = lerp(0, amplitude, interpolator);
     speed = lerp(0, speed, interpolator);
 
-    return (abs((2 * frequency * pos.z + (speed * _Time)) % 2 - 1) * amplitude) - (amplitude/2);
+    return (abs((2 * frequency * pos.z + (speed * _Time.x)) % 2 - 1) * amplitude) - (amplitude/2);
 }
 
             
@@ -132,7 +132,7 @@ SurfaceData SetupSurfaceData(float3 albedo, float3 specular, float3 emission, ha
     surfaceData.alpha = alpha * _BaseColor.a;
     surfaceData.specular = specular;
 
-    float3 emissionResult = lerp(emission * _EmissionColor, emission * _BaseColor, _EmissionMulByBaseColor);
+    float3 emissionResult = lerp(emission * _EmissionColor.rgb, emission * _BaseColor.rgb, _EmissionMulByBaseColor);
     emissionResult *= _EmissionStrength;
     surfaceData.emission = emissionResult;
     surfaceData.smoothness = _Smoothness;

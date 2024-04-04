@@ -11,6 +11,11 @@ Shader "Custom/GridGround"
         _EmissionStrength ("Emission Strenght", Range(0.1, 1)) = 1
         _EmissionColor ("Emission Color", Color) = (1,1,1,1)
         [Toggle]_EmissionMulByBaseColor ("  Use Base Color Instead", Range(0,1)) = 0
+        
+        [Header(Polar Coordinates)]
+        _RadialScale ("Radial Scale", Float) = 1
+        _LengthScale ("Length Scale", Float) = 1
+        _Falloff ("Falloff", Range(1,10)) = 1
     }
     
     SubShader
