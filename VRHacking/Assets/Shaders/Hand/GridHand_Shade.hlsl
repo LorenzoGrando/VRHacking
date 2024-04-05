@@ -72,6 +72,7 @@ float TriWaveDisplacement(float frequency, float amplitude, float speed, float4 
     amplitude = lerp(0, amplitude, interpolator);
     speed = lerp(0, speed, interpolator);
 
+    //Triangle wave
     return (abs((2 * frequency * pos.z + (speed * _Time.x)) % 2 - 1) * amplitude) - (amplitude/2);
 }
 

@@ -16,6 +16,12 @@ Shader "Custom/GridGround"
         _RadialScale ("Radial Scale", Float) = 1
         _LengthScale ("Length Scale", Float) = 1
         _Falloff ("Falloff", Range(1,10)) = 1
+        
+        [Header(Voronoi Noise)]
+        _CellDensity ("Cell Density", Float) = 1
+        _AngleOffset ("Angle Offset", Float) = 1
+        _HeightMod ("Height Mod", Float) = 1
+        _ScrollSpeed ("Speed", Float) = 1
     }
     
     SubShader

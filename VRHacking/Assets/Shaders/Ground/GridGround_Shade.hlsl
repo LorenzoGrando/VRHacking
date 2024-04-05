@@ -44,6 +44,11 @@ float _RadialScale;
 float _LengthScale;
 float _Falloff;
 
+float _CellDensity;
+float _AngleOffset;
+float _HeightMod;
+float _ScrollSpeed;
+
 CBUFFER_END
 
 float4 TransformShadowCasterPositionCS(float3 positionWS, float3 normalWS)
@@ -59,6 +64,7 @@ float4 TransformShadowCasterPositionCS(float3 positionWS, float3 normalWS)
     return positionCS;
 }
 
+//generated code of ShaderGraph node
 float2 TransformToPolarCoordinates(float2 UV, float2 Center, float RadialScale, float LengthScale) {
     float2 delta = UV - Center;
     float radius = length(delta) * 2 * RadialScale;
@@ -66,11 +72,47 @@ float2 TransformToPolarCoordinates(float2 UV, float2 Center, float RadialScale, 
     return float2(radius, angle);
 }
 
-float4 DisplaceVertex(float4 pos, float2 polarUV)
+inline float2 VoronoiRandomVector (float2 UV, float offset)
 {
-    float displacement = 0.25 * sin(pos.x + _Time.x * 7);
-    float damping = exp(polarUV.r * _Falloff) * (1 - polarUV.r);
-    displacement *= abs(max(0,1 - damping));
+    float2x2 m = float2x2(15.27, 47.63, 99.41, 89.98);
+    UV = frac(sin(mul(UV, m)) * 46839.32);
+    return float2(sin(UV.y*+offset)*0.5+0.5, cos(UV.x*offset)*0.5+0.5);
+}
+
+float Voronoi(float2 UV, float AngleOffset, float CellDensity)
+{
+    float Out;
+    float2 g = floor(UV * CellDensity);
+    float2 f = frac(UV * CellDensity);
+    float t = 8.0;
+    float3 res = float3(8.0, 0.0, 0.0);
+
+    for(int y=-1; y<=1; y++)
+    {
+        for(int x=-1; x<=1; x++)
+        {
+            float2 lattice = float2(x,y);
+            float2 offset = VoronoiRandomVector(lattice + g, AngleOffset);
+            float d = distance(lattice + offset, f);
+            if(d < res.x)
+            {
+                res = float3(d, offset.x, offset.y);
+                Out = res.x;
+            }
+        }
+    }
+
+    return Out;
+}
+
+float4 DisplaceVertex(float4 pos, Varyings i)
+{
+    i.uv += _ScrollSpeed * _Time.x;
+    float displacement = Voronoi(i.uv, _AngleOffset, _CellDensity);
+    displacement *= _HeightMod;
+    float damping = exp(i.uvPolar.r * _Falloff) * (1 - i.uvPolar.r);
+    //Falloff function goes from 1 to 0 as X goes from 0 to 1, so we invert the damping before we displace
+    displacement *= abs(max(0,1 - saturate(damping)));
     displacement = max(0, displacement);
 
     pos.y += displacement;
@@ -90,7 +132,7 @@ Varyings vert(Attributes i)
     o.uvPolar = TransformToPolarCoordinates(i.uv, float2(0.5, 0.5), _RadialScale, _LengthScale);
     o.uv = TRANSFORM_TEX(i.uv, _BaseTex);
     
-    i.positionOS = DisplaceVertex(i.positionOS, o.uvPolar);
+    i.positionOS = DisplaceVertex(i.positionOS, o);
     
     VertexPositionInputs vertexPositions = GetVertexPositionInputs(i.positionOS.xyz);
     VertexNormalInputs normalInputs = GetVertexNormalInputs(i.normalOS);
