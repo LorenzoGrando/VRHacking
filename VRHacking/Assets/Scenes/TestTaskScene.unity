@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.10827428, b: 0.11132811, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.10112355, b: 0.10397175, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9970,7 +9970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: a4090d3efe7fd7f4aa3defec17252fb6, type: 2}
-  inOutAnimDuration: 2.5
+  inOutAnimDuration: 1.75
   holdErrorAnimDuration: 2.5
   baseColor: {r: 0, g: 1, b: 0.8980392, a: 1}
   errorGradient:
@@ -11473,7 +11473,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.2, y: -2.15, z: -10.256}
-  m_LocalScale: {x: 17.394648, y: 17.394648, z: 17.394648}
+  m_LocalScale: {x: 30, y: 30, z: 32}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1490152504}

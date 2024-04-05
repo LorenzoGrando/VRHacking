@@ -18,7 +18,6 @@ struct Varyings
 {
     float4 positionCS  : SV_POSITION;
     float2 uv : TEXCOORD0;
-    float2 uvPolar : TEXCOORD1;
     float3 positionWS : TEXCOORD2;
     float3 normalWS : TEXCOORD3;
 
@@ -42,14 +41,11 @@ float _EmissionStrength;
 float4 _EmissionColor;
 float _EmissionMulByBaseColor;
 
-float _RadialScale;
-float _LengthScale;
-float _Falloff;
-
 float _CellDensity;
 float _AngleOffset;
-float _HeightMod;
-float _ScrollSpeed;
+float _NoiseStrength;
+float _CutoffHeight;
+float _EdgeWidth;
 
 CBUFFER_END
 
@@ -58,27 +54,12 @@ float4 TransformShadowCasterPositionCS(float3 positionWS, float3 normalWS)
     float3 lightDirectionWS = _LightDirection;
     float4 positionCS = TransformWorldToHClip(ApplyShadowBias(positionWS, normalWS, lightDirectionWS));
     #if UNITY_REVERSED_Z
-    positionCS.z = min(positionCS.z, UNITY_NEAR_CLIP_VALUE);
+        positionCS.z = min(positionCS.z, UNITY_NEAR_CLIP_VALUE);
     #else   
-    positionCS.z = max(positionCS.z, UNITY_NEAR_CLIP_VALUE);
+        positionCS.z = max(positionCS.z, UNITY_NEAR_CLIP_VALUE);
     #endif
     
     return positionCS;
-}
-
-float4 DisplaceVertex(float4 pos, Varyings i)
-{
-    i.uv += _ScrollSpeed * _Time.x;
-    float displacement = Voronoi(i.uv, _AngleOffset, _CellDensity);
-    displacement *= _HeightMod;
-    float damping = exp(i.uvPolar.r * _Falloff) * (1 - i.uvPolar.r);
-    //Falloff function goes from 1 to 0 as X goes from 0 to 1, so we invert the damping before we displace
-    displacement *= abs(max(0,1 - saturate(damping)));
-    displacement = max(0, displacement);
-
-    pos.y += displacement;
-    
-    return pos;
 }
             
 Varyings vert(Attributes i)
@@ -89,11 +70,8 @@ Varyings vert(Attributes i)
     UNITY_SETUP_INSTANCE_ID(i);                
     UNITY_TRANSFER_INSTANCE_ID(i, o);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-
-    o.uvPolar = TransformToPolarCoordinates(i.uv, float2(0.5, 0.5), _RadialScale, _LengthScale);
-    o.uv = TRANSFORM_TEX(i.uv, _BaseTex);
     
-    i.positionOS = DisplaceVertex(i.positionOS, o);
+    o.uv = TRANSFORM_TEX(i.uv, _BaseTex);
     
     VertexPositionInputs vertexPositions = GetVertexPositionInputs(i.positionOS.xyz);
     VertexNormalInputs normalInputs = GetVertexNormalInputs(i.normalOS);
@@ -142,18 +120,41 @@ float4 CalculateLighting(InputData lightingData, SurfaceData surfaceData)
 
     return UniversalFragmentBlinnPhong(lightingData, surfaceData);
 }
+
+float4 DissolveText(Varyings i, float4 baseTextColor, out float Cutoff)
+{
+    float noiseSample = Voronoi_Chebyshev(i.uv, _AngleOffset, _CellDensity);
+    float2 strengthRemap = float2(-1 * _NoiseStrength, _NoiseStrength);
+    noiseSample = remap(0, 1, strengthRemap.x, strengthRemap.y, noiseSample);
+    noiseSample += _CutoffHeight;
+    
+    float edge = i.positionWS.y + _EdgeWidth;
+    edge = step(noiseSample, edge);
+
+    Cutoff = step(i.positionWS.y, noiseSample);
+    
+    return max(edge, baseTextColor);
+}
+
+void TryAlphaClip(float value)
+{
+    clip(value - 0.5);
+}
             
-float4 frag(Varyings i) : SV_Target
+float4 frag(Varyings i) : SV_Target 
 {
     //GPU Instancing and Single Pass Stereo Rendering
     UNITY_SETUP_INSTANCE_ID(i);
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
     
     float4 baseTextCol = SAMPLE_TEXTURE2D(_BaseTex, sampler_BaseTex, i.uv);
+    float alpha;
+    float4 noise = DissolveText(i, baseTextCol, alpha);
 
-    InputData lightData = SetupLightingData(i.positionWS, i.normalWS);
-    SurfaceData surfData = SetupSurfaceData(baseTextCol.rgb, 1, baseTextCol.rgb, 1);
+    TryAlphaClip(alpha);
     
+    InputData lightData = SetupLightingData(i.positionWS, i.normalWS);
+    SurfaceData surfData = SetupSurfaceData(noise.rgb, 1, noise.rgb, 1);
     float4 finalCol = CalculateLighting(lightData, surfData);
     return finalCol;
 }
