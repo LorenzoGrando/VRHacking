@@ -76,7 +76,7 @@ float4 DisplaceVertex(float4 pos, Varyings i)
     displacement *= abs(max(0,1 - saturate(damping)));
     displacement = max(0, displacement);
 
-    pos.y += displacement;
+    pos.z += displacement;
     
     return pos;
 }
