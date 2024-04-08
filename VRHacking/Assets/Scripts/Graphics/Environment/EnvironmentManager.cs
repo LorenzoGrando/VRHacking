@@ -25,6 +25,8 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField]
     private GameObject[] dissolveObjects;
     private Material[] dissolveMats;
+    [SerializeField]
+    public float maxDissolveHeight;
 
     [Header("Glitch")]
     [SerializeField]
@@ -47,6 +49,12 @@ public class EnvironmentManager : MonoBehaviour
             isGlitched = !isGlitched;
             ChangeWorldState(isGlitched);
         }
+        if(Input.GetKeyDown(KeyCode.D)) {
+            DissolveWorld(1.5f, true);
+        }
+        if(Input.GetKeyDown(KeyCode.F)) {
+            DissolveWorld(1.5f, false);
+        }
     }
 
     private void SetupMats() {
@@ -65,6 +73,7 @@ public class EnvironmentManager : MonoBehaviour
         UpdateGroundDisplacement(groundDisplaceSpeed);
         UpdateMats(baseColor);
         skyboxMat.SetFloat("_Rotation", skyboxRotationSpeed);
+        SetDissolveMats(maxDissolveHeight);
     }
 
     private void ChangeWorldState(bool isGlitch) {
@@ -102,6 +111,21 @@ public class EnvironmentManager : MonoBehaviour
             }
 
             skyboxMat.SetFloat("_Rotation", internalRotationValue);
+        }
+    }
+
+    private void SetDissolveMats(float value) {
+        foreach(Material mat in dissolveMats) {
+            mat.SetFloat("_CutoffHeight", value);
+        }
+    }
+
+    public void DissolveWorld(float duration, bool isInit) {
+        if(isInit) {
+            DOVirtual.Float(maxDissolveHeight, -maxDissolveHeight/2, duration, (x) => SetDissolveMats(x));
+        }
+        else {
+            DOVirtual.Float(-maxDissolveHeight/2, maxDissolveHeight, duration, (x) => SetDissolveMats(x));
         }
     }
  }

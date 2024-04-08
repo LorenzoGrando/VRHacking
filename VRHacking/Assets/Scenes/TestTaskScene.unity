@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.10128054, b: 0.084142566, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.0938406, b: 0.07796204, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15393,6 +15393,7 @@ MonoBehaviour:
   - {fileID: 2106637777}
   - {fileID: 568952660}
   - {fileID: 291452659}
+  maxDissolveHeight: 2.15
   timeToGlitch: 8
   glitchedSkyboxSpeed: 60
   glitchedGroundSpeed: 4
