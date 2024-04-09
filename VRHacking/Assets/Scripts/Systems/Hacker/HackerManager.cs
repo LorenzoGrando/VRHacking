@@ -130,6 +130,12 @@ public class HackerManager : MonoBehaviour
         lastBugUploadTime = currentTime;
         lastTaskCompletionTime = currentTime;
 
+        DialogueRequestData requestData = new DialogueRequestData {
+            type = DialogueAsset.DialogueType.Hacker,
+            source =  DialogueAsset.DialogueSource.Greeting
+        };
+        OnMessageTrigger?.Invoke(requestData);
+
         currentlyExecuting = true;
     }
 

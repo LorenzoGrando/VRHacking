@@ -7,7 +7,7 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public event Action OnPlayerTasksCompleted;
-    public event Action<DialogueRequestData> OnTaskEfficiencyMessageTrigger;
+    public event Action<DialogueRequestData> OnMessageTrigger;
     [SerializeField]
     private HackTask[] availableTasks;
     private int lastPerformedTaskIndex;
@@ -56,7 +56,7 @@ public class TaskManager : MonoBehaviour
                     source = DialogueAsset.DialogueSource.SlowTask
                 };
 
-                OnTaskEfficiencyMessageTrigger?.Invoke(requestData);
+                OnMessageTrigger?.Invoke(requestData);
 
                 return true;
             }
@@ -111,7 +111,7 @@ public class TaskManager : MonoBehaviour
                 source = DialogueAsset.DialogueSource.EfficientTask
             };
 
-            OnTaskEfficiencyMessageTrigger?.Invoke(requestData);
+            OnMessageTrigger?.Invoke(requestData);
         }
 
         if(remainingTasksInSequence <= 0) {

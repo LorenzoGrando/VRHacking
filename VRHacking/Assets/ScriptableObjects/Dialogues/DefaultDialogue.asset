@@ -34,7 +34,27 @@ MonoBehaviour:
     - Test Stagger 1
     - Test Stagger 2
   taskThresholdMessages: []
-  playerGlitchedMessages: []
+  playerGlitchedMessages:
+  - messages:
+    - Hi this is index 0
+    - Message is working
+    - Test Stagger 1
+    - Test Stagger 2
+  - messages:
+    - Hi this is index 1
+    - Message is working
+    - Test Stagger 1
+    - Test Stagger 2
+  - messages:
+    - Hi this is index 2
+    - Message is working
+    - Test Stagger 1
+    - Test Stagger 2
+  - messages:
+    - Hi this is index 3
+    - Message is working
+    - Test Stagger 1
+    - Test Stagger 2
   hackerBugUploadMessages: []
   efficentTaskMessages: []
   slowTaskMessages: []

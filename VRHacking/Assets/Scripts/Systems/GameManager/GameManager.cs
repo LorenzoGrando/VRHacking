@@ -45,12 +45,14 @@ public class GameManager : MonoBehaviour
         taskManager.OnPlayerTasksCompleted += CallWonGame;
 
         HackerData sequenceHacker = hackerManager.InitializeHackerData(gameSettingsData);
-        hackerManager.BeginHackerSequence();
 
         dialogueManager.ResetDialogueData();
-        dialogueManager.UpdateHackerDialogue(sequenceHacker.hackerDialogue);
+        dialogueManager.UpdateHackerDialogue(sequenceHacker);
         SetupMessageTriggers(init: true);
 
+        hackerManager.BeginHackerSequence();
+
+        
         playerBugManager.InitializeBugData(gameSettingsData);
 
         hackerManager.OnHackerBugUploaded += CommunicateBugStart;
@@ -61,12 +63,12 @@ public class GameManager : MonoBehaviour
 
     private void SetupMessageTriggers(bool init) {
         if(init) {
-            taskManager.OnTaskEfficiencyMessageTrigger += CommunicateMessageTrigger;
+            taskManager.OnMessageTrigger += CommunicateMessageTrigger;
             hackerManager.OnMessageTrigger += CommunicateMessageTrigger;
             hackerDisplay.OnMessageTrigger += CommunicateMessageTrigger;
         }
         else {
-            taskManager.OnTaskEfficiencyMessageTrigger -= CommunicateMessageTrigger;
+            taskManager.OnMessageTrigger -= CommunicateMessageTrigger;
             hackerManager.OnMessageTrigger -= CommunicateMessageTrigger;
             hackerDisplay.OnMessageTrigger -= CommunicateMessageTrigger;
         }

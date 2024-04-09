@@ -1,74 +1,86 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Display Data")]
     [SerializeField]
-    private float intervalBetweenDisplayMessages;
+    private DialogueVisualizer visualizer;
+
+    [Header("Display Data")]
     [SerializeField]
     private float intervalPreventNewMessages;
     private bool canGenerateMessage;
+    private bool isExecuting;
+    private Queue<string> messages;
 
     private Coroutine preventIntervalRoutine;
-    private Coroutine inbetweenIntervalRoutine;
 
     [SerializeField]
     private DialogueAsset systemDialogue;
-    private DialogueAsset currentHackerDialogue;
+    private HackerData currentHacker;
 
     public void ResetDialogueData() {
         StopAllCoroutines();
 
-        currentHackerDialogue = null;
+        currentHacker = null;
         canGenerateMessage = true;
     }
-    public void UpdateHackerDialogue(DialogueAsset hackerDialogue) {
-        currentHackerDialogue = hackerDialogue;
+
+    public void UpdateHackerDialogue(HackerData hackerData) {
+        currentHacker = hackerData;
     }
 
     public void OnRequestMessage(DialogueRequestData requestData) {
-        if(canGenerateMessage || requestData.isPriority) {
-            string[] messages = TryGenerateMessage(requestData);
+        if((canGenerateMessage && !isExecuting)|| requestData.isPriority) {
+            messages = TryGenerateMessage(requestData);
             if(messages != null) {
-                DisplayMessages(messages);
-                InitiateInterval();
+                visualizer.StartVisualization(currentHacker, () => BeginDisplaying());
+                isExecuting = true;
             }
         }
     }
 
-    private string[] TryGenerateMessage(DialogueRequestData requestData) {
+    private void BeginDisplaying() {
+        CheckDisplayMessage();
+        InitiateInterval();
+    }
+
+    private Queue<string> TryGenerateMessage(DialogueRequestData requestData) {
+        Queue<string> returnMessages = new Queue<string>();
         switch (requestData.type) {
             case DialogueAsset.DialogueType.System:
                 //TODO
                 return null;
 
             case DialogueAsset.DialogueType.Hacker:
-                string[] messages = currentHackerDialogue.RequestMessage(requestData);
+                string[] messages = currentHacker.hackerDialogue.RequestMessage(requestData);
 
                 if(messages == null) {
                     Debug.Log("No messages for target source");
                     return null;
                 }
 
-                return messages;
+                foreach(string message in messages) {
+                    returnMessages.Enqueue(message);
+                }
+
+                return returnMessages;
 
             default:
                 return null;
         }
     }
 
-    private void DisplayMessages(string[] messages) {
-        if(messages.Length == 1) {
-            DisplaySingleMessage(messages[0]);
+    private void CheckDisplayMessage() {
+        Debug.Log("Called Back");
+        if(messages.Count > 0) {
+            visualizer.DisplayMessage(messages.Dequeue(), () => CheckDisplayMessage());
         }
-
-
-        inbetweenIntervalRoutine = StartCoroutine(routine: StaggerMessageDialogue(messages));
-    }
-
-    private void DisplaySingleMessage(string message) {
-        Debug.Log(message);
+        else {
+            visualizer.EndVisualization();
+            isExecuting = false;
+        }
     }
     
     private void InitiateInterval() {
@@ -84,19 +96,6 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(intervalPreventNewMessages);
 
         canGenerateMessage = true;
-        yield break;
-    }
-
-    private IEnumerator StaggerMessageDialogue(string[] messages) {
-        int currentIndex = 0;
-
-        while(currentIndex < messages.Length) {
-            DisplaySingleMessage(messages[currentIndex]);
-            currentIndex++;
-
-            yield return new WaitForSeconds(intervalBetweenDisplayMessages);
-        }
-
         yield break;
     }
 }
