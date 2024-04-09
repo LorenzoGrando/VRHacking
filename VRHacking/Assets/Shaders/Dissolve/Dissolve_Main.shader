@@ -18,6 +18,13 @@
         _NoiseStrength ("Noise Strength", Float) = 1
         _CutoffHeight ("Cutoff Height", Float) = 0
         _EdgeWidth ("Edge Width", Float) = 0.1
+        
+        [Header(Scrolling Mask)]
+        [Toggle]_UseScroll ("Enable Scrolling Mask", Range(0,1)) = 0
+        [NoScaleOffset]_ScrollMaskTex ("Mask Texture", 2D) = "white" {}
+        _ScrollStrength ("Strength", Range(0,1)) = 1
+        _ScrollSpeed ("Speed", Float) = 1
+        _ScrollDirection ("DirectionVector", Vector) = (0,1,0,0)
     }
     
     SubShader

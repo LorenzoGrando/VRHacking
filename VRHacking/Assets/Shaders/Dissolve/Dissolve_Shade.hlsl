@@ -18,6 +18,7 @@ struct Varyings
 {
     float4 positionCS  : SV_POSITION;
     float2 uv : TEXCOORD0;
+    float2 scrollUV : TEXCOORD1;
     float3 positionWS : TEXCOORD2;
     float3 normalWS : TEXCOORD3;
 
@@ -27,6 +28,9 @@ struct Varyings
 
 TEXTURE2D(_BaseTex);
 SAMPLER(sampler_BaseTex);
+
+TEXTURE2D(_ScrollMaskTex);
+SAMPLER(sampler_ScrollMaskTex);
 
 float3 _LightDirection;
 
@@ -46,6 +50,11 @@ float _AngleOffset;
 float _NoiseStrength;
 float _CutoffHeight;
 float _EdgeWidth;
+
+float _UseScroll;
+float _ScrollSpeed;
+float _ScrollStrength;
+float2 _ScrollDirection;
 
 CBUFFER_END
 
@@ -72,6 +81,10 @@ Varyings vert(Attributes i)
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
     
     o.uv = TRANSFORM_TEX(i.uv, _BaseTex);
+    if(_UseScroll > 0)
+    {
+        o.scrollUV = i.uv + (_ScrollDirection * _ScrollSpeed * _Time.x);
+    }
     
     VertexPositionInputs vertexPositions = GetVertexPositionInputs(i.positionOS.xyz);
     VertexNormalInputs normalInputs = GetVertexNormalInputs(i.normalOS);
@@ -121,6 +134,13 @@ float4 CalculateLighting(InputData lightingData, SurfaceData surfaceData)
     return UniversalFragmentBlinnPhong(lightingData, surfaceData);
 }
 
+float4 ApplyScrollMask(float4 baseColor, float2 uv)
+{
+    float4 scrollMask = SAMPLE_TEXTURE2D(_ScrollMaskTex, sampler_ScrollMaskTex, uv);
+    scrollMask *= _ScrollStrength;
+    return baseColor * scrollMask;
+}
+
 float4 DissolveText(Varyings i, float4 baseTextColor, out float Cutoff)
 {
     float noiseSample = Voronoi_Chebyshev(i.uv, _AngleOffset, _CellDensity);
@@ -148,6 +168,11 @@ float4 frag(Varyings i) : SV_Target
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
     
     float4 baseTextCol = SAMPLE_TEXTURE2D(_BaseTex, sampler_BaseTex, i.uv);
+    if(_UseScroll > 0)
+    {
+        baseTextCol = ApplyScrollMask(baseTextCol, i.scrollUV);
+    }
+    
     float alpha;
     float4 noise = DissolveText(i, baseTextCol, alpha);
 
