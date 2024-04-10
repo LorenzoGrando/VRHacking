@@ -33,7 +33,7 @@
 
         Pass
         {
-            Name "ForwardLit"
+            Name "ForwardLitPass"
             Tags
             {
                 "LightMode" = "UniversalForward"
