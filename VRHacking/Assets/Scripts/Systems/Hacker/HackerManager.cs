@@ -6,9 +6,9 @@ public class HackerManager : MonoBehaviour
 {
     public event Action OnHackerTasksCompleted;
     public event Action<HackerData> OnHackerBugUploaded;
+    public event Action<DialogueRequestData> OnMessageTrigger;
 
-    [SerializeField]
-    private HackerMainDisplay display;
+    public HackerMainDisplay display;
     [SerializeField]
     private HackerData[] hackers;
     private HackerData activeHacker;
@@ -67,7 +67,7 @@ public class HackerManager : MonoBehaviour
         SendProgressData();
     }
 
-    public void InitializeHackerData(GameSettingsData gameSettings) {
+    public HackerData InitializeHackerData(GameSettingsData gameSettings) {
         this.gameSettings = gameSettings;
 
         if(gameSettings.thisGameMode == GameSettingsData.GameMode.Campaign)
@@ -79,6 +79,8 @@ public class HackerManager : MonoBehaviour
 
         display.InitiateCanvas();
         display.UpdateHackerData(activeHacker);
+
+        return activeHacker;
     }
 
     private void ResetValues() {
@@ -128,6 +130,12 @@ public class HackerManager : MonoBehaviour
         lastBugUploadTime = currentTime;
         lastTaskCompletionTime = currentTime;
 
+        DialogueRequestData requestData = new DialogueRequestData {
+            type = DialogueAsset.DialogueType.Hacker,
+            source =  DialogueAsset.DialogueSource.Greeting
+        };
+        OnMessageTrigger?.Invoke(requestData);
+
         currentlyExecuting = true;
     }
 
@@ -150,6 +158,12 @@ public class HackerManager : MonoBehaviour
         if(!blockNextBug) {
             Debug.Log("Uploaded Bug!");
             OnHackerBugUploaded?.Invoke(activeHacker);
+
+            DialogueRequestData requestData = new DialogueRequestData {
+                type = DialogueAsset.DialogueType.Hacker,
+                source =  DialogueAsset.DialogueSource.PlayerGlitched
+            };
+            OnMessageTrigger?.Invoke(requestData);
         }
         else {
             Debug.Log("Bug was Blocked!");

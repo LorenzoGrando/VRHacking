@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 9668490}
+  taskQuicknessTimeThreshold: 0
   display: {fileID: 9668493}
   slider: {fileID: 206080270}
   spawnPositions:
@@ -9751,6 +9752,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993927920}
   m_CullTransparentMesh: 1
+--- !u!1 &996684326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996684327}
+  - component: {fileID: 996684328}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &996684327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996684326}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1774461583}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996684328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996684326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c81ac0ea8f373e4eb9019291b6f1b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intervalBetweenDisplayMessages: 3.5
+  intervalPreventNewMessages: 10
+  systemDialogue: {fileID: 11400000, guid: e6f6079bf8ea6774e8cf59adb8f9bba2, type: 2}
 --- !u!1 &998560220
 GameObject:
   m_ObjectHideFlags: 0
@@ -11984,6 +12032,7 @@ MonoBehaviour:
   taskManager: {fileID: 2002679078}
   hackerManager: {fileID: 869494265}
   playerBugManager: {fileID: 70830866}
+  dialogueManager: {fileID: 996684328}
 --- !u!1 &1228300495
 GameObject:
   m_ObjectHideFlags: 0
@@ -13966,6 +14015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 1656933278}
+  taskQuicknessTimeThreshold: 0
   display: {fileID: 1505789700}
 --- !u!222 &1505789699
 CanvasRenderer:
@@ -16223,7 +16273,7 @@ Transform:
   - {fileID: 1219130968}
   - {fileID: 2002679077}
   - {fileID: 869494264}
-  - {fileID: 70830865}
+  - {fileID: 70830865
   - {fileID: 1689669522}
   - {fileID: 1186444821}
   - {fileID: 901917156}

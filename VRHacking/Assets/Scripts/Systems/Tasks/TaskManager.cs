@@ -7,6 +7,7 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public event Action OnPlayerTasksCompleted;
+    public event Action<DialogueRequestData> OnMessageTrigger;
     [SerializeField]
     private HackTask[] availableTasks;
     private int lastPerformedTaskIndex;
@@ -22,6 +23,9 @@ public class TaskManager : MonoBehaviour
 
     private GameSettingsData currentData;
 
+    private float currentTaskBeginTime;
+    private bool hasCheckedQuickness;
+
     [Space(5)]
     [SerializeField]
     private MainScreenDisplay mainScreenDisplay;
@@ -30,6 +34,35 @@ public class TaskManager : MonoBehaviour
     void Start()
     {
         numberOfAvailableTasks = availableTasks.Length;
+    }
+
+    void Update()
+    {
+        if(!hasCheckedQuickness)
+            hasCheckedQuickness = TestQuickness(isCompletion: false);
+    }
+
+    public bool TestQuickness(bool isCompletion) {
+        if(isCompletion) {
+            bool wasQuick = Time.time <= currentTaskBeginTime + availableTasks[lastPerformedTaskIndex].taskQuicknessTimeThreshold;
+            return wasQuick;
+        }
+
+        //See if is slow
+        else {
+            if(Time.time > currentTaskBeginTime +  (availableTasks[lastPerformedTaskIndex].taskQuicknessTimeThreshold * 3)) {
+                DialogueRequestData requestData = new DialogueRequestData {
+                    type = DialogueAsset.DialogueType.Hacker,
+                    source = DialogueAsset.DialogueSource.SlowTask
+                };
+
+                OnMessageTrigger?.Invoke(requestData);
+
+                return true;
+            }
+
+            else return false;
+        }
     }
 
     public void BeginTaskSequence(GameSettingsData gameData) {
@@ -61,6 +94,8 @@ public class TaskManager : MonoBehaviour
         availableTasks[index].OnTaskCompleted += TaskCompleted;
 
         lastPerformedTaskIndex = index;
+        currentTaskBeginTime = Time.time;
+        hasCheckedQuickness = false;
     }
 
     private void TaskCompleted() {
@@ -69,6 +104,15 @@ public class TaskManager : MonoBehaviour
         remainingTasksInSequence--;
 
         mainScreenDisplay.UpdateTaskSlider(Mathf.Lerp(0, 1, Mathf.Abs((float)remainingTasksInSequence - (float)generatedSequenceSize)/(float)generatedSequenceSize));
+
+        if(TestQuickness(isCompletion: true)) {
+            DialogueRequestData requestData = new DialogueRequestData {
+                type = DialogueAsset.DialogueType.Hacker,
+                source = DialogueAsset.DialogueSource.EfficientTask
+            };
+
+            OnMessageTrigger?.Invoke(requestData);
+        }
 
         if(remainingTasksInSequence <= 0) {
             FinishTaskSequence();
