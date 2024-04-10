@@ -104,24 +104,18 @@ public class DialogueVisualizer : MonoBehaviour
                 float typoThreshold = currentHackerData.behaviour == HackerData.HackerBehaviour.Trickster ? 0.1f : 0.005f;
                 float rng = UnityEngine.Random.Range(1.0f,4.0f);
     
-                int wholePart = (int)Math.Truncate(rng);
-
-                Debug.Log("Full: " + rng + ", Whole: " + wholePart);
+                int wholePart = Mathf.FloorToInt(rng);
                 if(rng - wholePart <= typoThreshold) {
                     currentTypos++;
                     yield return StartCoroutine(routine: TypoRoutine(displayMessage.ToCharArray(), wholePart));
                 }
             }
-            displayMessage += orderedChars[currentIndex];
-            textBox.text = displayMessage;
-            currentIndex++;
+            displayMessage = DisplayMessage(displayMessage,  ref currentIndex, orderedChars[currentIndex]);
             yield return new WaitForSeconds(typewriterSpeed);
         }
 
         while(currentIndex > 0) {
-            displayMessage.Remove(currentIndex - 1);
-            currentIndex--;
-            textBox.text = displayMessage;
+            displayMessage = DisplayMessage(displayMessage, ref currentIndex, true);
             yield return new WaitForSeconds(typewriterSpeed/2);
         }
 
@@ -142,19 +136,46 @@ public class DialogueVisualizer : MonoBehaviour
 
         while(currentIndex < initialIndex + typoSize) {
             int randomCharIndex = UnityEngine.Random.Range(0, typoChars.Length);
-            displayMessage += typoChars[randomCharIndex];
-            textBox.text = displayMessage;
-            currentIndex++;
+            displayMessage = DisplayMessage(displayMessage,  ref currentIndex, typoChars[randomCharIndex]);
             yield return new WaitForSeconds(typewriterSpeed);
         }
 
         while(currentIndex > initialIndex) {
-            displayMessage.Remove(Mathf.Max(0,currentIndex - 1));
-            currentIndex--;
-            textBox.text = displayMessage;
+            displayMessage = DisplayMessage(displayMessage, ref currentIndex, true);
             yield return new WaitForSeconds(typewriterSpeed);
         }
 
         yield break;
+    }
+
+    private string DisplayMessage(string baseMessage, ref int currentIndex, string messageToAdd = "") {
+        baseMessage += messageToAdd;
+        currentIndex--;
+        
+        textBox.text = baseMessage;
+
+        return baseMessage;
+    }
+
+    private string DisplayMessage(string baseMessage, ref int currentIndex, char messageToAdd = ' ') {
+        if(messageToAdd != ' ') {
+            baseMessage += messageToAdd;
+            currentIndex--;
+        }
+        
+        textBox.text = baseMessage;
+
+        return baseMessage;
+    }
+
+    private string DisplayMessage(string baseMessage, ref int currentIndex, bool isRemove) {
+        if(isRemove) {
+            baseMessage.Remove(Mathf.Max(0,currentIndex - 1));
+            currentIndex--;
+        }
+
+        textBox.text = baseMessage;
+
+        return baseMessage;
     }
 }

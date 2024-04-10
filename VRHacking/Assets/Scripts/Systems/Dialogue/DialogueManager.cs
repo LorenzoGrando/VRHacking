@@ -73,7 +73,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void CheckDisplayMessage() {
-        Debug.Log("Called Back");
         if(messages.Count > 0) {
             visualizer.DisplayMessage(messages.Dequeue(), () => CheckDisplayMessage());
         }
