@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Settings_Endless
   m_EditorClassIdentifier: 
   thisGameMode: 2
-  difficulty: 1
+  difficulty: 2
   level: 0
-  defeatedHackers: 0
-  maximumDifficultyByHackerAmount: 5
-  newInvasionMaxIntervalTime: 6.5
+  defeatedHackers: 3
+  maximumDifficultyByHackerAmount: 3
+  newInvasionMaxIntervalTime: 20

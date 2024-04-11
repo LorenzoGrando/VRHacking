@@ -52,7 +52,6 @@ public class GameManager : MonoBehaviour
         SetupMessageTriggers(init: true);
 
         soundtrackManager.ResetVolume();
-        soundtrackManager.UpdateIntensityByDifficulty(gameSettingsData.difficulty);
 
         hackerManager.OnHackerBugUploaded += CommunicateBugStart;
         hackerManager.OnHackerTasksCompleted += CallLostGame;
@@ -61,7 +60,8 @@ public class GameManager : MonoBehaviour
 
         DialogueRequestData requestData = new DialogueRequestData {
             type = DialogueAsset.DialogueType.Hacker,
-            source =  DialogueAsset.DialogueSource.Greeting
+            source =  DialogueAsset.DialogueSource.Greeting,
+            isPriority = true
         };
         CommunicateMessageTrigger(requestData);
 
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     private void StartDispute() {
         taskManager.BeginTaskSequence(gameSettings);
         playerBugManager.InitializeBugData(gameSettings);
-        soundtrackManager.InitializeTrack();
+        soundtrackManager.InitializeTrack(gameSettings);
         hackerManager.BeginHackerSequence();
 
         dialogueManager.OnEndDialogue -= StartDispute;
@@ -110,6 +110,10 @@ public class GameManager : MonoBehaviour
             }
         }
         else {
+            if(gameSettings.thisGameMode == GameSettingsData.GameMode.Endless) {
+                GameSettings.InitializeData(GameSettingsData.GameMode.Endless);
+                gameSettings = GameSettings.GetGameData();
+            }
             soundtrackManager.ResetVolume();
             soundtrackManager.SilenceAll();
         }
@@ -117,7 +121,8 @@ public class GameManager : MonoBehaviour
         SetupMessageTriggers(init: false);
         DialogueRequestData requestData = new DialogueRequestData {
             type = DialogueAsset.DialogueType.Hacker,
-            source = playerWon ? DialogueAsset.DialogueSource.PlayerWon : DialogueAsset.DialogueSource.PlayerLost
+            source = playerWon ? DialogueAsset.DialogueSource.PlayerWon : DialogueAsset.DialogueSource.PlayerLost,
+            isPriority = true
         };
         CommunicateMessageTrigger(requestData);
 

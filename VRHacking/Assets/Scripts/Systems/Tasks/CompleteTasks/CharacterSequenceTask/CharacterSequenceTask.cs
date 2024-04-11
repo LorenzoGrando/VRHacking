@@ -113,7 +113,7 @@ public class CharacterSequenceTask : HackTask
     private int GenerateSingleCharLenght() {
         //TODO: Make it more likely to generate 3-letter strings on higher difficulties
         //max exclusive
-        int lenght = Mathf.Clamp(Mathf.RoundToInt(2 * gameSettingsData.difficulty), 2, 3);
+        int lenght = Mathf.Clamp(Mathf.RoundToInt(2 * gameSettingsData.difficulty + (- 0.6f + UnityEngine.Random.Range(0,2))), 2, 3);
         return lenght;
     }
 

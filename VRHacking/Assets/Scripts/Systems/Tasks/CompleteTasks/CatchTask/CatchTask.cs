@@ -58,6 +58,8 @@ public class CatchTask : HackTask
     [SerializeField]
     private CatchTaskDisplay display;
     [SerializeField]
+    private AudioSource catchAudio;
+    [SerializeField]
     CatchTaskSlider slider;
     [SerializeField]
     private Transform[] spawnPositions;
@@ -111,6 +113,7 @@ public class CatchTask : HackTask
 
     private void OnCollectCatchable() {
         numberOfCollectedObjects++;
+        catchAudio.Play();
         
         if(CheckTaskCompleted()) {
             if(gameLoopRoutine != null) {
