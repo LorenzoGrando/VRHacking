@@ -10,9 +10,14 @@ public class GameManager : MonoBehaviour
     private TaskManager taskManager;
     [SerializeField]
     private HackerManager hackerManager;
+    private HackerMainDisplay hackerDisplay;
 
     [SerializeField]
     private PlayerBugManager playerBugManager;
+    [SerializeField]
+    private DialogueManager dialogueManager;
+    [SerializeField]
+    private SoundtrackManager soundtrackManager;
 
     private GameSettingsData gameSettings;
 
@@ -21,6 +26,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartMenu();
+        hackerDisplay = hackerManager.display;
     }
 
     void OnDisable()
@@ -32,19 +38,46 @@ public class GameManager : MonoBehaviour
         playerBugManager.StartBugRequest(hackerData);
     }
 
+    private void CommunicateMessageTrigger(DialogueRequestData dialogueRequest) {
+        dialogueManager.OnRequestMessage(dialogueRequest);
+    }
+
     private void BeginNewSystemDispute(GameSettingsData gameSettingsData) {
         taskManager.BeginTaskSequence(gameSettingsData);
         taskManager.OnPlayerTasksCompleted += CallWonGame;
 
-        hackerManager.InitializeHackerData(gameSettingsData);
+        HackerData sequenceHacker = hackerManager.InitializeHackerData(gameSettingsData);
+
+        dialogueManager.ResetDialogueData();
+        dialogueManager.UpdateHackerDialogue(sequenceHacker);
+        SetupMessageTriggers(init: true);
+
         hackerManager.BeginHackerSequence();
 
+        
         playerBugManager.InitializeBugData(gameSettingsData);
+
+        soundtrackManager.ResetVolume();
+        soundtrackManager.UpdateIntensityByDifficulty(gameSettingsData.difficulty);
+        soundtrackManager.InitializeTrack();
 
         hackerManager.OnHackerBugUploaded += CommunicateBugStart;
         hackerManager.OnHackerTasksCompleted += CallLostGame;
 
         Debug.Log("Called game");
+    }
+
+    private void SetupMessageTriggers(bool init) {
+        if(init) {
+            taskManager.OnMessageTrigger += CommunicateMessageTrigger;
+            hackerManager.OnMessageTrigger += CommunicateMessageTrigger;
+            hackerDisplay.OnMessageTrigger += CommunicateMessageTrigger;
+        }
+        else {
+            taskManager.OnMessageTrigger -= CommunicateMessageTrigger;
+            hackerManager.OnMessageTrigger -= CommunicateMessageTrigger;
+            hackerDisplay.OnMessageTrigger -= CommunicateMessageTrigger;
+        }
     }
 
     public void FinishSystemDispute(bool playerWon) {
@@ -56,14 +89,27 @@ public class GameManager : MonoBehaviour
 
         hackerManager.OnEndDispute();
 
-        if(playerWon) { 
+        if(playerWon) {
             if(gameSettings.thisGameMode == GameSettingsData.GameMode.Endless) {
+                soundtrackManager.ModifyVolume(0.5f);
+
                 gameSettings.defeatedHackers++;
                 gameSettings = GameSettings.SetGetGameData(gameSettings);
 
                 invasionIntervalRoutine = StartCoroutine(NextInvasionTimer(gameSettings.newInvasionMaxIntervalTime));
             }
         }
+        else {
+            soundtrackManager.ResetVolume();
+            soundtrackManager.SilenceAll();
+        }
+
+        SetupMessageTriggers(init: false);
+        DialogueRequestData requestData = new DialogueRequestData {
+            type = DialogueAsset.DialogueType.Hacker,
+            source = playerWon ? DialogueAsset.DialogueSource.PlayerWon : DialogueAsset.DialogueSource.PlayerLost
+        };
+        CommunicateMessageTrigger(requestData);
 
         mainDisplay.OnEndDispute(gameSettings.thisGameMode, playerWon);
     }
@@ -85,6 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void StartMenu() {
         TryEndInvasionInterval();
+        soundtrackManager.PlayBackgroundNoise();
 
         taskManager.HideAllTasks();
         mainDisplay.StartMenu();
