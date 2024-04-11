@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     private PlayerBugManager playerBugManager;
     [SerializeField]
     private DialogueManager dialogueManager;
+    [SerializeField]
+    private SoundtrackManager soundtrackManager;
 
     private GameSettingsData gameSettings;
 
@@ -55,6 +57,10 @@ public class GameManager : MonoBehaviour
         
         playerBugManager.InitializeBugData(gameSettingsData);
 
+        soundtrackManager.ResetVolume();
+        soundtrackManager.UpdateIntensityByDifficulty(gameSettingsData.difficulty);
+        soundtrackManager.InitializeTrack();
+
         hackerManager.OnHackerBugUploaded += CommunicateBugStart;
         hackerManager.OnHackerTasksCompleted += CallLostGame;
 
@@ -83,13 +89,19 @@ public class GameManager : MonoBehaviour
 
         hackerManager.OnEndDispute();
 
-        if(playerWon) { 
+        if(playerWon) {
             if(gameSettings.thisGameMode == GameSettingsData.GameMode.Endless) {
+                soundtrackManager.ModifyVolume(0.5f);
+
                 gameSettings.defeatedHackers++;
                 gameSettings = GameSettings.SetGetGameData(gameSettings);
 
                 invasionIntervalRoutine = StartCoroutine(NextInvasionTimer(gameSettings.newInvasionMaxIntervalTime));
             }
+        }
+        else {
+            soundtrackManager.ResetVolume();
+            soundtrackManager.SilenceAll();
         }
 
         SetupMessageTriggers(init: false);
@@ -119,6 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void StartMenu() {
         TryEndInvasionInterval();
+        soundtrackManager.PlayBackgroundNoise();
 
         taskManager.HideAllTasks();
         mainDisplay.StartMenu();

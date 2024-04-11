@@ -26,6 +26,9 @@ public class TaskManager : MonoBehaviour
     private float currentTaskBeginTime;
     private bool hasCheckedQuickness;
 
+    [SerializeField]
+    private AudioSource completeAudioSource;
+
     [Space(5)]
     [SerializeField]
     private MainScreenDisplay mainScreenDisplay;
@@ -104,7 +107,7 @@ public class TaskManager : MonoBehaviour
         remainingTasksInSequence--;
 
         mainScreenDisplay.UpdateTaskSlider(Mathf.Lerp(0, 1, Mathf.Abs((float)remainingTasksInSequence - (float)generatedSequenceSize)/(float)generatedSequenceSize));
-
+        completeAudioSource.Play();
         if(TestQuickness(isCompletion: true)) {
             DialogueRequestData requestData = new DialogueRequestData {
                 type = DialogueAsset.DialogueType.Hacker,
