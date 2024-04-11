@@ -117,7 +117,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DisplacementAmplitude: 0.0045
     - _DisplacementFrequency: 630.19
-    - _DisplacementInterpolator: 0.3167748
+    - _DisplacementInterpolator: 0
     - _DisplacementLaterality: 0.75
     - _DisplacementPosition: 0
     - _DisplacementStrength: 0

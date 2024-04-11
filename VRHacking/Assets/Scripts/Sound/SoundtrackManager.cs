@@ -27,8 +27,6 @@ public class SoundtrackManager : MonoBehaviour
     [Header("Endless Tracks")]
     [SerializeField]
     private AudioClip[] dynamicTracksByIntensity;
-   
-    int debugIndex = 0;
 
     void OnEnable() {
         targetVolume = defaultVolume;
