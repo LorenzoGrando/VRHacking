@@ -17,6 +17,7 @@ Shader "Custom/UIGlitch"
         
         [Header(Glitch Effect)]
         [Toggle(_GLITCH_ON)] _GlitchOn ("Enable Glitch", Float) = 0
+    	_GlitchTint ("Glitch Tint", Color) = (0.5,0,0,1)
         _GlitchInterval ("Glitch interval time [seconds]", Float) = 0.16
 		_DispProbability ("Displacement Glitch Probability", Float) = 0.022
 		_DispIntensity ("Displacement Glitch Intensity", Float) = 0.09
@@ -114,6 +115,7 @@ Shader "Custom/UIGlitch"
             float _ColorProbability;
             float _ColorIntensity;
             float _WrapDispCoords;
+            fixed4 _GlitchTint;
 
             fixed4 frag(v2f IN) : SV_Target
             {
@@ -136,6 +138,7 @@ Shader "Custom/UIGlitch"
 					
 					c.a *= IN.color.a;
 					c.rgb *= c.a;
+            		c.rgb += (_GlitchTint.rgb * _GlitchTint.a);
 					return c;
                 #endif
 
