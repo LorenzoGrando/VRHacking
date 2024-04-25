@@ -59,6 +59,8 @@ public class HackerMainDisplay : MonoBehaviour
     private TextMeshProUGUI hackerBehaviourText;
     [SerializeField]
     private Image hackerImage;
+    [SerializeField]
+    private Image backgroundHackerImage;
 
     private HackerBug executingBug;
 
@@ -107,7 +109,8 @@ public class HackerMainDisplay : MonoBehaviour
     public void UpdateHackerData(HackerData data) {
         hackerImage.sprite = data.icon;
         hackerNameText.text = data.callsign;
-        hackerBehaviourText.text = Enum.GetName(typeof(HackerData.HackerBehaviour), (int)data.behaviour); 
+        hackerBehaviourText.text = Enum.GetName(typeof(HackerData.HackerBehaviour), (int)data.behaviour);
+        backgroundHackerImage.sprite = data.icon;
     }
 
     public void InitiateTask(GameObject[] referencePoints, HackerBug bug) {

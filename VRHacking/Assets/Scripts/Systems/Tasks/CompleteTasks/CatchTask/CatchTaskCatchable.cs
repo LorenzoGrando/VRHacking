@@ -29,6 +29,7 @@ public class CatchTaskCatchable : MonoBehaviour
     }
 
     public void OnExistanceFutile() {
+        Debug.Log("Called Existance Futile");
         poolReference.Release(this);
     }
 

@@ -58,6 +58,8 @@ public class CatchTask : HackTask
     [SerializeField]
     private CatchTaskDisplay display;
     [SerializeField]
+    private AudioSource catchAudio;
+    [SerializeField]
     CatchTaskSlider slider;
     [SerializeField]
     private Transform[] spawnPositions;
@@ -107,10 +109,12 @@ public class CatchTask : HackTask
     private void PlaceCatchableAtSpawn(CatchTaskCatchable catchable) {
         catchable.transform.position = spawnPositions[currentSpawnerIndex].transform.position;
         catchable.SetSpeed(thisTaskMoveSpeed);
+        catchable.gameObject.SetActive(true);
     }
 
     private void OnCollectCatchable() {
         numberOfCollectedObjects++;
+        catchAudio.Play();
         
         if(CheckTaskCompleted()) {
             if(gameLoopRoutine != null) {
@@ -158,6 +162,7 @@ public class CatchTask : HackTask
         catchable.UpdatePool(catchablePool);
         catchable.transform.SetParent(catchableHolder);
         catchable.transform.localScale = catchable.targetLocalScale;
+        catchable.transform.localRotation = Quaternion.Euler(Vector3.zero);
         catchable.GetComponent<UIRestrainAnchors>().UpdateAnchors(catachableBottomAnchor, catchableTopAnchor);
         return catchable;
     }

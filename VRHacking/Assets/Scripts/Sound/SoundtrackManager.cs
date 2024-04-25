@@ -33,10 +33,10 @@ public class SoundtrackManager : MonoBehaviour
         PlayBackgroundNoise();
         currentTrackPlayer = secondTrackPlayer;
     }
-    public void InitializeTrack(int targetIntensity = 0) {
-        intensityLevel = targetIntensity;
-        if(bgTrackPlayer.isPlaying) {
-            DoTrackFade(bgTrackPlayer, true, 2f);
+    public void InitializeTrack(GameSettingsData settings) {
+        UpdateIntensityByDifficulty(settings.difficulty);
+        if(bgTrackPlayer.volume > 0) {
+            DoTrackFade(bgTrackPlayer, true, 0.25f);
         }
         DoCrossfadeTracks(dynamicTracksByIntensity[intensityLevel], fadeTracksDuration);
     }
@@ -58,10 +58,8 @@ public class SoundtrackManager : MonoBehaviour
         DoTrackFade(bgTrackPlayer, false, fadeTracksDuration);
     }
 
-    public void UpdateIntensityByDifficulty(float difficulty) {
+    private void UpdateIntensityByDifficulty(float difficulty) {
         intensityLevel = (int)(Mathf.Lerp(0, dynamicTracksByIntensity.Length - 1, Mathf.Round(difficulty - 1)));
-
-        DoCrossfadeTracks(dynamicTracksByIntensity[intensityLevel], fadeTracksDuration);
     }
 
     private void DoCrossfadeTracks(AudioClip target, float duration) {

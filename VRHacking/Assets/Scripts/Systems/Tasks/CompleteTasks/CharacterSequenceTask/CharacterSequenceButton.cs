@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 public class CharacterSequenceButton : PokeButtonUI
 {
@@ -60,5 +61,13 @@ public class CharacterSequenceButton : PokeButtonUI
 
     public void ResetStatus() {
         hasActivatedProperly = false;
+    }
+
+    public override void OnXRUIHover(UIHoverEventArgs enterArgs)
+    {
+    }
+
+    public override void OnXRUIHoverExit(UIHoverEventArgs exitArgs)
+    {
     }
 }

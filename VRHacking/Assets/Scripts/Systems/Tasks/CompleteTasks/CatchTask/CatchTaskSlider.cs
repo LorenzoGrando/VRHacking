@@ -14,8 +14,13 @@ public class CatchTaskSlider : MonoBehaviour
         if(col == null) {
             col = GetComponent<BoxCollider>();
         }
-        float xPosition = Mathf.Lerp(leftAnchor.position.x, rightAnchor.position.x, 0.5f);
-        transform.position = new Vector3(xPosition, transform.position.y, transform.position.z);
+        float xPosition = Mathf.Lerp(leftAnchor.localPosition.x, rightAnchor.localPosition.x, 0.5f);
+        transform.localPosition = new Vector3(xPosition, transform.localPosition.y, transform.localPosition.z);
+    }
+
+    void Update()
+    {
+        restrainer.TryRestrain(true);
     }
 
     void OnTriggerEnter(Collider other)

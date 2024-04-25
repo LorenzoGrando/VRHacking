@@ -13,6 +13,8 @@ public abstract class HackTask : MonoBehaviour
 
     [SerializeField]
     public float taskQuicknessTimeThreshold;
+    [HideInInspector]
+    public bool enableMines;
 
     //Reset task values and canvas to initial ones
     protected abstract void ResetTask();
@@ -26,6 +28,7 @@ public abstract class HackTask : MonoBehaviour
     
     //Finalizes the task. Should fire OnTaskCompleted
     protected virtual void CompleteTask() {
+        enableMines = false;
         OnTaskCompleted?.Invoke();
     }
 }

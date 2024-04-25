@@ -32,11 +32,13 @@ public class TaskManager : MonoBehaviour
     [Space(5)]
     [SerializeField]
     private MainScreenDisplay mainScreenDisplay;
-
+    [HideInInspector]
+    public bool enableMines;
 
     void Start()
     {
         numberOfAvailableTasks = availableTasks.Length;
+        enableMines = false;
     }
 
     void Update()
@@ -92,9 +94,15 @@ public class TaskManager : MonoBehaviour
                 index = 0;
             }
         }
+        if(enableMines) {
+            availableTasks[index].enableMines = true;
+            enableMines = false;
+        }
+
         availableTasks[index].StartTask(currentData);
         Debug.Log(availableTasks[index].gameObject.name);
         availableTasks[index].OnTaskCompleted += TaskCompleted;
+
 
         lastPerformedTaskIndex = index;
         currentTaskBeginTime = Time.time;

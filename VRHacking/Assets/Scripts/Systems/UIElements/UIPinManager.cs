@@ -94,8 +94,10 @@ public class UIPinManager : MonoBehaviour
     }
 
     public void ActivateBug() {
-        activeBug.BeginBugUpload();
-        activeBug = null;
+        if(activeBug != null) {
+            activeBug.BeginBugUpload();
+            activeBug = null;
+        }
     }
 
     public Sequence AnimatePins(bool isInit, bool animateLine) {
