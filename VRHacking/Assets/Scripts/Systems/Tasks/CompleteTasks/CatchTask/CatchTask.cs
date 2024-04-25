@@ -109,6 +109,7 @@ public class CatchTask : HackTask
     private void PlaceCatchableAtSpawn(CatchTaskCatchable catchable) {
         catchable.transform.position = spawnPositions[currentSpawnerIndex].transform.position;
         catchable.SetSpeed(thisTaskMoveSpeed);
+        catchable.gameObject.SetActive(true);
     }
 
     private void OnCollectCatchable() {
@@ -161,6 +162,7 @@ public class CatchTask : HackTask
         catchable.UpdatePool(catchablePool);
         catchable.transform.SetParent(catchableHolder);
         catchable.transform.localScale = catchable.targetLocalScale;
+        catchable.transform.localRotation = Quaternion.Euler(Vector3.zero);
         catchable.GetComponent<UIRestrainAnchors>().UpdateAnchors(catachableBottomAnchor, catchableTopAnchor);
         return catchable;
     }

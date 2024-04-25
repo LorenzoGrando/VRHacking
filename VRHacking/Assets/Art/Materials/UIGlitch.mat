@@ -24,9 +24,11 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9c1662e5f4ad7f3449ea385467029417, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _GLITCH_ON
   m_InvalidKeywords:
   - _EMISSIONMULBYBASECOLOR_ON
+  - _WRAPDISPCOORDS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -117,16 +119,16 @@ Material:
     - _CellDensity: 4
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _ColorIntensity: 0.07
+    - _ColorIntensity: 3.31
     - _ColorMask: 15
-    - _ColorProbability: 0.02
+    - _ColorProbability: 2
     - _Cull: 2
     - _Cutoff: 0.5
     - _CutoffHeight: 2.15
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DispIntensity: 0.09
-    - _DispProbability: 0.022
+    - _DispIntensity: 10.67
+    - _DispProbability: 0.52
     - _DisplacementAmplitude: 0.002
     - _DisplacementFrequency: 630.19
     - _DisplacementInterpolator: 0
@@ -141,8 +143,8 @@ Material:
     - _EmissionStrength: 1
     - _EnvironmentReflections: 1
     - _Falloff: 1.2
-    - _GlitchInterval: 0.16
-    - _GlitchOn: 0
+    - _GlitchInterval: 0.25
+    - _GlitchOn: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -172,6 +174,7 @@ Material:
     - _UseScroll: 0
     - _UseUIAlphaClip: 0
     - _WorkflowMode: 1
+    - _WrapDispCoords: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0, g: 1, b: 0.92234755, a: 1}

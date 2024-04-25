@@ -22,6 +22,7 @@ Shader "Custom/UIGlitch"
 		_DispIntensity ("Displacement Glitch Intensity", Float) = 0.09
 		_ColorProbability("Color Glitch Probability", Float) = 0.02
 		_ColorIntensity("Color Glitch Intensity", Float) = 0.07
+    	[Toggle]_WrapDispCoords("Wrap UV", Range(0,1)) = 1
     }
 
     SubShader
@@ -112,12 +113,30 @@ Shader "Custom/UIGlitch"
             float _DispIntensity;
             float _ColorProbability;
             float _ColorIntensity;
+            float _WrapDispCoords;
 
             fixed4 frag(v2f IN) : SV_Target
             {
                 //Does Glitch effect only if enabled by keyword
                 #ifdef _GLITCH_ON
-
+                    float intervalTime = floor(_Time.y / _GlitchInterval) * _GlitchInterval;
+            		float3 offset = UnityObjectToViewPos(float3(0.0, 0.0, 0.0));
+					float timePositionVal = float(intervalTime + offset.x + offset.y);
+					float timeRandom = rand(timePositionVal, -timePositionVal);
+					if(timeRandom < _DispProbability){
+						IN.texcoord.x += (rand(floor(IN.texcoord.y / 0.2) - intervalTime, floor(IN.texcoord.y / 0.2) + intervalTime) - 0.5) * _DispIntensity;
+						if(_WrapDispCoords == 1){
+							IN.texcoord.x = fmod(IN.texcoord.x, 1);
+						}
+						else{
+							IN.texcoord.x = clamp(IN.texcoord.x, 0, 1);
+						}
+					}
+					fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
+					
+					c.a *= IN.color.a;
+					c.rgb *= c.a;
+					return c;
                 #endif
 
                 

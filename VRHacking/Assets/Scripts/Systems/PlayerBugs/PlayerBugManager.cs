@@ -55,6 +55,8 @@ public class PlayerBugManager : MonoBehaviour
             .Where(x => x.minDifficulty < gameSettingsData.difficulty)
             .ToList();
 
+        Debug.Log("Available Bugs: " + availableBugs.Count);
+
         currentBug = SelectBugFromList(availableBugs);
         currentBug.OnBugCompleted += OnBugComplete;
         currentBug.StartBug(gameSettingsData);
@@ -73,6 +75,7 @@ public class PlayerBugManager : MonoBehaviour
         int index = UnityEngine.Random.Range(0, availableBugs.Count);
         return availableBugs[index];
     }
+
 
     private IEnumerator ExecuteBugInterval(float intervalDuration) {
         yield return new WaitForSeconds(intervalDuration);
