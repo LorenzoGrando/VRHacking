@@ -127,10 +127,10 @@ Shader "Custom/UIGlitch"
 					float timeRandom = rand(timePositionVal, -timePositionVal);
 					if(timeRandom < _DispProbability){
 						IN.texcoord.x += (rand(floor(IN.texcoord.y / 0.2) - intervalTime, floor(IN.texcoord.y / 0.2) + intervalTime) - 0.5) * _DispIntensity;
-						if(_WrapDispCoords == 1){
+						if(_WrapDispCoords == 1) {
 							IN.texcoord.x = fmod(IN.texcoord.x, 1);
 						}
-						else{
+						else {
 							IN.texcoord.x = clamp(IN.texcoord.x, 0, 1);
 						}
 					}
