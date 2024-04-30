@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
@@ -13,14 +12,21 @@ public class CharacterSequenceButton : PokeButtonUI
     private CharacterSequenceTask task;
     private CharacterSequenceTask.CharacterSequenceData thisButtonData;
     private Button buttonScript;
+    private Image image;
     private bool hasActivatedProperly;
     [SerializeField]
     private Vector3 targetScale;
     [SerializeField]
     private float animDuration;
 
+    [SerializeField]
+    private Material mainMat;
+
     void OnEnable()
     {
+        if(image == null) {
+            image = GetComponent<Image>();
+        }
         if (task == null)
             task = FindObjectOfType<CharacterSequenceTask>();
 
@@ -35,6 +41,11 @@ public class CharacterSequenceButton : PokeButtonUI
         }
         thisButtonData = data;
         textRef.text = data.characters;
+
+        if(data.isBugged)
+            image.material.EnableKeyword("_GLITCH_ON");
+        else
+            image.material.DisableKeyword("_GLITCH_ON");
 
         buttonScript.enabled = false;
 

@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class GlitchManager : MonoBehaviour
 {
+    public HandController[] controllers;
     public GameObject textHolderObject;
     public GameObject displayHolder;
+    public Material mainMonitorMat;
+    public Texture2D[] monitorTextures;
     public float glitchDuration;
     private EnvironmentManager environmentManager;
     [SerializeField]
@@ -73,8 +76,12 @@ public class GlitchManager : MonoBehaviour
 
         displayHolder.SetActive(true);
         mat.EnableKeyword("_GLITCH_ON");
+        mainMonitorMat.SetTexture("_BaseTex", monitorTextures[1]);
         environmentManager.ChangeWorldState(true);
         glitchRoutine = StartCoroutine(routine: ExecuteGlitch(glitchDuration));
+        foreach(HandController controller in controllers) {
+            controller.ChangeInteractorState(false);
+        }
     }
 
     public void EndGlitches() {
@@ -82,7 +89,11 @@ public class GlitchManager : MonoBehaviour
             t.textObject.text = t.originalText;
         }
 
+        mainMonitorMat.SetTexture("_BaseTex", monitorTextures[0]);
         mat.DisableKeyword("_GLITCH_ON");
         displayHolder.SetActive(false);
+        foreach(HandController controller in controllers) {
+            controller.ChangeInteractorState(true);
+        }
     }
 }

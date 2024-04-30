@@ -50,6 +50,7 @@ public class CharacterSequenceTask : HackTask
     public struct CharacterSequenceData {
         public string characters;
         public int numberInOrder;
+        public bool isBugged;
     }
 
     private const string possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -86,6 +87,10 @@ public class CharacterSequenceTask : HackTask
         orderedSequence.Clear();
         shuffledSequence.Clear();
         currentOrderValue = -1;
+        CharacterSequenceData mineData = new CharacterSequenceData();
+
+        if(enableMines && stringSize < 9) 
+            stringSize++;
 
 
         for(int i = 0; i < stringSize; i++) {
@@ -96,6 +101,19 @@ public class CharacterSequenceTask : HackTask
                 chars[l] = possibleCharsArray[rnd.Next(possibleCharsLenght)];
             }
 
+            if(enableMines) {
+                int rnd = UnityEngine.Random.Range(0,2);
+                if(rnd == 0) {
+                    CharacterSequenceData buggedData = new CharacterSequenceData() {
+                        characters = new string(chars),
+                        numberInOrder = i,
+                        isBugged = true
+                    };
+                    mineData = buggedData;
+                    enableMines = false;       
+                }
+            }
+
             //Initializes and adds data
             CharacterSequenceData data = new CharacterSequenceData() {
                 characters = new string(chars),
@@ -103,6 +121,12 @@ public class CharacterSequenceTask : HackTask
             };
             orderedSequence.Add(data);
             shuffledSequence.Add(data);
+        }
+
+        bool callBugged = false;
+        if(mineData.isBugged) {
+            callBugged = true;
+            shuffledSequence.Add(mineData);
         }
 
         shuffledSequence.Shuffle();
@@ -118,6 +142,12 @@ public class CharacterSequenceTask : HackTask
     }
 
     public bool TryActivateChar(CharacterSequenceData data){
+        if(data.isBugged) {
+            CallGlitch();
+            return false;
+        }
+
+
         bool validButton = currentOrderValue == data.numberInOrder - 1;
         if(validButton) {
             currentOrderValue++;
