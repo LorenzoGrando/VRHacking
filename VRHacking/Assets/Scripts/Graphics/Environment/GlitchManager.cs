@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,10 +6,13 @@ using UnityEngine;
 
 public class GlitchManager : MonoBehaviour
 {
+    public event Action OnGlitchFinished;
     public HandController[] controllers;
+    public HandShadingManager[] handManagers;
     public GameObject textHolderObject;
     public GameObject displayHolder;
-    public Material mainMonitorMat;
+    public GameObject mainMonitorObject;
+    private Material mainMonitorMat;
     public Texture2D[] monitorTextures;
     public float glitchDuration;
     private EnvironmentManager environmentManager;
@@ -30,6 +34,7 @@ public class GlitchManager : MonoBehaviour
         chars = typoChars.ToCharArray();
         targetTexts= new List<GlitchableText>();
         environmentManager = FindObjectOfType<EnvironmentManager>();
+        mainMonitorMat = mainMonitorObject.GetComponent<MeshRenderer>().material;
     }
 
     private IEnumerator ExecuteGlitch(float duration) {
@@ -58,7 +63,12 @@ public class GlitchManager : MonoBehaviour
             }
         }
 
-        return brokenString.ToString();
+        string finalString = "";
+        foreach(char c in brokenString) {
+            finalString += brokenString;
+        }
+
+        return finalString;
     }
 
     public void CallGlitch() {
@@ -74,14 +84,19 @@ public class GlitchManager : MonoBehaviour
             targetTexts.Add(t);
         }
 
+        Debug.Log("Found Texts:" + targetTexts.Count);
+
         displayHolder.SetActive(true);
         mat.EnableKeyword("_GLITCH_ON");
         mainMonitorMat.SetTexture("_BaseTex", monitorTextures[1]);
         environmentManager.ChangeWorldState(true);
-        glitchRoutine = StartCoroutine(routine: ExecuteGlitch(glitchDuration));
-        foreach(HandController controller in controllers) {
-            controller.ChangeInteractorState(false);
+        for(int i = 0; i < controllers.Length; i++) {
+            controllers[i].ChangeInteractorState(false);
+            handManagers[i].TriggerGlitchEffect();
         }
+
+        initialTime = Time.time;
+        glitchRoutine = StartCoroutine(routine: ExecuteGlitch(glitchDuration));
     }
 
     public void EndGlitches() {
@@ -95,5 +110,7 @@ public class GlitchManager : MonoBehaviour
         foreach(HandController controller in controllers) {
             controller.ChangeInteractorState(true);
         }
+
+        OnGlitchFinished?.Invoke();
     }
 }

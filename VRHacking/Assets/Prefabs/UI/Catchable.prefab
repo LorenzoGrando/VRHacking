@@ -93,6 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLocalScale: {x: 0.35, y: 0.35, z: 1}
   restrainer: {fileID: 1498078744661206296}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!65 &5057789351191260537
 BoxCollider:
   m_ObjectHideFlags: 0

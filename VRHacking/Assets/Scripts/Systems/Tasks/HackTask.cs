@@ -10,7 +10,7 @@ public abstract class HackTask : MonoBehaviour
     [SerializeField]
     protected GameObject prefabObject;
     protected GameSettingsData gameSettingsData;
-    private GlitchManager glitchManager;
+    protected GlitchManager glitchManager;
 
     [SerializeField]
     public float taskQuicknessTimeThreshold;
@@ -36,6 +36,8 @@ public abstract class HackTask : MonoBehaviour
     protected virtual void CallGlitch() {
         if(glitchManager == null)
             glitchManager = FindObjectOfType<GlitchManager>();
+        
+        enableMines = false;
 
         glitchManager.CallGlitch();
     }

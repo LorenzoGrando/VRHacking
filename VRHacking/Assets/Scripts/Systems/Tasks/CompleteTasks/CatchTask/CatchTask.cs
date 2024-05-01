@@ -23,6 +23,8 @@ public class CatchTask : HackTask
 
         slider.OnCollectCatchable += OnCollectCatchable;
 
+        canSpawn = true;
+
         
     }
 
@@ -52,6 +54,13 @@ public class CatchTask : HackTask
         base.CompleteTask();
     }
 
+    protected override void CallGlitch()
+    {
+        canSpawn = false;
+        base.CallGlitch();
+        glitchManager.OnGlitchFinished += () => canSpawn = true;
+    }
+
     #endregion
 
     #region Catch Methods
@@ -75,6 +84,7 @@ public class CatchTask : HackTask
     private int numberOfCollectedObjects;
     private int currentSpawnerIndex;
     private float thisTaskMoveSpeed;
+    private bool canSpawn;
 
     [SerializeField]
     private float baseSpawnObjectInterval;
@@ -112,7 +122,13 @@ public class CatchTask : HackTask
         catchable.gameObject.SetActive(true);
     }
 
-    private void OnCollectCatchable() {
+    private void OnCollectCatchable(CatchTaskCatchable catchable) {
+        bool isBugged = catchable.bugged;
+        catchable.OnExistanceFutile();
+        if(isBugged) {
+            CallGlitch();
+            return;
+        }
         numberOfCollectedObjects++;
         catchAudio.Play();
         
@@ -130,8 +146,21 @@ public class CatchTask : HackTask
 
     private IEnumerator GameLoopRoutine() {
         while (!CheckTaskCompleted()) {
-            PlaceCatchableAtSpawn(catchablePool.Get());
-            currentSpawnerIndex = GetNextSpawnerIndex();
+            if(canSpawn) {
+                CatchTaskCatchable catchable = catchablePool.Get();
+                bool bugStatus = false;
+                if(enableMines) {
+                    int rnd = UnityEngine.Random.Range(0, 3);
+                    if(rnd == 0) {
+                        bugStatus = true;
+                    }
+                }
+
+                catchable.UpdateStatus(bugStatus);
+
+                PlaceCatchableAtSpawn(catchable);
+                currentSpawnerIndex = GetNextSpawnerIndex();
+            }
 
             yield return new WaitForSeconds(baseSpawnObjectInterval);
         }

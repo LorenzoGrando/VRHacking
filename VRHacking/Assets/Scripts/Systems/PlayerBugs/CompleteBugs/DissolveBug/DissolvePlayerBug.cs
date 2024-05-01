@@ -73,8 +73,8 @@ public class DissolvePlayerBug : PlayerBug
     private void AnimTransition(bool isDissolve) {
         if(isDissolve) {
             environmentManager.DissolveWorld(bugCompletionDuration/2, true);
-            monitorObject.transform.DOScale(targetMonitorScale, bugCompletionDuration/4);
-            hackerObject.transform.DOScale(targetHackerScale, bugCompletionDuration/4);
+            monitorObject.transform.DOScale(Vector3.zero, bugCompletionDuration/4);
+            hackerObject.transform.DOScale(Vector3.zero, bugCompletionDuration/4);
         }
         else {
             monitorObject.transform.DOScale(targetMonitorScale, bugCompletionDuration/4);

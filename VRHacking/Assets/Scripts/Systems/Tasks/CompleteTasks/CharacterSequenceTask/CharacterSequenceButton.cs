@@ -20,12 +20,13 @@ public class CharacterSequenceButton : PokeButtonUI
     private float animDuration;
 
     [SerializeField]
-    private Material mainMat;
+    private Material mainMat, glitchedMat;
 
     void OnEnable()
     {
         if(image == null) {
             image = GetComponent<Image>();
+            image.material = mainMat;
         }
         if (task == null)
             task = FindObjectOfType<CharacterSequenceTask>();
@@ -43,9 +44,9 @@ public class CharacterSequenceButton : PokeButtonUI
         textRef.text = data.characters;
 
         if(data.isBugged)
-            image.material.EnableKeyword("_GLITCH_ON");
+            image.material = glitchedMat;
         else
-            image.material.DisableKeyword("_GLITCH_ON");
+            image.material = mainMat;
 
         buttonScript.enabled = false;
 

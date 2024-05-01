@@ -24,8 +24,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9c1662e5f4ad7f3449ea385467029417, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _GLITCH_ON
+  m_ValidKeywords: []
   m_InvalidKeywords:
   - _EMISSIONMULBYBASECOLOR_ON
   - _WRAPDISPCOORDS_ON
@@ -127,8 +126,8 @@ Material:
     - _CutoffHeight: 2.15
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DispIntensity: 10.03
-    - _DispProbability: 0.72
+    - _DispIntensity: 5.16
+    - _DispProbability: 0.47
     - _DisplacementAmplitude: 0.002
     - _DisplacementFrequency: 630.19
     - _DisplacementInterpolator: 0
@@ -143,7 +142,7 @@ Material:
     - _EmissionStrength: 1
     - _EnvironmentReflections: 1
     - _Falloff: 1.2
-    - _GlitchInterval: 0.25
+    - _GlitchInterval: 1.03
     - _GlitchOn: 1
     - _GlossMapScale: 0
     - _Glossiness: 0

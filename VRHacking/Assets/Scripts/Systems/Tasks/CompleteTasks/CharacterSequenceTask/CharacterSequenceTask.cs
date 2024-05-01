@@ -89,9 +89,6 @@ public class CharacterSequenceTask : HackTask
         currentOrderValue = -1;
         CharacterSequenceData mineData = new CharacterSequenceData();
 
-        if(enableMines && stringSize < 9) 
-            stringSize++;
-
 
         for(int i = 0; i < stringSize; i++) {
             //Generates a 2-3 char long string
@@ -123,9 +120,7 @@ public class CharacterSequenceTask : HackTask
             shuffledSequence.Add(data);
         }
 
-        bool callBugged = false;
         if(mineData.isBugged) {
-            callBugged = true;
             shuffledSequence.Add(mineData);
         }
 

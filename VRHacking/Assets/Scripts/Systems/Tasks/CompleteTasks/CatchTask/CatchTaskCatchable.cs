@@ -1,3 +1,4 @@
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -9,14 +10,18 @@ public class CatchTaskCatchable : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private UIRestrainer restrainer;
-
+    public bool bugged {get; private set;}
     private float moveSpeed;
+    public Material mainMat, glitchedMat;
+    private Image image;
 
 
     public void OnEnable()
     {
         if(rb == null)
             rb = GetComponent<Rigidbody>();
+        if(image == null)
+            image = GetComponent<Image>();
         
     }
     public void UpdatePool (IObjectPool<CatchTaskCatchable> pool) {
@@ -29,8 +34,17 @@ public class CatchTaskCatchable : MonoBehaviour
     }
 
     public void OnExistanceFutile() {
-        Debug.Log("Called Existance Futile");
         poolReference.Release(this);
+    }
+
+    public void UpdateStatus(bool bugged) {
+        this.bugged = bugged;
+        if(bugged)
+            image.material = glitchedMat;
+        else
+            image.material = mainMat;
+
+        ///visual change
     }
 
     void LateUpdate()

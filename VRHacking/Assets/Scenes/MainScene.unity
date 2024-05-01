@@ -1107,9 +1107,11 @@ MonoBehaviour:
   tricksterBugs:
   - {fileID: 1175346530}
   - {fileID: 1945516790}
+  - {fileID: 566192222}
   daredevilBugs:
   - {fileID: 1175346530}
   - {fileID: 1945516790}
+  - {fileID: 566192222}
   bugDisplayIntervalDuration: 1.75
 --- !u!1 &76508673
 GameObject:
@@ -1863,7 +1865,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &106070685 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -2487,7 +2490,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &116681410 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -8534,7 +8538,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &592885202 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -9351,7 +9356,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.5
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &744226771 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -9998,9 +10004,12 @@ MonoBehaviour:
   controllers:
   - {fileID: 7961951404514557518}
   - {fileID: 3403465182033359766}
+  handManagers:
+  - {fileID: 100526202}
+  - {fileID: 312387609}
   textHolderObject: {fileID: 1706963883}
   displayHolder: {fileID: 109099460}
-  mainMonitorMat: {fileID: 2100000, guid: c3d3266049929e141ac50284b40127c5, type: 2}
+  mainMonitorObject: {fileID: 634261015}
   monitorTextures:
   - {fileID: 2800000, guid: 38446596235ff3b469e09c1543fa044c, type: 3}
   - {fileID: 2800000, guid: ca37c81664e81594689929d12257c6b8, type: 3}
@@ -11914,7 +11923,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &899485084 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -13192,7 +13202,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &1038205883 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -16209,7 +16220,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &1350600097 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -19047,7 +19059,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &1642447586 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
@@ -23322,7 +23335,8 @@ MonoBehaviour:
   task: {fileID: 1505789698}
   targetScale: {x: 0.1, y: 0.1, z: 0.1}
   animDuration: 0.25
-  mainMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
+  mainMat: {fileID: 2100000, guid: b09e72d40bd792645b120be590b68099, type: 2}
+  glitchedMat: {fileID: 2100000, guid: 858932847ea4dab45a04243f15799045, type: 2}
 --- !u!82 &1369040428184572844 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6206995545666207325, guid: 659464d6c8775714f801ebe47e22004a,
