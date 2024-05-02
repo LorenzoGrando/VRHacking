@@ -13,6 +13,8 @@ public class CharacterSequenceButton : PokeButtonUI
     private CharacterSequenceTask.CharacterSequenceData thisButtonData;
     private Button buttonScript;
     private Image image;
+    [SerializeField]
+    private AudioSource glitchedSource;
     private bool hasActivatedProperly;
     [SerializeField]
     private Vector3 targetScale;
@@ -43,8 +45,10 @@ public class CharacterSequenceButton : PokeButtonUI
         thisButtonData = data;
         textRef.text = data.characters;
 
-        if(data.isBugged)
+        if(data.isBugged) {
             image.material = glitchedMat;
+            glitchedSource.PlayOneShot(glitchedSource.clip);
+        }
         else
             image.material = mainMat;
 

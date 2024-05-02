@@ -24,7 +24,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9c1662e5f4ad7f3449ea385467029417, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _GLITCH_ON
   m_InvalidKeywords:
   - _EMISSIONMULBYBASECOLOR_ON
   - _WRAPDISPCOORDS_ON

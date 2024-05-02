@@ -10,10 +10,12 @@ public class GlitchManager : MonoBehaviour
     public HandController[] controllers;
     public HandShadingManager[] handManagers;
     public GameObject textHolderObject;
-    public GameObject displayHolder;
+    public GlitchDisplay displayHolder;
     public GameObject mainMonitorObject;
     private Material mainMonitorMat;
     public Texture2D[] monitorTextures;
+    public AudioSource globalGlitchSource;
+    public AudioClip[] glitchSoundVariants;
     public float glitchDuration;
     private EnvironmentManager environmentManager;
     [SerializeField]
@@ -86,7 +88,7 @@ public class GlitchManager : MonoBehaviour
 
         Debug.Log("Found Texts:" + targetTexts.Count);
 
-        displayHolder.SetActive(true);
+        displayHolder.CallDisplay(glitchDuration);
         mat.EnableKeyword("_GLITCH_ON");
         mainMonitorMat.SetTexture("_BaseTex", monitorTextures[1]);
         environmentManager.ChangeWorldState(true);
@@ -94,6 +96,9 @@ public class GlitchManager : MonoBehaviour
             controllers[i].ChangeInteractorState(false);
             handManagers[i].TriggerGlitchEffect();
         }
+
+        int glitchIndex = UnityEngine.Random.Range(0, glitchSoundVariants.Length);
+        globalGlitchSource.PlayOneShot(glitchSoundVariants[glitchIndex]);
 
         initialTime = Time.time;
         glitchRoutine = StartCoroutine(routine: ExecuteGlitch(glitchDuration));
@@ -106,7 +111,6 @@ public class GlitchManager : MonoBehaviour
 
         mainMonitorMat.SetTexture("_BaseTex", monitorTextures[0]);
         mat.DisableKeyword("_GLITCH_ON");
-        displayHolder.SetActive(false);
         foreach(HandController controller in controllers) {
             controller.ChangeInteractorState(true);
         }

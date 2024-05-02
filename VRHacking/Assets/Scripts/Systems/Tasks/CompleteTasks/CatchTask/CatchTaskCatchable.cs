@@ -14,6 +14,7 @@ public class CatchTaskCatchable : MonoBehaviour
     private float moveSpeed;
     public Material mainMat, glitchedMat;
     private Image image;
+    private AudioSource glitchSource;
 
 
     public void OnEnable()
@@ -22,6 +23,9 @@ public class CatchTaskCatchable : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         if(image == null)
             image = GetComponent<Image>();
+        if(glitchSource == null) {
+            glitchSource = GetComponent<AudioSource>();
+        }
         
     }
     public void UpdatePool (IObjectPool<CatchTaskCatchable> pool) {
@@ -39,8 +43,10 @@ public class CatchTaskCatchable : MonoBehaviour
 
     public void UpdateStatus(bool bugged) {
         this.bugged = bugged;
-        if(bugged)
+        if(bugged) {
             image.material = glitchedMat;
+            glitchSource.PlayOneShot(glitchSource.clip);
+        }
         else
             image.material = mainMat;
 

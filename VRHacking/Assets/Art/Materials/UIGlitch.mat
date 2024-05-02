@@ -143,7 +143,7 @@ Material:
     - _EnvironmentReflections: 1
     - _Falloff: 1.2
     - _GlitchInterval: 0.25
-    - _GlitchOn: 1
+    - _GlitchOn: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
