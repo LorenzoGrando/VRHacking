@@ -12,6 +12,7 @@ public class CharacterSequenceButton : PokeButtonUI
     private CharacterSequenceTask task;
     private CharacterSequenceTask.CharacterSequenceData thisButtonData;
     private Button buttonScript;
+    [SerializeField]
     private Image image;
     [SerializeField]
     private AudioSource glitchedSource;
@@ -26,10 +27,6 @@ public class CharacterSequenceButton : PokeButtonUI
 
     void OnEnable()
     {
-        if(image == null) {
-            image = GetComponent<Image>();
-            image.material = mainMat;
-        }
         if (task == null)
             task = FindObjectOfType<CharacterSequenceTask>();
 

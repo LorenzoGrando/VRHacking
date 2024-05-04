@@ -13,7 +13,10 @@ public class CatchTaskCatchable : MonoBehaviour
     public bool bugged {get; private set;}
     private float moveSpeed;
     public Material mainMat, glitchedMat;
+    [SerializeField]
     private Image image;
+    [SerializeField]
+    private Sprite[] sprites;
     private AudioSource glitchSource;
 
 
@@ -21,8 +24,6 @@ public class CatchTaskCatchable : MonoBehaviour
     {
         if(rb == null)
             rb = GetComponent<Rigidbody>();
-        if(image == null)
-            image = GetComponent<Image>();
         if(glitchSource == null) {
             glitchSource = GetComponent<AudioSource>();
         }
@@ -45,12 +46,13 @@ public class CatchTaskCatchable : MonoBehaviour
         this.bugged = bugged;
         if(bugged) {
             image.material = glitchedMat;
+            image.sprite = sprites[1];
             glitchSource.PlayOneShot(glitchSource.clip);
         }
-        else
+        else {
             image.material = mainMat;
-
-        ///visual change
+            image.sprite = sprites[0];
+        }
     }
 
     void LateUpdate()

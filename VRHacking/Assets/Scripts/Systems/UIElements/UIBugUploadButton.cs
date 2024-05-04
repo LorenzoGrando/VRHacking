@@ -82,6 +82,7 @@ public class UIBugUploadButton : PokeButtonUI
 
     public override void OnXRUIHover(UIHoverEventArgs enterArgs)
     {
+        Debug.Log("Hovered");
         descritionHolder.SetActive(true);
         descriptionTextObject.text = thisButtonBug.description;
 
@@ -92,7 +93,6 @@ public class UIBugUploadButton : PokeButtonUI
 
         descriptionScaleTween = descritionHolder.transform.DOScale(targetDescriptionScale, animDuration).SetEase(Ease.OutQuart);
         descriptionPositionTween = descritionHolder.transform.DOLocalMove(targetPosition, animDuration / 2).SetEase(Ease.OutQuart);
-    
     }
     public override void OnXRUIHoverExit(UIHoverEventArgs exitArgs)
     {
