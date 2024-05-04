@@ -1,3 +1,4 @@
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -9,14 +10,23 @@ public class CatchTaskCatchable : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private UIRestrainer restrainer;
-
+    public bool bugged {get; private set;}
     private float moveSpeed;
+    public Material mainMat, glitchedMat;
+    [SerializeField]
+    private Image image;
+    [SerializeField]
+    private Sprite[] sprites;
+    private AudioSource glitchSource;
 
 
     public void OnEnable()
     {
         if(rb == null)
             rb = GetComponent<Rigidbody>();
+        if(glitchSource == null) {
+            glitchSource = GetComponent<AudioSource>();
+        }
         
     }
     public void UpdatePool (IObjectPool<CatchTaskCatchable> pool) {
@@ -30,6 +40,19 @@ public class CatchTaskCatchable : MonoBehaviour
 
     public void OnExistanceFutile() {
         poolReference.Release(this);
+    }
+
+    public void UpdateStatus(bool bugged) {
+        this.bugged = bugged;
+        if(bugged) {
+            image.material = glitchedMat;
+            image.sprite = sprites[1];
+            glitchSource.PlayOneShot(glitchSource.clip);
+        }
+        else {
+            image.material = mainMat;
+            image.sprite = sprites[0];
+        }
     }
 
     void LateUpdate()

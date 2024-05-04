@@ -23,6 +23,8 @@ public class HandController : MonoBehaviour
         ReadHandInputs();
     }
 
+    public void ChangeInteractorState(bool newState) => pokeInteractor.enabled = newState;
+
     private void ReadHandInputs() {
         float gripValue = controller.selectAction.action.ReadValue<float>();
         float triggerValue = controller.activateAction.action.ReadValue<float>();

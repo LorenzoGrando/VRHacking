@@ -21,6 +21,11 @@ public abstract class HackerBug : MonoBehaviour
     public float cooldownTimer;
     private float InitialUploadTime;
 
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     public void BeginBugUpload() {
         InitialUploadTime = Time.time;
         StartCoroutine(routine: ExecuteBugUpload());

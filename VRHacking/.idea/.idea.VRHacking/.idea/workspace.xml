@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5f985e9-1764-4dcc-8b8b-a022e8582125" name="Changes" comment="" />
+    <list default="true" id="c5f985e9-1764-4dcc-8b8b-a022e8582125" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.VRHacking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VRHacking/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/UIGlitch.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/UIGlitch.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/UIGlitch/UIGlitch_Main.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/UIGlitch/UIGlitch_Main.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/XR/Settings/OpenXR Package Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/XR/Settings/OpenXR Package Settings.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,7 +31,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "audio__system",
+    "git-widget-placeholder": "dev",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -97,6 +103,11 @@
       <workItem from="1712596769408" duration="139000" />
       <workItem from="1712618246468" duration="2050000" />
       <workItem from="1712787556112" duration="167000" />
+      <workItem from="1712974894093" duration="3000" />
+      <workItem from="1713487090127" duration="1156000" />
+      <workItem from="1713980836377" duration="1550000" />
+      <workItem from="1713994568420" duration="1562000" />
+      <workItem from="1714068499162" duration="997000" />
     </task>
     <servers />
   </component>

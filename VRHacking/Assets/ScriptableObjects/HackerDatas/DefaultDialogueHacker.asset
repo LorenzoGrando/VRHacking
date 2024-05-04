@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   callsign: 
   description: Establishing Connection...
-  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   efficiency: 0.5
   aggressiveness: 0.5
   behaviour: 0

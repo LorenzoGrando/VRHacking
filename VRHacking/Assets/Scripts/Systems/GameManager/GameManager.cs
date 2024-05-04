@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
     }
 
     private void BeginNewSystemDispute(GameSettingsData gameSettingsData) {
-        taskManager.BeginTaskSequence(gameSettingsData);
         taskManager.OnPlayerTasksCompleted += CallWonGame;
 
         HackerData sequenceHacker = hackerManager.InitializeHackerData(gameSettingsData);
@@ -52,19 +51,30 @@ public class GameManager : MonoBehaviour
         dialogueManager.UpdateHackerDialogue(sequenceHacker);
         SetupMessageTriggers(init: true);
 
-        hackerManager.BeginHackerSequence();
-
-        
-        playerBugManager.InitializeBugData(gameSettingsData);
-
         soundtrackManager.ResetVolume();
-        soundtrackManager.UpdateIntensityByDifficulty(gameSettingsData.difficulty);
-        soundtrackManager.InitializeTrack();
 
         hackerManager.OnHackerBugUploaded += CommunicateBugStart;
         hackerManager.OnHackerTasksCompleted += CallLostGame;
 
+        dialogueManager.OnEndDialogue += StartDispute;
+
+        DialogueRequestData requestData = new DialogueRequestData {
+            type = DialogueAsset.DialogueType.Hacker,
+            source =  DialogueAsset.DialogueSource.Greeting,
+            isPriority = true
+        };
+        CommunicateMessageTrigger(requestData);
+
         Debug.Log("Called game");
+    }
+
+    private void StartDispute() {
+        taskManager.BeginTaskSequence(gameSettings);
+        playerBugManager.InitializeBugData(gameSettings);
+        soundtrackManager.InitializeTrack(gameSettings);
+        hackerManager.BeginHackerSequence();
+
+        dialogueManager.OnEndDialogue -= StartDispute;
     }
 
     private void SetupMessageTriggers(bool init) {
@@ -100,6 +110,10 @@ public class GameManager : MonoBehaviour
             }
         }
         else {
+            if(gameSettings.thisGameMode == GameSettingsData.GameMode.Endless) {
+                GameSettings.InitializeData(GameSettingsData.GameMode.Endless);
+                gameSettings = GameSettings.GetGameData();
+            }
             soundtrackManager.ResetVolume();
             soundtrackManager.SilenceAll();
         }
@@ -107,7 +121,8 @@ public class GameManager : MonoBehaviour
         SetupMessageTriggers(init: false);
         DialogueRequestData requestData = new DialogueRequestData {
             type = DialogueAsset.DialogueType.Hacker,
-            source = playerWon ? DialogueAsset.DialogueSource.PlayerWon : DialogueAsset.DialogueSource.PlayerLost
+            source = playerWon ? DialogueAsset.DialogueSource.PlayerWon : DialogueAsset.DialogueSource.PlayerLost,
+            isPriority = true
         };
         CommunicateMessageTrigger(requestData);
 

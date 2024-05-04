@@ -76,7 +76,7 @@ public class EnvironmentManager : MonoBehaviour
         SetDissolveMats(maxDissolveHeight);
     }
 
-    private void ChangeWorldState(bool isGlitch) {
+    public void ChangeWorldState(bool isGlitch) {
         if(isGlitch) {
             DOVirtual.Float(skyboxRotationSpeed, glitchedSkyboxSpeed, 0.25f, (x) => internalRotationSpeed = x);
             DOVirtual.Float(groundDisplaceSpeed, glitchedGroundSpeed, 0.25f, (x) => UpdateGroundDisplacement(x));

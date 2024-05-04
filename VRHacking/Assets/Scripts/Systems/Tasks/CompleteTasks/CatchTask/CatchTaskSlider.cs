@@ -4,7 +4,7 @@ using System;
 [RequireComponent(typeof(BoxCollider))]
 public class CatchTaskSlider : MonoBehaviour
 {
-    public event Action OnCollectCatchable;
+    public event Action<CatchTaskCatchable> OnCollectCatchable;
     private BoxCollider col;
     [SerializeField]
     UIRestrainer restrainer;
@@ -14,15 +14,20 @@ public class CatchTaskSlider : MonoBehaviour
         if(col == null) {
             col = GetComponent<BoxCollider>();
         }
-        float xPosition = Mathf.Lerp(leftAnchor.position.x, rightAnchor.position.x, 0.5f);
-        transform.position = new Vector3(xPosition, transform.position.y, transform.position.z);
+        float xPosition = Mathf.Lerp(leftAnchor.localPosition.x, rightAnchor.localPosition.x, 0.5f);
+        transform.localPosition = new Vector3(xPosition, transform.localPosition.y, transform.localPosition.z);
+    }
+
+    void Update()
+    {
+        restrainer.TryRestrain(true);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Catchable")) {
-            other.GetComponent<CatchTaskCatchable>().OnExistanceFutile();
-            OnCollectCatchable?.Invoke();
+            CatchTaskCatchable catched = other.GetComponent<CatchTaskCatchable>();
+            OnCollectCatchable?.Invoke(catched);
         }
     }
 

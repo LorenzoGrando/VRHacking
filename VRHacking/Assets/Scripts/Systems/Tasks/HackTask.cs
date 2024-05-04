@@ -10,9 +10,12 @@ public abstract class HackTask : MonoBehaviour
     [SerializeField]
     protected GameObject prefabObject;
     protected GameSettingsData gameSettingsData;
+    protected GlitchManager glitchManager;
 
     [SerializeField]
     public float taskQuicknessTimeThreshold;
+    [HideInInspector]
+    public bool enableMines;
 
     //Reset task values and canvas to initial ones
     protected abstract void ResetTask();
@@ -26,6 +29,16 @@ public abstract class HackTask : MonoBehaviour
     
     //Finalizes the task. Should fire OnTaskCompleted
     protected virtual void CompleteTask() {
+        enableMines = false;
         OnTaskCompleted?.Invoke();
+    }
+
+    protected virtual void CallGlitch() {
+        if(glitchManager == null)
+            glitchManager = FindObjectOfType<GlitchManager>();
+        
+        enableMines = false;
+
+        glitchManager.CallGlitch();
     }
 }

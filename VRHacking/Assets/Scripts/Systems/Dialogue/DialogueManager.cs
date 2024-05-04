@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
+    public event Action OnEndDialogue;
     [SerializeField]
     private DialogueVisualizer visualizer;
 
@@ -79,6 +81,7 @@ public class DialogueManager : MonoBehaviour
         else {
             visualizer.EndVisualization();
             isExecuting = false;
+            OnEndDialogue?.Invoke();
         }
     }
     

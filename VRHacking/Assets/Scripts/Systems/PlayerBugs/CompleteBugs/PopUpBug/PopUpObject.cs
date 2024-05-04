@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(UIRestrainer)), RequireComponent(typeof(BoxCollider))]
@@ -14,6 +15,10 @@ public class PopUpObject : MonoBehaviour
     private Vector3 targetScale;
     [SerializeField]
     private float graceDurationOnSpawn;
+    [SerializeField]
+    private string[] popupMessages;
+    [SerializeField]
+    private TextMeshProUGUI textObject;
 
     private Tween scaleTween;
     private bool preventMultiCall = false;
@@ -27,6 +32,8 @@ public class PopUpObject : MonoBehaviour
         
         restrainer.OnHitBounds += HitBoundsCall;
 
+
+        UpdatePopUpMessage();
         OnSpawnPopUp();
     }
 
@@ -58,6 +65,11 @@ public class PopUpObject : MonoBehaviour
         myCol.enabled = colStatus;
     }
 
+    private void UpdatePopUpMessage() {
+        int rng = UnityEngine.Random.Range(0, popupMessages.Length);
+
+        textObject.text = popupMessages[rng];
+    }
 
     private void HitBoundsCall() {
         CallDespawnPopup();

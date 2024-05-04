@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 public class CharacterSequenceButton : PokeButtonUI
 {
@@ -12,11 +12,18 @@ public class CharacterSequenceButton : PokeButtonUI
     private CharacterSequenceTask task;
     private CharacterSequenceTask.CharacterSequenceData thisButtonData;
     private Button buttonScript;
+    [SerializeField]
+    private Image image;
+    [SerializeField]
+    private AudioSource glitchedSource;
     private bool hasActivatedProperly;
     [SerializeField]
     private Vector3 targetScale;
     [SerializeField]
     private float animDuration;
+
+    [SerializeField]
+    private Material mainMat, glitchedMat;
 
     void OnEnable()
     {
@@ -34,6 +41,13 @@ public class CharacterSequenceButton : PokeButtonUI
         }
         thisButtonData = data;
         textRef.text = data.characters;
+
+        if(data.isBugged) {
+            image.material = glitchedMat;
+            glitchedSource.PlayOneShot(glitchedSource.clip);
+        }
+        else
+            image.material = mainMat;
 
         buttonScript.enabled = false;
 
@@ -60,5 +74,13 @@ public class CharacterSequenceButton : PokeButtonUI
 
     public void ResetStatus() {
         hasActivatedProperly = false;
+    }
+
+    public override void OnXRUIHover(UIHoverEventArgs enterArgs)
+    {
+    }
+
+    public override void OnXRUIHoverExit(UIHoverEventArgs exitArgs)
+    {
     }
 }

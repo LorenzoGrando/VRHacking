@@ -23,6 +23,8 @@ public class CatchTask : HackTask
 
         slider.OnCollectCatchable += OnCollectCatchable;
 
+        canSpawn = true;
+
         
     }
 
@@ -52,11 +54,20 @@ public class CatchTask : HackTask
         base.CompleteTask();
     }
 
+    protected override void CallGlitch()
+    {
+        canSpawn = false;
+        base.CallGlitch();
+        glitchManager.OnGlitchFinished += () => canSpawn = true;
+    }
+
     #endregion
 
     #region Catch Methods
     [SerializeField]
     private CatchTaskDisplay display;
+    [SerializeField]
+    private AudioSource catchAudio;
     [SerializeField]
     CatchTaskSlider slider;
     [SerializeField]
@@ -73,6 +84,7 @@ public class CatchTask : HackTask
     private int numberOfCollectedObjects;
     private int currentSpawnerIndex;
     private float thisTaskMoveSpeed;
+    private bool canSpawn;
 
     [SerializeField]
     private float baseSpawnObjectInterval;
@@ -107,10 +119,18 @@ public class CatchTask : HackTask
     private void PlaceCatchableAtSpawn(CatchTaskCatchable catchable) {
         catchable.transform.position = spawnPositions[currentSpawnerIndex].transform.position;
         catchable.SetSpeed(thisTaskMoveSpeed);
+        catchable.gameObject.SetActive(true);
     }
 
-    private void OnCollectCatchable() {
+    private void OnCollectCatchable(CatchTaskCatchable catchable) {
+        bool isBugged = catchable.bugged;
+        catchable.OnExistanceFutile();
+        if(isBugged) {
+            CallGlitch();
+            return;
+        }
         numberOfCollectedObjects++;
+        catchAudio.Play();
         
         if(CheckTaskCompleted()) {
             if(gameLoopRoutine != null) {
@@ -126,8 +146,21 @@ public class CatchTask : HackTask
 
     private IEnumerator GameLoopRoutine() {
         while (!CheckTaskCompleted()) {
-            PlaceCatchableAtSpawn(catchablePool.Get());
-            currentSpawnerIndex = GetNextSpawnerIndex();
+            if(canSpawn) {
+                CatchTaskCatchable catchable = catchablePool.Get();
+                bool bugStatus = false;
+                if(enableMines) {
+                    int rnd = UnityEngine.Random.Range(0, 3);
+                    if(rnd == 0) {
+                        bugStatus = true;
+                    }
+                }
+
+                catchable.UpdateStatus(bugStatus);
+
+                PlaceCatchableAtSpawn(catchable);
+                currentSpawnerIndex = GetNextSpawnerIndex();
+            }
 
             yield return new WaitForSeconds(baseSpawnObjectInterval);
         }
@@ -158,6 +191,7 @@ public class CatchTask : HackTask
         catchable.UpdatePool(catchablePool);
         catchable.transform.SetParent(catchableHolder);
         catchable.transform.localScale = catchable.targetLocalScale;
+        catchable.transform.localRotation = Quaternion.Euler(Vector3.zero);
         catchable.GetComponent<UIRestrainAnchors>().UpdateAnchors(catachableBottomAnchor, catchableTopAnchor);
         return catchable;
     }

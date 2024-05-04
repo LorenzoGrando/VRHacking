@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 public class TaskManager : MonoBehaviour
 {
@@ -28,15 +28,19 @@ public class TaskManager : MonoBehaviour
 
     [SerializeField]
     private AudioSource completeAudioSource;
+    [SerializeField]
+    private GameObject taskWindowObject;
 
     [Space(5)]
     [SerializeField]
     private MainScreenDisplay mainScreenDisplay;
-
+    [HideInInspector]
+    public bool enableMines;
 
     void Start()
     {
         numberOfAvailableTasks = availableTasks.Length;
+        enableMines = false;
     }
 
     void Update()
@@ -73,7 +77,7 @@ public class TaskManager : MonoBehaviour
         remainingTasksInSequence = CalculateLenght();
         generatedSequenceSize = remainingTasksInSequence;
 
-        StartNewTask();
+        taskWindowObject.transform.DOScale(Vector3.one, 0.25f).OnComplete(() => StartNewTask());
     }
 
     private int CalculateLenght() {
@@ -92,9 +96,14 @@ public class TaskManager : MonoBehaviour
                 index = 0;
             }
         }
+        if(enableMines) {
+            availableTasks[index].enableMines = true;
+            enableMines = false;
+        }
+
         availableTasks[index].StartTask(currentData);
-        Debug.Log(availableTasks[index].gameObject.name);
         availableTasks[index].OnTaskCompleted += TaskCompleted;
+
 
         lastPerformedTaskIndex = index;
         currentTaskBeginTime = Time.time;
@@ -117,6 +126,12 @@ public class TaskManager : MonoBehaviour
             OnMessageTrigger?.Invoke(requestData);
         }
 
+        taskWindowObject.transform.DOScale(Vector3.zero, 0.25f).OnComplete(() => CheckContinueSequence());
+        
+    }
+
+
+    private void CheckContinueSequence() {
         if(remainingTasksInSequence <= 0) {
             FinishTaskSequence();
         }
@@ -124,7 +139,6 @@ public class TaskManager : MonoBehaviour
             StartCoroutine(routine: WaitForNewTask());
         }
     }
-
     private void FinishTaskSequence() {
         OnPlayerTasksCompleted?.Invoke();
     }
@@ -132,7 +146,7 @@ public class TaskManager : MonoBehaviour
     private IEnumerator WaitForNewTask() {
         yield return new WaitForSeconds(newTaskInvervalDuration);
 
-        StartNewTask();
+        taskWindowObject.transform.DOScale(Vector3.one, 0.25f).OnComplete(() => StartNewTask());
 
         yield break;
     }

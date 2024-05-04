@@ -77,9 +77,6 @@ public class HackerManager : MonoBehaviour
 
         ResetValues();
 
-        display.InitiateCanvas();
-        display.UpdateHackerData(activeHacker);
-
         return activeHacker;
     }
 
@@ -120,6 +117,8 @@ public class HackerManager : MonoBehaviour
     }
 
     public void BeginHackerSequence() {
+        display.InitiateCanvas();
+        display.UpdateHackerData(activeHacker);
         sequenceSize = GenerateSequenceSize();
         remainingTasksInSequence = sequenceSize;
 
@@ -129,12 +128,6 @@ public class HackerManager : MonoBehaviour
         float currentTime = Time.time;
         lastBugUploadTime = currentTime;
         lastTaskCompletionTime = currentTime;
-
-        DialogueRequestData requestData = new DialogueRequestData {
-            type = DialogueAsset.DialogueType.Hacker,
-            source =  DialogueAsset.DialogueSource.Greeting
-        };
-        OnMessageTrigger?.Invoke(requestData);
 
         currentlyExecuting = true;
     }

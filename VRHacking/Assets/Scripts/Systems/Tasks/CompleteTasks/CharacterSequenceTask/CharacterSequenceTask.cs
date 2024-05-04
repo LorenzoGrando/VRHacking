@@ -50,6 +50,7 @@ public class CharacterSequenceTask : HackTask
     public struct CharacterSequenceData {
         public string characters;
         public int numberInOrder;
+        public bool isBugged;
     }
 
     private const string possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -86,6 +87,7 @@ public class CharacterSequenceTask : HackTask
         orderedSequence.Clear();
         shuffledSequence.Clear();
         currentOrderValue = -1;
+        CharacterSequenceData mineData = new CharacterSequenceData();
 
 
         for(int i = 0; i < stringSize; i++) {
@@ -94,6 +96,19 @@ public class CharacterSequenceTask : HackTask
             char[] chars = new char[generationlenght];
             for(int l = 0; l < generationlenght; l++) {
                 chars[l] = possibleCharsArray[rnd.Next(possibleCharsLenght)];
+            }
+
+            if(enableMines) {
+                int rnd = UnityEngine.Random.Range(0,2);
+                if(rnd == 0) {
+                    CharacterSequenceData buggedData = new CharacterSequenceData() {
+                        characters = new string(chars),
+                        numberInOrder = i,
+                        isBugged = true
+                    };
+                    mineData = buggedData;
+                    enableMines = false;       
+                }
             }
 
             //Initializes and adds data
@@ -105,6 +120,10 @@ public class CharacterSequenceTask : HackTask
             shuffledSequence.Add(data);
         }
 
+        if(mineData.isBugged) {
+            shuffledSequence.Add(mineData);
+        }
+
         shuffledSequence.Shuffle();
 
         display.InitiateDisplay(orderedSequence, shuffledSequence);
@@ -113,11 +132,17 @@ public class CharacterSequenceTask : HackTask
     private int GenerateSingleCharLenght() {
         //TODO: Make it more likely to generate 3-letter strings on higher difficulties
         //max exclusive
-        int lenght = Mathf.Clamp(Mathf.RoundToInt(2 * gameSettingsData.difficulty), 2, 3);
+        int lenght = Mathf.Clamp(Mathf.RoundToInt(2 * gameSettingsData.difficulty + (- 0.6f + UnityEngine.Random.Range(0,2))), 2, 3);
         return lenght;
     }
 
     public bool TryActivateChar(CharacterSequenceData data){
+        if(data.isBugged) {
+            CallGlitch();
+            return false;
+        }
+
+
         bool validButton = currentOrderValue == data.numberInOrder - 1;
         if(validButton) {
             currentOrderValue++;

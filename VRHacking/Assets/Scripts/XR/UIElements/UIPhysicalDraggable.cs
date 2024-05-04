@@ -108,7 +108,11 @@ public class UIPhysicalDraggable : MonoBehaviour
             finalPos.z = constrainedPos.z;
         }
 
+        //finalPos = transform.InverseTransformPoint(finalPos);
+        //finalPos.z = transform.localPosition.z;
+
         transform.position = finalPos;
+        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0); 
     }
 
     private void StartMomentum() {

@@ -23,13 +23,6 @@ public class HandShadingManager : MonoBehaviour
     [SerializeField]
     private int temp;
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            TriggerGlitchEffect();
-        }
-    }
-
     void OnEnable()
     {
         ResetToDefault();

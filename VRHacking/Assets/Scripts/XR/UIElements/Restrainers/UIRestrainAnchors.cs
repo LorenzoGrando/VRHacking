@@ -20,27 +20,27 @@ public class UIRestrainAnchors : UIRestrainer
     {
         bool hitBounds = false;
 
-        if(transform.position.x > (upperRightAnchor.position.x)) {
+        if(transform.localPosition.x > (upperRightAnchor.localPosition.x)) {
             if(assignPosition)
-                transform.position = new Vector3(upperRightAnchor.position.x, transform.position.y, transform.position.z);
+                transform.localPosition = new Vector3(upperRightAnchor.localPosition.x, transform.localPosition.y, transform.localPosition.z);
             hitBounds = true;
         }
 
-        if(transform.position.x < (lowerLeftAnchor.position.x)) {
+        if(transform.localPosition.x < (lowerLeftAnchor.localPosition.x)) {
             if(assignPosition)
-                transform.position = new Vector3(lowerLeftAnchor.position.x, transform.position.y, transform.position.z);
+                transform.localPosition = new Vector3(lowerLeftAnchor.localPosition.x, transform.localPosition.y, transform.localPosition.z);
             hitBounds = true;
         }
 
-        if(transform.position.y  > (upperRightAnchor.position.y)) {
+        if(transform.localPosition.y  > (upperRightAnchor.localPosition.y)) {
             if(assignPosition)
-                transform.position = new Vector3(transform.position.x, upperRightAnchor.position.y,  transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, upperRightAnchor.localPosition.y,  transform.localPosition.z);
             hitBounds = true;
         }
 
-        if(transform.position.y < (lowerLeftAnchor.position.y)) {
+        if(transform.localPosition.y < (lowerLeftAnchor.localPosition.y)) {
             if(assignPosition)
-                transform.position = new Vector3(transform.position.x, lowerLeftAnchor.position.y,  transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, lowerLeftAnchor.localPosition.y,  transform.localPosition.z);
             hitBounds = true;
         }
 

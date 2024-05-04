@@ -3,9 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using DG.Tweening;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 [RequireComponent(typeof(UnityEngine.UI.Button))]
-public class UIBugUploadButton : MonoBehaviour
+public class UIBugUploadButton : PokeButtonUI
 {
     [Header("Functionality")]
     [SerializeField]
@@ -74,11 +75,14 @@ public class UIBugUploadButton : MonoBehaviour
         }
     }
 
-    public void OnClick() {
+    public override void OnButtonPressed()
+    {
         hackerMainDisplay.InitiateTask(thisPinConfig, thisButtonBug);
     }
 
-    public void OnHover(HoverEnterEventArgs hoverEnterEventArgs) {
+    public override void OnXRUIHover(UIHoverEventArgs enterArgs)
+    {
+        Debug.Log("Hovered");
         descritionHolder.SetActive(true);
         descriptionTextObject.text = thisButtonBug.description;
 
@@ -90,8 +94,8 @@ public class UIBugUploadButton : MonoBehaviour
         descriptionScaleTween = descritionHolder.transform.DOScale(targetDescriptionScale, animDuration).SetEase(Ease.OutQuart);
         descriptionPositionTween = descritionHolder.transform.DOLocalMove(targetPosition, animDuration / 2).SetEase(Ease.OutQuart);
     }
-
-    public void OnUnhover(HoverExitEventArgs hoverExitEventArgs) {
+    public override void OnXRUIHoverExit(UIHoverEventArgs exitArgs)
+    {
         ClearDescriptionTweens();
 
         descriptionScaleTween = descritionHolder.transform.DOScale(Vector3.zero, animDuration  / 2).OnComplete(() => descritionHolder.SetActive(false)).SetEase(Ease.InQuart);
