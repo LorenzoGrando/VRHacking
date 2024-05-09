@@ -15,27 +15,29 @@ public class QuickMemoryTask : HackTask
     {
         this.gameSettingsData = settingsData;
         ResetTask();
-        prefabObject.SetActive(true);
-        GenerateOrderedSequence(GenerateSequenceSize());
+        GenerateOrderedSequence(GenerateSequenceSize(), false);
     }
 
     protected override bool CheckTaskCompleted()
     {
-        if(currentOrderInSequence == targetValue - 1) {
+        if(currentOrderInSequence == targetValue) {
+            display.OnScalingAnimComplete += CompleteTask;
+            display.ScaleDisplay(false);
             return true;
         }
         else return false;
     }
 
     protected override void CompleteTask() {
+        display.OnScalingAnimComplete -= CompleteTask;
+        display.ResetDisplay();
         base.CompleteTask();
-        prefabObject.SetActive(false);
     }
 
     protected override void ResetTask()
     {
         InitializeValues();
-        currentOrderInSequence = 0;
+        currentOrderInSequence = 1;
         display.ResetDisplay();
     }
 
@@ -60,11 +62,12 @@ public class QuickMemoryTask : HackTask
         orderedData = new List<QuickMemoryData>();
     }
 
-    private void GenerateOrderedSequence(int size) {
+    private void GenerateOrderedSequence(int size, bool isReset) {
         orderedData.Clear();
-        targetValue = size;
+        currentOrderInSequence = 1;
+        targetValue = size + 1;
 
-        for(int i = 0; i < size; i++) {
+        for(int i = 1; i <= size; i++) {
             QuickMemoryData data = new QuickMemoryData(){
                 numberInOrder = i,
             };
@@ -84,7 +87,7 @@ public class QuickMemoryTask : HackTask
             orderedData.Add(data);
         }
 
-        display.InitializeDisplay(orderedData);
+        display.InitializeDisplay(orderedData, !isReset);
     }
 
     private int GenerateSequenceSize() {
@@ -105,6 +108,7 @@ public class QuickMemoryTask : HackTask
         }
         else {
             CallRestartTask();
+            return false;
         }
 
         if(CheckTaskCompleted()) {
@@ -115,8 +119,9 @@ public class QuickMemoryTask : HackTask
     }
 
     public void CallRestartTask() {
-        ResetTask();
-        GenerateOrderedSequence(orderedData.Count);
+        display.ResetDisplay();
+        display.InitializeDisplay(orderedData, false);
+        display.OnCompleteAnim(true);
     }
 
 

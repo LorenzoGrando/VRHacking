@@ -44,17 +44,6 @@ public class EnvironmentManager : MonoBehaviour
 
     private void Update() {
         RotateSkybox();
-
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            isGlitched = !isGlitched;
-            ChangeWorldState(isGlitched);
-        }
-        if(Input.GetKeyDown(KeyCode.D)) {
-            DissolveWorld(1.5f, true);
-        }
-        if(Input.GetKeyDown(KeyCode.F)) {
-            DissolveWorld(1.5f, false);
-        }
     }
 
     private void SetupMats() {

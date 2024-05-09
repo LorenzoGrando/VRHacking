@@ -35,6 +35,9 @@ public class QuickMemoryButton : PokeButtonUI
     }
 
     public void HideButtonData() {
+        if(textRef == null) {
+            textRef = GetComponentInChildren<TextMeshProUGUI>();
+        }
         textRef.text = " ";
     }
 
