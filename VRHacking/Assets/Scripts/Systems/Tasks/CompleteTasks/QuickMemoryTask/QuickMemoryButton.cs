@@ -20,12 +20,12 @@ public class QuickMemoryButton : PokeButtonUI
     private Vector3 targetScale;
     public override void OnXRUIHover(UIHoverEventArgs enterArgs)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void OnXRUIHoverExit(UIHoverEventArgs exitArgs)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void ResetStatus() {

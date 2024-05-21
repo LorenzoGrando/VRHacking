@@ -88,6 +88,8 @@ public class GlitchManager : MonoBehaviour
 
         Debug.Log("Found Texts:" + targetTexts.Count);
 
+        if(displayHolder == null)
+            displayHolder = FindObjectOfType<GlitchDisplay>();
         displayHolder.CallDisplay(glitchDuration);
         mat.EnableKeyword("_GLITCH_ON");
         mainMonitorMat.SetTexture("_BaseTex", monitorTextures[1]);

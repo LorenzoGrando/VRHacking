@@ -155,9 +155,8 @@ public class CatchTask : HackTask
                         bugStatus = true;
                     }
                 }
-
-                catchable.UpdateStatus(bugStatus);
-
+                catchable.bugged = bugStatus;
+                
                 PlaceCatchableAtSpawn(catchable);
                 currentSpawnerIndex = GetNextSpawnerIndex();
             }
