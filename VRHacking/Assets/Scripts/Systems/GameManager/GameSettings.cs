@@ -4,10 +4,11 @@ using UnityEngine;
 public static class GameSettings
 {
     private static GameSettingsData currentGameData;
-    private const string constPath = "ScriptableObjects/Settings_";
+    private static RunData currentRunData;
+    private const string constSettingsPath = "ScriptableObjects/Settings_";
 
     public static void InitializeData(GameSettingsData.GameMode mode) {
-        string path = constPath + Enum.GetName(typeof(GameSettingsData.GameMode), mode);
+        string path = constSettingsPath + Enum.GetName(typeof(GameSettingsData.GameMode), mode);
         currentGameData = Resources.Load<GameSettingsData>(path);
 
         currentGameData.difficulty = 1;
@@ -29,4 +30,12 @@ public static class GameSettings
 
         return currentGameData;
     }
+}
+
+public class RunData {
+    public int hackersDefeated;
+    public int tasksCompleted;
+    public int bugsUploaded;
+    public int bugsReceived;
+    public float averageTaskCompletionTime;
 }

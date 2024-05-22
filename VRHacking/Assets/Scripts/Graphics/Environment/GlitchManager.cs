@@ -48,7 +48,7 @@ public class GlitchManager : MonoBehaviour
                 }
             }
 
-            yield return null;
+            yield return new WaitForSeconds(duration/15);
         }
 
         EndGlitches();

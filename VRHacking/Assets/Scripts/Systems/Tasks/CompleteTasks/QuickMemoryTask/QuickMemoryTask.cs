@@ -98,6 +98,7 @@ public class QuickMemoryTask : HackTask
     public bool TryActiveButton(QuickMemoryData data) {
         if(data.isBugged) {
             CallGlitch();
+            CallRestartTask();
             return false;
         }
 

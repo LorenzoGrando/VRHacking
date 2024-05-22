@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5f985e9-1764-4dcc-8b8b-a022e8582125" name="Changes" comment="" />
+    <list default="true" id="c5f985e9-1764-4dcc-8b8b-a022e8582125" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Graphics/Environment/GlitchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Graphics/Environment/GlitchManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/GameManager/GameSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/GameManager/GameSettings.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,6 +107,7 @@
       <workItem from="1713994568420" duration="1562000" />
       <workItem from="1714068499162" duration="997000" />
       <workItem from="1715286953663" duration="32000" />
+      <workItem from="1716405848850" duration="6000" />
     </task>
     <servers />
   </component>
