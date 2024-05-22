@@ -34,6 +34,10 @@ public class GlitchManager : MonoBehaviour
     void Start()
     {
         chars = typoChars.ToCharArray();
+        string charstring = "";
+        foreach(char c in chars) {
+            charstring += c;
+        }
         targetTexts= new List<GlitchableText>();
         environmentManager = FindObjectOfType<EnvironmentManager>();
         mainMonitorMat = mainMonitorObject.GetComponent<MeshRenderer>().material;
@@ -48,7 +52,7 @@ public class GlitchManager : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(duration/15);
+            yield return new WaitForSeconds(duration/8);
         }
 
         EndGlitches();
@@ -65,10 +69,15 @@ public class GlitchManager : MonoBehaviour
             }
         }
 
-        string finalString = "";
+        /*
+        string charstring = "";
         foreach(char c in brokenString) {
-            finalString += brokenString;
+            charstring += c;
         }
+        Debug.Log(charstring);
+        */
+        string finalString = new(brokenString);
+        Debug.Log("Final List: " + finalString);
 
         return finalString;
     }

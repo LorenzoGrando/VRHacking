@@ -44,11 +44,15 @@ public class CharacterSequenceButton : PokeButtonUI
 
         if(data.isBugged) {
             image.material = glitchedMat;
-            image.color = Color.red;
+            Color color = Color.red;
+            color.a = 1;
+            image.color = color; 
             glitchedSource.PlayOneShot(glitchedSource.clip);
         }
         else {
-            image.color = Color.white;
+            Color color = Color.white;
+            color.a = 1;
+            image.color = color; 
             image.material = mainMat;
         }
         buttonScript.enabled = false;

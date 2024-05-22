@@ -28,6 +28,7 @@ public class GlitchDisplay : MonoBehaviour
         endSequence.Append(backgroundImage.transform.DOScale(Vector3.zero, 0.15f));
         
         endSequence.OnComplete(() => holderObject.SetActive(false));
+        endSequence.Play();
     }
 
     public void CallDisplay(float duration) {
@@ -46,6 +47,7 @@ public class GlitchDisplay : MonoBehaviour
         startSequence.Insert(1, textObject.transform.DOScale(Vector3.one, 0.10f));
 
         startSequence.OnComplete(() => StartCoroutine(TypewriterRoutine(targetText, () => StartCoroutine(CountdownRoutine(duration, () => OnDisappear())))));
+        startSequence.Play();
     }
 
     private IEnumerator TypewriterRoutine(string message, Callback OnCompleteCallback = null) {

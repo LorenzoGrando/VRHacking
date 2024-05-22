@@ -48,13 +48,17 @@ public class CatchTaskCatchable : MonoBehaviour
         if(bugged) {
             image.material = glitchedMat;
             image.sprite = sprites[1];
-            image.color = Color.red;
+            Color color = Color.red;
+            color.a = 1;
+            image.color = color; 
             glitchSource.PlayOneShot(glitchSource.clip);
         }
         else {
             image.material = mainMat;
             image.sprite = sprites[0];
-            image.color = Color.white;
+            Color color = Color.white;
+            color.a = 1;
+            image.color = color; 
         }
     }
 
