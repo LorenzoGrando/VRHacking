@@ -47,17 +47,16 @@ public class CatchTaskCatchable : MonoBehaviour
         this.bugged = bugged;
         if(bugged) {
             image.material = glitchedMat;
-            image.sprite = sprites[1];
-            Color color = Color.red;
-            color.a = 1;
+            image.overrideSprite = sprites[1];
+            Color32 color = new Color32(255, 0, 0, 255);
+            image.color = color; 
             image.color = color; 
             glitchSource.PlayOneShot(glitchSource.clip);
         }
         else {
             image.material = mainMat;
-            image.sprite = sprites[0];
-            Color color = Color.white;
-            color.a = 1;
+            image.overrideSprite = sprites[0];
+            Color32 color = new Color32(255, 255, 255, 255);
             image.color = color; 
         }
     }
