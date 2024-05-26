@@ -119,7 +119,9 @@ public class QuickMemoryTask : HackTask
         return validButton;
     }
 
-    public void CallRestartTask() {
+    public void CallRestartTask()
+    {
+        currentOrderInSequence = 1;
         display.ResetDisplay();
         display.InitializeDisplay(orderedData, false);
         display.OnCompleteAnim(true);

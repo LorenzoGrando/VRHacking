@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainScreenDisplay : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class MainScreenDisplay : MonoBehaviour
     private HackerBug[] hackerBugs;
     [SerializeField]
     private Image[] bugVisualizers;
-
+    [SerializeField]
+    private TextMeshProUGUI endlessHolderDataText;
     void OnEnable()
     {
         UpdatedVisualizers();
@@ -72,7 +74,7 @@ public class MainScreenDisplay : MonoBehaviour
 
             break;
             case GameSettingsData.GameMode.Endless:
-            startEndlessHolder.SetActive(true);
+                UpdateEndlessHolderScreen();
 
             //update data about the display
             break;
@@ -93,7 +95,7 @@ public class MainScreenDisplay : MonoBehaviour
                 }
 
                 else {
-                    startEndlessHolder.SetActive(true);
+                    UpdateEndlessHolderScreen();
                 }
 
             break;
@@ -101,5 +103,26 @@ public class MainScreenDisplay : MonoBehaviour
 
             break;
         }
+    }
+
+    private void UpdateEndlessHolderScreen() {
+        RunData bestRunData = GameSettings.TryGetBestRunData();
+
+        if(bestRunData == null) {
+            bestRunData = new RunData();
+            bestRunData.ResetData();
+            bestRunData.averageTaskCompletionTime = 0.01f;
+        }
+
+        string displayText = 
+            $"Hackers Defeated: {bestRunData.hackersDefeated}\n" +
+            $"Tasks Completed: {bestRunData.tasksCompleted}\n" +
+            $"Average Task Time: {bestRunData.averageTaskCompletionTime.ToString("0.#")}s\n" +
+            $"Bugs Uploaded: {bestRunData.bugsUploaded}\n" +
+            $"Bugs Received: {bestRunData.bugsReceived}";
+        
+        endlessHolderDataText.text = displayText;
+        
+        startEndlessHolder.SetActive(true);
     }
 }

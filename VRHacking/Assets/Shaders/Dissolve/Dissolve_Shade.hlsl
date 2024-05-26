@@ -38,6 +38,9 @@ CBUFFER_START(UnityPerMaterial)
 
 float4 _BaseColor;
 half4 _BaseTex_ST;
+float _GradientOnY;
+float _GradientStrength;
+float _GradientTransition;
 
 
 float _Smoothness;
@@ -175,6 +178,12 @@ float4 frag(Varyings i) : SV_Target
     
     float alpha;
     float4 noise = DissolveText(i, baseTextCol, alpha);
+
+    if(_GradientOnY > 0)
+    {
+        float yValue = pow(abs(1 - i.uv.y), _GradientTransition) * _GradientStrength;
+        noise += float4(yValue.xxx,0);
+    }
 
     TryAlphaClip(alpha);
     

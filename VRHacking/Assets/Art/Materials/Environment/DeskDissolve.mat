@@ -139,6 +139,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _GradientOnY: 0
+    - _GradientStrength: 1
+    - _GradientTransition: 1
     - _HeightMod: 2.43
     - _LengthScale: 1
     - _Metallic: 0

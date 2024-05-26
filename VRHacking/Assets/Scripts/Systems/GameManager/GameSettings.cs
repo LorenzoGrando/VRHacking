@@ -6,6 +6,14 @@ public static class GameSettings
 {
     private static GameSettingsData currentGameData;
     private static RunData currentRunData;
+    public static RunData CurrentRunData {
+        get {
+            return currentRunData;
+        }
+        set {
+            currentRunData = value;
+        }
+    }
     private const string constSettingsPath = "ScriptableObjects/Settings_";
     private static string saveDirectory = Application.persistentDataPath + "/SavedData";
     private static string savedRunName = "/BestRunData";
@@ -18,6 +26,8 @@ public static class GameSettings
         currentGameData.level = 0;
         currentGameData.defeatedHackers = 0;
         
+        if(currentRunData == null)
+            currentRunData = new RunData();
         currentRunData.ResetData();
     }
 
