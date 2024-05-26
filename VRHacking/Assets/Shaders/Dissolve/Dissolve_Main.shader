@@ -5,6 +5,9 @@
         [Header(Base Color)]
         [MainColor] _BaseColor ("Base Color", Color) = (1,1,1,1)
         [MainTexture] _BaseTex ("Base Tex", 2D) = "white" {}
+        [Toggle] _GradientOnY (" Gradient On Y Axis?", Range(0,1)) = 0
+        _GradientStrength ("    Gradient Strength", Float) = 1
+        _GradientTransition ("  Gradient Transtion Threshold", Float) = 1
 
         [Header(Lighting)]
         _Smoothness ("Smoothness", Range(0,1)) = 0

@@ -32,6 +32,7 @@ public abstract class HackerBug : MonoBehaviour
     }
 
     public virtual void OnBugUpload() {
+        GameSettings.CurrentRunData.bugsUploaded++;
         progress = 0;
         StartCoroutine(routine: ExecuteBugTimer());
         cooldownTimer = cooldown;

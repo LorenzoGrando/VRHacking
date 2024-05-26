@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void CommunicateBugStart(HackerData hackerData) {
+        GameSettings.CurrentRunData.bugsReceived++;
         playerBugManager.StartBugRequest(hackerData);
     }
 
@@ -130,10 +131,12 @@ public class GameManager : MonoBehaviour
     }
 
     private void CallLostGame() {
+        GameSettings.TryUpdateBestRun(GameSettings.CurrentRunData);
         FinishSystemDispute(false);
     }
 
     private void CallWonGame() {
+        GameSettings.CurrentRunData.hackersDefeated++;
         FinishSystemDispute(true);
     }
 
@@ -142,6 +145,10 @@ public class GameManager : MonoBehaviour
 
         BeginNewSystemDispute(gameSettings);
         mainDisplay.StartGameDisplay();
+    }
+
+    public void ResetCurrentRun() {
+        GameSettings.CurrentRunData.ResetData();
     }
 
     public void StartMenu() {

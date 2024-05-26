@@ -10,7 +10,7 @@ public class CatchTaskCatchable : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private UIRestrainer restrainer;
-    public bool bugged {get; private set;}
+    public bool bugged;
     private float moveSpeed;
     public Material mainMat, glitchedMat;
     [SerializeField]
@@ -28,6 +28,7 @@ public class CatchTaskCatchable : MonoBehaviour
             glitchSource = GetComponent<AudioSource>();
         }
         
+        UpdateStatus(bugged);
     }
     public void UpdatePool (IObjectPool<CatchTaskCatchable> pool) {
         poolReference = pool;
@@ -46,12 +47,17 @@ public class CatchTaskCatchable : MonoBehaviour
         this.bugged = bugged;
         if(bugged) {
             image.material = glitchedMat;
-            image.sprite = sprites[1];
+            image.overrideSprite = sprites[1];
+            Color32 color = new Color32(255, 0, 0, 255);
+            image.color = color; 
+            image.color = color; 
             glitchSource.PlayOneShot(glitchSource.clip);
         }
         else {
             image.material = mainMat;
-            image.sprite = sprites[0];
+            image.overrideSprite = sprites[0];
+            Color32 color = new Color32(255, 255, 255, 255);
+            image.color = color; 
         }
     }
 

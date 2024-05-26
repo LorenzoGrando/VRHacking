@@ -36,6 +36,7 @@ public class TaskManager : MonoBehaviour
     private MainScreenDisplay mainScreenDisplay;
     [HideInInspector]
     public bool enableMines;
+    private float lastTaskStartTime;
 
     void Start()
     {
@@ -101,6 +102,7 @@ public class TaskManager : MonoBehaviour
             enableMines = false;
         }
 
+        lastTaskStartTime = Time.time;
         availableTasks[index].StartTask(currentData);
         availableTasks[index].OnTaskCompleted += TaskCompleted;
 
@@ -125,7 +127,10 @@ public class TaskManager : MonoBehaviour
 
             OnMessageTrigger?.Invoke(requestData);
         }
-
+        GameSettings.CurrentRunData.tasksCompleted++;
+        float previousAverage = GameSettings.CurrentRunData.averageTaskCompletionTime;
+        GameSettings.CurrentRunData.averageTaskCompletionTime = previousAverage + (((Time.time - lastTaskStartTime) - previousAverage)/GameSettings.CurrentRunData.tasksCompleted);
+        
         taskWindowObject.transform.DOScale(Vector3.zero, 0.25f).OnComplete(() => CheckContinueSequence());
         
     }
@@ -153,6 +158,7 @@ public class TaskManager : MonoBehaviour
 
     public void OnEndDispute() {
         availableTasks[lastPerformedTaskIndex].OnTaskCompleted -= TaskCompleted;
+        taskWindowObject.transform.DOScale(Vector3.one, 0.15f);
         HideAllTasks();
         StopAllCoroutines();
     }

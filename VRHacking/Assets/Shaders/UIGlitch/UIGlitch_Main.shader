@@ -119,6 +119,8 @@ Shader "Custom/UIGlitch"
 
             fixed4 frag(v2f IN) : SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(IN);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
                 //Does Glitch effect only if enabled by keyword
                 #ifdef _GLITCH_ON
                     float intervalTime = floor(_Time.y / _GlitchInterval) * _GlitchInterval;
