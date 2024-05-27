@@ -22,6 +22,7 @@ public class WhacAMoleButton : PokeButtonUI
     public bool mined;
     [SerializeField]
     private Sprite[] sprites;
+    private Sequence currentSequence;
 
 
     public void ResetStatus() {
@@ -49,12 +50,12 @@ public class WhacAMoleButton : PokeButtonUI
 
     public void AnimateMoleButton(float activeTime) {
         isActive = true;
-        Sequence sequence = DOTween.Sequence();
+        currentSequence = DOTween.Sequence();
         
-        sequence.Append(moleObject.transform.DOScale(1, activeTime/3).OnComplete(() => button.enabled = true));
-        sequence.AppendInterval(activeTime);
-        sequence.AppendCallback(() => button.enabled = false);
-        sequence.Append(moleObject.transform.DOScale(0, activeTime/3).OnComplete(() => isActive = false));
+        currentSequence.Append(moleObject.transform.DOScale(1, activeTime/5).OnComplete(() => button.enabled = true));
+        currentSequence.AppendInterval(activeTime);
+        currentSequence.AppendCallback(() => button.enabled = false);
+        currentSequence.Append(moleObject.transform.DOScale(0, activeTime/5).OnComplete(() => isActive = false));
     }
 
     public override void OnButtonPressed()
@@ -62,6 +63,10 @@ public class WhacAMoleButton : PokeButtonUI
         task.OnMoleHit(mined);
         if(mined)
             mined = false;
+
+        currentSequence.Kill(false);
+        button.enabled = false;
+        moleObject.transform.DOScale(0, 0.15f).OnComplete(() => isActive = false);
     }
 
     public override void OnXRUIHover(UIHoverEventArgs enterArgs)
