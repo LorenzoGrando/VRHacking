@@ -14,11 +14,21 @@ public class WhacAMoleDisplay : MonoBehaviour
     private TextMeshProUGUI descriptionText;
     [SerializeField]
     private Vector3 targetButtonScale;
+
+    void OnDisable()
+    {
+        OnLeaveAnimationFinish?.Invoke();
+    }
     
     public void InitiateDisplay() {
         descriptionText.transform.localScale = Vector3.zero;
         descriptionText.transform.DOScale(1, 0.25f);
         AnimateButtons(true);
+    }
+
+    public void HideDisplay() {
+        ChangeButtonVisibility(false);
+        displayHolder.SetActive(false);
     }
 
     public void ChangeButtonVisibility(bool status) {
@@ -55,7 +65,6 @@ public class WhacAMoleDisplay : MonoBehaviour
     public void FireAnimCompletionEvent(bool isEntry) {
         if(!isEntry) {
             ChangeButtonVisibility(false);
-            OnLeaveAnimationFinish?.Invoke();
             displayHolder.SetActive(false);
         }
     }

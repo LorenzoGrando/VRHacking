@@ -13,7 +13,8 @@ public class WhacAMoleTask : HackTask
 
     public override void HideTask()
     {
-        display.ChangeButtonVisibility(false);
+        StopAllCoroutines();
+        display.HideDisplay();
     }
     public override void StartTask(GameSettingsData settingsData)
     {
@@ -103,6 +104,8 @@ public class WhacAMoleTask : HackTask
         }
 
         currentMoleAmount++;
+
+        Debug.Log("Moles hit: " + currentMoleAmount);
 
         if(CheckTaskCompleted()) {
             CompleteTask();

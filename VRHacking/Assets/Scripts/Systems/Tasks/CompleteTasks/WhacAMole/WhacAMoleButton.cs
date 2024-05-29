@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
 
 public class WhacAMoleButton : PokeButtonUI
 {
@@ -16,19 +17,29 @@ public class WhacAMoleButton : PokeButtonUI
     [SerializeField]
     private Material mainMat, glitchedMat;
     [SerializeField]
-    private AudioSource glitchedSource;
+    private AudioSource mainSource, glitchedSource;
 
     public bool isActive;
     public bool mined;
     [SerializeField]
     private Sprite[] sprites;
-    private Sequence currentSequence;
+    private Coroutine delayRoutine;
+    private Tween activeTween;
 
-
+    public void OnDisable() {
+        if(delayRoutine != null) {
+            StopCoroutine(delayRoutine);
+            delayRoutine = null;
+        }
+        if(activeTween != null) {
+            activeTween.Kill();
+            activeTween = null;
+        }
+    }
     public void ResetStatus() {
         mined = false;
         isActive = false;
-        button.enabled = false;
+        button.interactable = false;
         moleObject.transform.localScale = Vector3.zero;
     }
 
@@ -50,23 +61,28 @@ public class WhacAMoleButton : PokeButtonUI
 
     public void AnimateMoleButton(float activeTime) {
         isActive = true;
-        currentSequence = DOTween.Sequence();
         
-        currentSequence.Append(moleObject.transform.DOScale(1, activeTime/5).OnComplete(() => button.enabled = true));
-        currentSequence.AppendInterval(activeTime);
-        currentSequence.AppendCallback(() => button.enabled = false);
-        currentSequence.Append(moleObject.transform.DOScale(0, activeTime/5).OnComplete(() => isActive = false));
+        activeTween = moleObject.transform.DOScale(1, activeTime/6).OnComplete(() => delayRoutine = StartCoroutine(routine: DelayedEndAnimation(activeTime)));
     }
 
     public override void OnButtonPressed()
     {
+        if(delayRoutine != null) {
+            StopCoroutine(delayRoutine);
+            delayRoutine = null;
+        }
+        if(activeTween != null) {
+            activeTween.Kill();
+            activeTween = null;
+        }
+        activeTween = moleObject.transform.DOScale(0, 0.15f).OnComplete(() => isActive = false);
+        button.interactable = false;
+
         task.OnMoleHit(mined);
         if(mined)
             mined = false;
-
-        currentSequence.Kill(false);
-        button.enabled = false;
-        moleObject.transform.DOScale(0, 0.15f).OnComplete(() => isActive = false);
+        else
+            mainSource.PlayOneShot(mainSource.clip);
     }
 
     public override void OnXRUIHover(UIHoverEventArgs enterArgs)
@@ -77,5 +93,17 @@ public class WhacAMoleButton : PokeButtonUI
     public override void OnXRUIHoverExit(UIHoverEventArgs exitArgs)
     {
         //
+    }
+
+    private IEnumerator DelayedEndAnimation(float duration) {
+        button.interactable = true;
+        activeTween = null;
+        
+        yield return new WaitForSeconds(duration);
+
+        button.interactable = false;
+        activeTween = moleObject.transform.DOScale(0, duration/6).OnComplete(() => isActive = false);
+
+        yield break;
     }
 }

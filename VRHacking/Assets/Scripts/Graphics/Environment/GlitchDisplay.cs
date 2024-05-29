@@ -24,7 +24,7 @@ public class GlitchDisplay : MonoBehaviour
         StopAllCoroutines();
         Sequence endSequence = DOTween.Sequence();
         endSequence.Append(textObject.transform.DOScale(Vector3.zero, 0.05f));
-        endSequence.Insert(0, textObject.transform.DOScale(Vector3.zero, 0.05f));
+        endSequence.Insert(0, countdownObject.transform.DOScale(Vector3.zero, 0.05f));
         endSequence.Append(backgroundImage.transform.DOScale(Vector3.zero, 0.15f));
         
         endSequence.OnComplete(() => holderObject.SetActive(false));
@@ -43,8 +43,8 @@ public class GlitchDisplay : MonoBehaviour
 
         Sequence startSequence = DOTween.Sequence();
         startSequence.Append(backgroundImage.transform.DOScale(Vector3.one, 0.25f));
-        startSequence.Append(textObject.transform.DOScale(Vector3.one, 0.10f));
-        startSequence.Insert(1, textObject.transform.DOScale(Vector3.one, 0.10f));
+        startSequence.Append(textObject.transform.DOScale(Vector3.one/100, 0.10f));
+        startSequence.Insert(1, countdownObject.transform.DOScale(Vector3.one/100, 0.10f));
 
         startSequence.OnComplete(() => StartCoroutine(TypewriterRoutine(targetText, () => StartCoroutine(CountdownRoutine(duration, () => OnDisappear())))));
         startSequence.Play();
