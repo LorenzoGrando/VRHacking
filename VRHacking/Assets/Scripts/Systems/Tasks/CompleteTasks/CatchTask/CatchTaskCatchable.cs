@@ -35,8 +35,7 @@ public class CatchTaskCatchable : MonoBehaviour
     }
 
     public void SetSpeed(float speed) {
-        moveSpeed = -speed;
-        rb.velocity = new Vector3(0, moveSpeed, 0);
+        moveSpeed = -speed;  
     }
 
     public void OnExistanceFutile() {
@@ -59,6 +58,11 @@ public class CatchTaskCatchable : MonoBehaviour
             Color32 color = new Color32(255, 255, 255, 255);
             image.color = color; 
         }
+    }
+
+    void Update()
+    {
+        rb.velocity = transform.up * moveSpeed;
     }
 
     void LateUpdate()
