@@ -24,8 +24,6 @@ public class CatchTask : HackTask
         slider.OnCollectCatchable += OnCollectCatchable;
 
         canSpawn = true;
-
-        
     }
 
     protected override bool CheckTaskCompleted()
