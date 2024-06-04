@@ -140,8 +140,16 @@ public class HackerManager : MonoBehaviour
             OnHackerTasksCompleted?.Invoke();
             currentlyExecuting = false;
         }
-        
+
         else {
+            if(remainingTasksInSequence == sequenceSize/2) {
+                DialogueRequestData requestData = new DialogueRequestData {
+                    type = DialogueAsset.DialogueType.Hacker,
+                    source =  DialogueAsset.DialogueSource.TaskThreshold
+                };
+                OnMessageTrigger?.Invoke(requestData);
+            }
+
             CalculateNextTaskCompletion();
         }
     }
