@@ -107,6 +107,8 @@ public class MatchingImagesTask : HackTask
         }
     }
 
+    public void ResetActiveType() => currentSelectedType = ImageType.Null;
+
     private void DeactivePrefabObject() {
         prefabObject.SetActive(false);
     }

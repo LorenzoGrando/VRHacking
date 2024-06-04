@@ -73,6 +73,11 @@ public class MatchingImagesDisplay : MonoBehaviour
         if(lastPressedButton == null) {
             lastPressedButton = button;
         }
+        else if(lastPressedButton == button) {
+            DeselectButtons();
+            taskManager.ResetActiveType();
+            return;
+        }
 
         taskManager.TryActivateImage(button.thisButtonType);
     }

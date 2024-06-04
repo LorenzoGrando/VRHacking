@@ -35,7 +35,7 @@ public class MatchingImageButton : PokeButtonUI
         if(isEntry) {
             gameObject.SetActive(true);
             transform.localScale = Vector3.zero;
-            targetScale = new Vector3(0.1, 0.09, 0.1);
+            targetScale = new Vector3(0.1f, 0.09f, 0.1f);
         }
 
         Tween t = transform.DOScale(targetScale, 0.85f);
