@@ -34,7 +34,6 @@ public class MatchingImagesTask : HackTask
         //Other possible behaviour (anims, etc)
         //Will fire completion event
         display.HideButtons();
-        display.OnLeaveAnimationFinish += DeactivePrefabObject;
         base.CompleteTask();
     }
 
@@ -108,10 +107,6 @@ public class MatchingImagesTask : HackTask
     }
 
     public void ResetActiveType() => currentSelectedType = ImageType.Null;
-
-    private void DeactivePrefabObject() {
-        prefabObject.SetActive(false);
-    }
 
     #endregion
 }

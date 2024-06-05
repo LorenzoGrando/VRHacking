@@ -38,7 +38,7 @@ public class MatchingImageButton : PokeButtonUI
             targetScale = new Vector3(0.1f, 0.09f, 0.1f);
         }
 
-        Tween t = transform.DOScale(targetScale, 0.85f);
+        Tween t = transform.DOScale(targetScale, 0.65f);
         if(!isEntry)
             t.OnComplete(() => OnHideButton());
     }

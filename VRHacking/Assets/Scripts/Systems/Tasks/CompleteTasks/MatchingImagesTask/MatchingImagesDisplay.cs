@@ -27,6 +27,7 @@ public class MatchingImagesDisplay : MonoBehaviour
         displayHolder.SetActive(true);
 
         descriptionObject.transform.DOScale(1, 0.5f);
+        selectionObject.transform.localScale = Vector3.zero;
         GenerateButtons(shuffledList);
         lastPressedButton = null;
     }
@@ -58,7 +59,7 @@ public class MatchingImagesDisplay : MonoBehaviour
     public void ResetDisplay() {
         foreach(MatchingImageButton button in buttons) {
             button.thisButtonType = MatchingImagesTask.ImageType.Null;
-            button.HideButton();
+            button.gameObject.SetActive(false);
         }
     }
 
@@ -86,7 +87,7 @@ public class MatchingImagesDisplay : MonoBehaviour
     {
         selectionObject.transform.localScale = Vector3.zero;
         selectionObject.transform.position = lastPressedButton.transform.position;
-        selectionObject.transform.DOScale(1, 0.65f);
+        selectionObject.transform.DOScale(1, 0.45f);
     }
 
     public void ActivateMatchingButtons(MatchingImagesTask.ImageType type) {
