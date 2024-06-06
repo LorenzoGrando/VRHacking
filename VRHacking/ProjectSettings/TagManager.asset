@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Catchable
   - FallingObject
+  - TargetImage
   layers:
   - Default
   - TransparentFX
