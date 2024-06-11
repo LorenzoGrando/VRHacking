@@ -59,14 +59,7 @@ public class GlitchDisplay : MonoBehaviour
             displayMessage += orderedChars[currentIndex];
             textObject.text = displayMessage;
             currentIndex++;
-            yield return new WaitForSeconds(0.15f);
-        }
-
-        while(currentIndex > 0) {
-            displayMessage.Remove(currentIndex - 1);
-            currentIndex--;
-            textObject.text = displayMessage;
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         if(OnCompleteCallback != null) {

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cbfc0eaeeb87e340909d667f8279821, type: 3}
+  m_Name: Dialogue_BoyFromNowHere()
+  m_EditorClassIdentifier: 
+  greetingMessages:
+  - messages:
+    - Nice to meet you, @gadinjay! Welcome to my world<3
+  taskThresholdMessages:
+  - messages:
+    - Look at the clock! In one song I'm going to beat you.
+    - Tick tock, tick tock, almost done!
+  playerGlitchedMessages:
+  - messages:
+    - You can learn tricks like this from me. Just drop me a line at 45454544@dmail.com
+  - messages:
+    - It's bad, isn't it? But don't be sad.
+  hackerBugUploadMessages:
+  - messages:
+    - I love this moment! It's getting boring competing with you... where's the excitement?
+  - messages:
+    - That was just for fun LOL
+  efficentTaskMessages:
+  - messages:
+    - Yayy! Finally showing signs of life! It's getting interesting.
+  - messages:
+    - "\u201CI'll catch up with you in a moment... wait for me!"
+  slowTaskMessages:
+  - messages:
+    - Excuse me, could you solve this faster?
+  - messages:
+    - I would have solved this in 3 seconds....
+  playerWonMessages:
+  - messages:
+    - I like you. Get out of that shitty company and come to GAIAHEC!
+    - See you later...
+  playerLostMessages:
+  - messages:
+    - What a shame... but I think the next time will be better. Let's go!

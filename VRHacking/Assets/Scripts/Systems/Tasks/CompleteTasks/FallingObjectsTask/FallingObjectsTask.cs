@@ -20,6 +20,7 @@ public class FallingObjectsTask : HackTask
 
         canSpawn = true;
 
+        collectedObjects = 0;
         GenerateTaskTargets();
 
         display.OnScalingAnimComplete += AwaitStartAnim;
@@ -39,10 +40,16 @@ public class FallingObjectsTask : HackTask
         }
 
         collectedObjects = 0;
+        
+        DestroyPool();
     }
 
     protected override void CompleteTask()
     {
+        if(gameLoopRoutine != null) {
+            StopCoroutine(gameLoopRoutine);
+            gameLoopRoutine = null;
+        }
         display.OnScalingAnimComplete -= AwaitEndAnim;
         display.HideDisplay(false);
         base.CompleteTask();
@@ -163,6 +170,11 @@ public class FallingObjectsTask : HackTask
             fallingObjectPool = new ObjectPool<FallingObjectCatchable>
              (CreateFallingObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject, collectionCheck, defaultCapacity, maxSize);
         }
+    }
+
+    private void DestroyPool() {
+        if(fallingObjectPool != null)
+            fallingObjectPool.Clear();
     }
     private FallingObjectCatchable CreateFallingObject() {
         FallingObjectCatchable fallingObject = Instantiate(fallingObjectPrefab).GetComponent<FallingObjectCatchable>();
