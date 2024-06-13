@@ -11,6 +11,7 @@ public class UIPhysicalDraggable : MonoBehaviour
     private Transform interactorTransform;
     [SerializeField]
     private Vector3 allowedAxis;    
+    private Rigidbody rb;
 
     private bool isSelected;
     private Vector3 selectionOffset;
@@ -55,6 +56,8 @@ public class UIPhysicalDraggable : MonoBehaviour
     {
         initialPos = transform.position;
 
+        rb = GetComponent<Rigidbody>();
+
         reversePos = new Vector3();
         if(initialPos.x != 0) {
             reversePos.x = 1f;
@@ -72,8 +75,11 @@ public class UIPhysicalDraggable : MonoBehaviour
     void LateUpdate()
     {
         if(isSelected)
+            if(rb != null) {
+                rb.velocity = Vector3.zero;
             MoveToInteractorTransform();
             isOnMomentum = restrainer.TryRestrain(true);
+        }
         if(isOnMomentum) {
             ExecuteMomentum();
             isOnMomentum = restrainer.TryRestrain(true);
@@ -133,5 +139,9 @@ public class UIPhysicalDraggable : MonoBehaviour
         if(momentumSteps <= 0) {
             isOnMomentum = false;
         }
+    }
+
+    public bool GetInteractionStatus() {
+        return isSelected;
     }
 }

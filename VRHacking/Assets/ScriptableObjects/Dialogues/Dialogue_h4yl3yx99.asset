@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cbfc0eaeeb87e340909d667f8279821, type: 3}
+  m_Name: Dialogue_h4yl3yx99
+  m_EditorClassIdentifier: 
+  greetingMessages:
+  - messages:
+    - Too bad they hired you. A skillset like yours shouldn't be wasted here.
+    - Anyways, what's the passcode for the energy reactor systems?
+  taskThresholdMessages:
+  - messages:
+    - Try not to solve a bug before comprehending it.. The coffee shop waitress you
+      see every day wouldn't like your performance.
+    - I'm almost beating you to it!
+  - messages:
+    - I thought it would be more fun to see you beat me, but that's not going to
+      happen at this rate..
+  playerGlitchedMessages: []
+  hackerBugUploadMessages:
+  - messages:
+    - Come to the dark side of the force... now it's more fun, let's go!
+  - messages:
+    - You'd be a great addition to GaiaHec, but I can't let you beat me after that!
+  efficentTaskMessages:
+  - messages:
+    - Keep it up like that and soon you'll be even beter than your supposed "best
+      boss in the world"!
+  - messages:
+    - go to gaiahec.com and you can learn a lot more about being a good hacker
+  slowTaskMessages: []
+  playerWonMessages:
+  - messages:
+    - I had a lot of fun, it's not everybody who can beat me.
+    - 'Don''t let them use you. Remember: we just want a fair world for everyone.'
+    - We're tired of waiting. GAIAHEC!
+  playerLostMessages:
+  - messages:
+    - One more round? :D
+    - I promise to take it easy...

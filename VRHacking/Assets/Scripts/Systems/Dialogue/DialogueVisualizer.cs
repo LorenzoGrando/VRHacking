@@ -30,6 +30,7 @@ public class DialogueVisualizer : MonoBehaviour
     private Image imageBox;
     [SerializeField]
     private RectMask2D imageMask;
+    private Tween rotationTween;
 
     private void OnEnable()
     {
@@ -78,6 +79,11 @@ public class DialogueVisualizer : MonoBehaviour
         textBox.text = defaultHackerData.description;
         callsignBox.text = "";
         imageBox.sprite = defaultHackerData.icon;
+        if(rotationTween != null) {
+            rotationTween.Kill();
+            rotationTween = null;
+        }
+        rotationTween = imageBox.gameObject.transform.parent.transform.DORotateQuaternion(Quaternion.Euler(0,0,-360), 1).SetLoops(20, LoopType.Restart);
 
         dialogueHolder.transform.localScale = Vector3.zero;
         imageBox.transform.localScale = Vector3.zero;
@@ -87,6 +93,11 @@ public class DialogueVisualizer : MonoBehaviour
     private void UpdateVisualizerToHacker() {
         //Makes mask cover entire sprite, hiding it
         Debug.Log("Called");
+        if(rotationTween != null) {
+            rotationTween.Kill();
+            rotationTween = null;
+        }
+        imageBox.transform.parent.transform.rotation = Quaternion.Euler(0,0,0);
         imageBox.sprite = currentHackerData.icon;
         callsignBox.text = currentHackerData.callsign;
         imageMask.padding = new Vector4(0,0,0,1);

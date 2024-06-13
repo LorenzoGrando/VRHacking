@@ -74,8 +74,8 @@ public class CharacterSequenceDisplay : MonoBehaviour
         mainSequenceTextRef.transform.localScale = Vector3.zero;
         mainSequenceTextRef.transform.DOScale(targetTextScale, .25f);
 
-        UpdateDisplay(-1)
-;    }
+        UpdateDisplay(-1);
+    }
     public void HideSequenceCharacters() {
         mainSequenceTextRef.transform.DOScale(Vector3.zero, .5f);
     }

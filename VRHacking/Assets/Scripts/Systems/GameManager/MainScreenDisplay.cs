@@ -43,11 +43,11 @@ public class MainScreenDisplay : MonoBehaviour
     public void UpdatedVisualizers() {
         for(int i = 0; i < hackerBugs.Length; i++) {
             if(hackerBugs[i].cooldownTimer > 0) {
-                bugVisualizers[i].color = Color.gray;
+                bugVisualizers[i].color = new Color(0.25f, 0.25f, 0.25f, 1);
             }
 
             else {
-                bugVisualizers[i].color = Color.green;
+                bugVisualizers[i].color = Color.white;
             }
         }
     }
