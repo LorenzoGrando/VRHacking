@@ -29,6 +29,7 @@ public class FallingObjectsTask : HackTask
 
     protected override bool CheckTaskCompleted()
     {
+        
         return collectedObjects >= objectsToCatch;
     }
 
@@ -50,7 +51,7 @@ public class FallingObjectsTask : HackTask
             StopCoroutine(gameLoopRoutine);
             gameLoopRoutine = null;
         }
-        display.OnScalingAnimComplete -= AwaitEndAnim;
+        display.OnScalingAnimComplete -= CompleteTask;
         display.HideDisplay(false);
         base.CompleteTask();
     }

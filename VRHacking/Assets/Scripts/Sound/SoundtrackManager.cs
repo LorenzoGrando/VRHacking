@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class SoundtrackManager : MonoBehaviour
     private float defaultVolume;
     private float targetVolume;
     private int intensityLevel;
+    private int currentSoundtrack;
 
     [Header("Background")]
     [SerializeField]
@@ -26,7 +28,31 @@ public class SoundtrackManager : MonoBehaviour
 
     [Header("Endless Tracks")]
     [SerializeField]
-    private AudioClip[] dynamicTracksByIntensity;
+    private Soundtrack[] dynamicTracksByIntensity;
+
+    [System.Serializable]
+    private class Soundtrack
+    {
+        public List<AudioClip> variationsByIntensity;
+        private int currentIndex;
+
+        public AudioClip GetNextClipInSequence()
+        {
+            currentIndex++;
+
+            if (currentIndex > variationsByIntensity.Count)
+            {
+                Debug.LogException(new Exception("There are no more soundtrack variations"));
+                return null;
+            }
+            
+            return variationsByIntensity[currentIndex];
+        }
+
+        public void ResetToBeginning() => currentIndex = 0;
+
+        public AudioClip GetCurrentTrack() => variationsByIntensity[currentIndex];
+    } 
 
     void OnEnable() {
         targetVolume = defaultVolume;
@@ -38,7 +64,7 @@ public class SoundtrackManager : MonoBehaviour
         if(bgTrackPlayer.volume > 0) {
             DoTrackFade(bgTrackPlayer, true, 0.25f);
         }
-        DoCrossfadeTracks(dynamicTracksByIntensity[intensityLevel], fadeTracksDuration);
+        DoCrossfadeTracks(dynamicTracksByIntensity[currentSoundtrack].GetCurrentTrack(), fadeTracksDuration);
     }
 
     public void ModifyVolume(float clampedModifier) => targetVolume = (defaultVolume *= clampedModifier);

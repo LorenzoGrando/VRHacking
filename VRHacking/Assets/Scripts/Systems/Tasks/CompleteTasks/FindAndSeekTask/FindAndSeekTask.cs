@@ -14,7 +14,6 @@ public class FindAndSeekTask : HackTask
         this.gameSettingsData = settingsData;
         ResetTask();
         InitializeValues();
-        display.InitiateDisplay();
         executing = true;
     }
 
@@ -54,6 +53,7 @@ public class FindAndSeekTask : HackTask
     private void InitializeValues() {
         int rng = UnityEngine.Random.Range(1, Enum.GetValues(typeof(TargetIcon)).Length);
         raycaster.UpdateTargetIcon((TargetIcon)rng);
+        display.InitiateDisplay((TargetIcon)rng);
         raycaster.UpdateFireStatus(true);
     }
 

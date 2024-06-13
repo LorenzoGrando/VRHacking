@@ -9,34 +9,47 @@ public class FindAndSeekDisplay : MonoBehaviour
 {
     public event Action OnScalingAnimComplete;
     [SerializeField]
-    private GameObject displayHolder, iconHolder;
+    private GameObject displayHolder, iconHolder, majorWindowHolder;
     [SerializeField]
     private UIRestrainer imageRestrainer;
     [SerializeField]
     private GameObject iconPrefab;
     [SerializeField]
     private TextMeshProUGUI descriptionText;
-    private List<FindAndSeekIcon> icons;
+
+    [SerializeField] private FindAndSeekIcon descriptionIcon;
+    [SerializeField] private List<FindAndSeekIcon> icons;
     [SerializeField] private Transform bottomLeftAnchor, upperRightAnchor;
     private Vector2 imageCenter;
     [SerializeField]
     private Vector2 minIconDistance;
     public void HideDisplay()
     {
-        foreach(FindAndSeekIcon icon in icons) {
-            icon.gameObject.SetActive(false);
+        if (icons != null)
+        {
+            foreach (FindAndSeekIcon icon in icons)
+            {
+                icon.gameObject.SetActive(false);
+            }
         }
 
+        majorWindowHolder.transform.DOScale(0, 0.65f);
         descriptionText.transform.DOScale(0, 0.65f).OnComplete(() => OnFinishAnim(false));
+        descriptionIcon.transform.DOScale(0, 0.5f);
     }
 
     public void ResetDisplay()
     {
-        foreach(FindAndSeekIcon icon in icons) {
-            icon.gameObject.SetActive(false);
+        if (icons != null)
+        {
+            foreach (FindAndSeekIcon icon in icons)
+            {
+                icon.gameObject.SetActive(false);
+            }
+
+            CalculateImageCenter();
+            iconHolder.transform.position = imageCenter;
         }
-        CalculateImageCenter();
-        iconHolder.transform.position = imageCenter;
     }
 
     void Update() {
@@ -45,20 +58,28 @@ public class FindAndSeekDisplay : MonoBehaviour
         }
     }
 
-    public void InitiateDisplay() {
+    public void InitiateDisplay(FindAndSeekTask.TargetIcon targetIcon) {
         displayHolder.gameObject.SetActive(true);
         iconHolder.transform.localPosition = Vector3.zero;
+        
         int iconsLength = Enum.GetValues(typeof(FindAndSeekTask.TargetIcon)).Length;
+        /*
         if(icons == null ||  iconsLength - 1 != icons.Count) {
             icons = new List<FindAndSeekIcon>();
-            GenerateIcons(iconsLength - 1);
+            
         }
+        */
+        
+        GenerateIcons(iconsLength - 1);
 
         for(int i = 0; i < icons.Count; i++) {
             icons[i].gameObject.SetActive(true);
         }
         ScaleIcons(true);
         descriptionText.transform.DOScale(1, 0.45f);
+        descriptionIcon.UpdateAppearance(targetIcon);
+        descriptionIcon.transform.DOScale(1, 0.6f);
+        majorWindowHolder.transform.DOScale(1, 0.4f);
     }
 
     private void CalculateImageCenter() {
@@ -67,16 +88,21 @@ public class FindAndSeekDisplay : MonoBehaviour
     }
 
     private void GenerateIcons(int amount) {
+        /*
         if(icons != null || icons.Count >= 0) {
             foreach(var icon in icons) {
                 Destroy(icon);
             }
             icons.Clear();
         }
+        */
 
         for(int i = 0; i < amount; i++) {
+            /*
             FindAndSeekIcon icon = Instantiate(iconPrefab).GetComponent<FindAndSeekIcon>();
             icon.transform.parent = iconHolder.transform;
+            */
+            FindAndSeekIcon icon = icons[i];
             icon.UpdateAppearance((FindAndSeekTask.TargetIcon) i+1);
             icon.transform.localPosition = GenerateIconPosition();
             icon.transform.localRotation = Quaternion.Euler(Vector3.zero);
@@ -84,12 +110,12 @@ public class FindAndSeekDisplay : MonoBehaviour
     }
 
     private Vector2 GenerateIconPosition() {
-        float xLength = upperRightAnchor.position.x - bottomLeftAnchor.position.x;
-        float yLength = upperRightAnchor.position.y - bottomLeftAnchor.position.y;
+        float xLength = upperRightAnchor.position.x + Mathf.Abs(bottomLeftAnchor.position.x);
+        float yLength = upperRightAnchor.position.y + Mathf.Abs(bottomLeftAnchor.position.y);
 
         //primary SDF
-        Vector2 distanceRangeX = new Vector2(imageCenter.x - xLength/2, imageCenter.x - minIconDistance.x);
-        Vector2 distanceRangeY = new Vector2(imageCenter.y - yLength/2, imageCenter.y - minIconDistance.y);
+        Vector2 distanceRangeX = new Vector2(-xLength, - minIconDistance.x);
+        Vector2 distanceRangeY = new Vector2(- yLength, - minIconDistance.y);
         
         float x = UnityEngine.Random.Range(distanceRangeX.x, distanceRangeX.y);
         float y = UnityEngine.Random.Range(distanceRangeY.x, distanceRangeY.y);

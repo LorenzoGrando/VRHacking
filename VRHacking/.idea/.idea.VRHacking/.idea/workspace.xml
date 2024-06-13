@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5f985e9-1764-4dcc-8b8b-a022e8582125" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.VRHacking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VRHacking/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/HackerDatas/DefaultDialogueHacker.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/HackerDatas/DefaultDialogueHacker.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sound/SoundtrackManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sound/SoundtrackManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Dialogue/DialogueVisualizer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Dialogue/DialogueVisualizer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FallingObjectsTask/FallingObjectsTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FallingObjectsTask/FallingObjectsTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FindAndSeekTask/FindAndSeekDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FindAndSeekTask/FindAndSeekDisplay.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FindAndSeekTask/FindAndSeekRaycaster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FindAndSeekTask/FindAndSeekRaycaster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FindAndSeekTask/FindAndSeekTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Tasks/CompleteTasks/FindAndSeekTask/FindAndSeekTask.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +119,7 @@
       <workItem from="1716501946995" duration="1577000" />
       <workItem from="1716735799440" duration="26000" />
       <workItem from="1717695787731" duration="688000" />
+      <workItem from="1718224985774" duration="8248000" />
     </task>
     <servers />
   </component>
