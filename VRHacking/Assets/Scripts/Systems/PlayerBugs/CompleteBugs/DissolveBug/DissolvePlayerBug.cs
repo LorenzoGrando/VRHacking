@@ -9,6 +9,8 @@ public class DissolvePlayerBug : PlayerBug
     private GameObject[] anchorSpots;
     [SerializeField]
     private GameObject monitorObject, hackerObject;
+    [SerializeField]
+    private AudioSource source;
     private int currentIndex = 0;
     private Sequence durationSequence;
     private EnvironmentManager environmentManager;
@@ -24,6 +26,12 @@ public class DissolvePlayerBug : PlayerBug
     public override void StartBug(GameSettingsData data)
     {
         StartDissolveSequence();
+    }
+
+    protected override void CompleteBug()
+    {
+        source.Stop();
+        base.CompleteBug();
     }
 
     protected override void ResetBug()
@@ -61,6 +69,7 @@ public class DissolvePlayerBug : PlayerBug
         durationSequence.AppendCallback(() => environmentManager.DissolveWorld(bugCompletionDuration/2, false));
         durationSequence.AppendCallback(() => AnimTransition(false));
         durationSequence.AppendInterval(bugCompletionDuration/1.5f).OnComplete(() => CompleteBug());
+        source.Play();
     }
 
     private void ChangeWorldPos() {

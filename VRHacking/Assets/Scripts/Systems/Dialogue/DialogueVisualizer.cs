@@ -30,15 +30,19 @@ public class DialogueVisualizer : MonoBehaviour
     private Image imageBox;
     [SerializeField]
     private RectMask2D imageMask;
+    [SerializeField]
+    private AudioSource source;
     private Tween rotationTween;
 
     private void OnEnable()
     {
         ResetToDefault();
+        
     }
 
     private void OnDisable()
     {
+        
         StopAllCoroutines();
     }
 
@@ -48,6 +52,7 @@ public class DialogueVisualizer : MonoBehaviour
         ResetToDefault();
         currentHackerData = hackerData;
 
+        
         //Do scaling
         float brokenDuration = scalingDuration/3;
         Sequence scalingSequence = DOTween.Sequence();
@@ -71,7 +76,7 @@ public class DialogueVisualizer : MonoBehaviour
         sequence.Append(imageBox.transform.DOScale(Vector3.zero, scalingDuration/2));
         sequence.Insert(0, textBox.transform.DOScale(Vector3.zero, scalingDuration/2));
         sequence.Insert(0, dialogueHolder.transform.DOScale(Vector3.zero, scalingDuration));
-
+        sequence.OnComplete(() => source.Stop());
         sequence.Play();
     }
 
@@ -115,6 +120,8 @@ public class DialogueVisualizer : MonoBehaviour
         int maxTypos = 3;
         int currentTypos = 0;
 
+        source.Play();
+
         while (currentIndex < orderedChars.Count) {
             
             if(currentTypos < maxTypos) {
@@ -137,7 +144,7 @@ public class DialogueVisualizer : MonoBehaviour
             displayMessage.Remove(currentIndex - 1);
             currentIndex--;
             textBox.text = displayMessage;
-            yield return new WaitForSeconds(typewriterSpeed - typewriterSpeed/3);
+            yield return new WaitForSeconds(typewriterSpeed - typewriterSpeed/4);
         }
 
         if(OnCompleteCallback != null) {

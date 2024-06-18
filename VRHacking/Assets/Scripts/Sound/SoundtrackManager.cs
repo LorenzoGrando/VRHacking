@@ -52,6 +52,7 @@ public class SoundtrackManager : MonoBehaviour
         public void ResetToBeginning() => currentIndex = 0;
 
         public AudioClip GetCurrentTrack() => variationsByIntensity[currentIndex];
+        public AudioClip GetTrackByIntensity(int intensity) => variationsByIntensity[intensity];
     } 
 
     void OnEnable() {
@@ -59,12 +60,24 @@ public class SoundtrackManager : MonoBehaviour
         PlayBackgroundNoise();
         currentTrackPlayer = secondTrackPlayer;
     }
+
+    public void ChooseRandomTrack() {
+        int rnd = UnityEngine.Random.Range(0, dynamicTracksByIntensity.Length);
+        if(rnd == currentSoundtrack) {
+            rnd++;
+            if(rnd > dynamicTracksByIntensity.Length) {
+                rnd = 0;
+            }
+        }
+
+        currentSoundtrack = rnd;
+    }
     public void InitializeTrack(GameSettingsData settings) {
         UpdateIntensityByDifficulty(settings.difficulty);
         if(bgTrackPlayer.volume > 0) {
             DoTrackFade(bgTrackPlayer, true, 0.25f);
         }
-        DoCrossfadeTracks(dynamicTracksByIntensity[currentSoundtrack].GetCurrentTrack(), fadeTracksDuration);
+        DoCrossfadeTracks(dynamicTracksByIntensity[currentSoundtrack].GetTrackByIntensity(intensityLevel), fadeTracksDuration);
     }
 
     public void ModifyVolume(float clampedModifier) => targetVolume = (defaultVolume *= clampedModifier);
@@ -95,7 +108,7 @@ public class SoundtrackManager : MonoBehaviour
         AudioSource targetPlayer = currentTrackPlayer == firstTrackPlayer ? secondTrackPlayer : firstTrackPlayer;
         targetPlayer.clip = target;
         targetPlayer.Play();
-        targetPlayer.time = currentTrackPlayer.clip == null ? 0 : currentTrackPlayer.time;
+        targetPlayer.time = currentTrackPlayer.clip == null ? 0 : currentTrackPlayer.time > targetPlayer.clip.length ? 0 : currentTrackPlayer.time;
         targetPlayer.DOFade(targetVolume, duration);
         currentTrackPlayer.DOFade(0, duration).OnComplete(() => SwapCurrentTrack(targetPlayer));
     }

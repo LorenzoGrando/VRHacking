@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e6f061d015e034f9a744ecf9e3b9d9, type: 3}
   m_Name: BoyFromNowHere()
   m_EditorClassIdentifier: 
-  callsign: BoyFromNowHere:()
+  callsign: BoyFromNowHere
   description: 
   icon: {fileID: 21300000, guid: 0e57accd33177854a9bcfff10579f3e2, type: 3}
   efficiency: 0.85
