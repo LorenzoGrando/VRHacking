@@ -11,7 +11,7 @@ public class UIPinManager : MonoBehaviour
     UILineRenderer lineRenderer;
 
     [SerializeField]
-    UIPinButton[] pins;
+    public UIPinButton[] pins;
     [SerializeField]
     private Vector3 targetPinScale;
 

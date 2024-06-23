@@ -15,6 +15,7 @@ public class HackerMainDisplay : MonoBehaviour
 
     #endregion
     public event Action<DialogueRequestData> OnMessageTrigger;
+    private delegate void OnCompleteSequenceCallback();
 
     [Header("Canvas")]
     [SerializeField]
@@ -69,6 +70,7 @@ public class HackerMainDisplay : MonoBehaviour
     private HackerBug executingBug;
 
     private GameObject[] cachedPins;
+    private GameObject cachedStarterPin;
     private HackerBug cachedBug;
 
     public void InitiateCanvas() {
@@ -120,7 +122,7 @@ public class HackerMainDisplay : MonoBehaviour
         backgroundHackerImage.sprite = data.icon;
     }
 
-    public void CallBugDescription(GameObject[] referencePoints, HackerBug bug, string name, string description) {
+    public void CallBugDescription(GameObject[] referencePoints, GameObject startPoint, HackerBug bug, string name, string description) {
         Sequence sequence = DOTween.Sequence();
         float buttonAnimDuration = 0.5f;
         for(int i = 0; i < buttons.Length; i++) {
@@ -135,6 +137,7 @@ public class HackerMainDisplay : MonoBehaviour
         bugDescriptionNameText.text = name;
         bugDescriptionText.text = description;
         cachedPins = referencePoints;
+        cachedStarterPin = startPoint;
         cachedBug = bug;
         sequence.AppendCallback(() => bugDescriptionHolder.SetActive(true));
         sequence.Append(bugDescriptionHolder.transform.DOScale(1, 0.45f));
@@ -150,7 +153,7 @@ public class HackerMainDisplay : MonoBehaviour
         copyAreaPinManager.activeBug = cachedBug;
 
         mainTaskDisplayObject.SetActive(true);
-        DisplayTaskSequence(isInit: true);
+        DisplayTaskSequence(true, () => copyAreaPinManager.AddNewPin(cachedStarterPin));
     }
 
     private void CheckPinCompletion() {
@@ -160,6 +163,20 @@ public class HackerMainDisplay : MonoBehaviour
                 if(copyAreaPinManager.activePoints[i].name != referenceAreaPinManager.activePoints[i].name) {
                     hasCompleted = false;
                     break;
+                }
+            }
+
+            if(!hasCompleted) {
+                int regularIndex = 0;
+                for(int i = copyAreaPinManager.activePoints.Count - 1; i >= 0; i--) {
+                    if(copyAreaPinManager.activePoints[regularIndex].name != referenceAreaPinManager.activePoints[i].name) {
+                        hasCompleted = false;
+                        break;
+                    }
+                    else {
+                        hasCompleted = true;
+                    }
+                    regularIndex++;
                 }
             }
 
@@ -189,7 +206,7 @@ public class HackerMainDisplay : MonoBehaviour
         OnMessageTrigger?.Invoke(requestData);
     }
 
-    private void DisplayTaskSequence(bool isInit) {
+    private void DisplayTaskSequence(bool isInit, OnCompleteSequenceCallback callback = null) {
         Sequence sequence = DOTween.Sequence();
 
         if(isInit) {
@@ -214,6 +231,11 @@ public class HackerMainDisplay : MonoBehaviour
                 }
             } 
         }
+
+        if(callback != null) {
+            callback?.Invoke();
+        }
+
         sequence.Play();
     }
 
@@ -232,7 +254,6 @@ public class HackerMainDisplay : MonoBehaviour
             sequence.Append(playerBugUploadObject.transform.DOScale(Vector3.zero, 0.325f).SetEase(Ease.InBack).OnComplete(() => playerBugUploadObject.SetActive(false)));
             sequence.AppendInterval(0.05f).OnComplete(() => DisplayTaskSequence(false));
         }
-
         sequence.Play();
     }
 }

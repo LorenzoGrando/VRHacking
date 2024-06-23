@@ -30,7 +30,7 @@ public class DissolvePlayerBug : PlayerBug
 
     protected override void CompleteBug()
     {
-        source.Stop();
+        
         base.CompleteBug();
     }
 
@@ -86,8 +86,11 @@ public class DissolvePlayerBug : PlayerBug
             hackerObject.transform.DOScale(Vector3.zero, bugCompletionDuration/4);
         }
         else {
+            DOVirtual.Float(0, 1, bugCompletionDuration/2, (x) => Foo(x)).OnComplete(() => source.Stop());
             monitorObject.transform.DOScale(targetMonitorScale, bugCompletionDuration/4);
             hackerObject.transform.DOScale(targetHackerScale, bugCompletionDuration/4);
         }
     }
+
+    private void Foo(float x){}
 }

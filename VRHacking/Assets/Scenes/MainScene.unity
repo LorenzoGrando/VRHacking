@@ -1624,6 +1624,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
+      propertyPath: starterPin
+      value: 
+      objectReference: {fileID: 249541812}
+    - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
+        type: 3}
       propertyPath: animDuration
       value: 0.25
       objectReference: {fileID: 0}
@@ -23270,6 +23275,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
+      propertyPath: starterPin
+      value: 
+      objectReference: {fileID: 1766025429}
+    - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
+        type: 3}
       propertyPath: animDuration
       value: 0.25
       objectReference: {fileID: 0}
@@ -28568,6 +28578,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 122856194}
     m_Modifications:
+    - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
+        type: 3}
+      propertyPath: starterPin
+      value: 
+      objectReference: {fileID: 121662846}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: animDuration
@@ -51899,6 +51914,11 @@ PrefabInstance:
       propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: UIBugUploadButton, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
+        type: 3}
+      propertyPath: starterPin
+      value: 
+      objectReference: {fileID: 350870755}
     - target: {fileID: 2895331189857975679, guid: afe932a8ca1b0ac48a4c8e7698baeae0,
         type: 3}
       propertyPath: animDuration

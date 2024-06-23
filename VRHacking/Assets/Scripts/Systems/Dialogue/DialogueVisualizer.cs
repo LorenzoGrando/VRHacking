@@ -76,7 +76,6 @@ public class DialogueVisualizer : MonoBehaviour
         sequence.Append(imageBox.transform.DOScale(Vector3.zero, scalingDuration/2));
         sequence.Insert(0, textBox.transform.DOScale(Vector3.zero, scalingDuration/2));
         sequence.Insert(0, dialogueHolder.transform.DOScale(Vector3.zero, scalingDuration));
-        sequence.OnComplete(() => source.Stop());
         sequence.Play();
     }
 
@@ -139,6 +138,8 @@ public class DialogueVisualizer : MonoBehaviour
             currentIndex++;
             yield return new WaitForSeconds(typewriterSpeed);
         }
+
+        source.Stop();
 
         while(currentIndex > 0) {
             displayMessage.Remove(currentIndex - 1);
