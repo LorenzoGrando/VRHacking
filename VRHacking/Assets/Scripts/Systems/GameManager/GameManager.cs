@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     private void StartDispute() {
         taskManager.BeginTaskSequence(gameSettings);
         playerBugManager.InitializeBugData(gameSettings);
+        soundtrackManager.ChooseRandomTrack();
         soundtrackManager.InitializeTrack(gameSettings);
         hackerManager.BeginHackerSequence();
 
@@ -172,6 +173,10 @@ public class GameManager : MonoBehaviour
         GameSettingsData.GameMode mode = (GameSettingsData.GameMode)enumValue;
         GameSettings.InitializeData(mode);
         gameSettings = GameSettings.GetGameData();
+
+        if(mode == GameSettingsData.GameMode.Tutorial) {
+            dialogueManager.UpdateTargetVisualizer(mode != GameSettingsData.GameMode.Tutorial);
+        }
 
         mainDisplay.ActivateMenuByMode(mode);
     }

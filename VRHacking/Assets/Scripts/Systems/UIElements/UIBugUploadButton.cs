@@ -15,6 +15,8 @@ public class UIBugUploadButton : PokeButtonUI
     [SerializeField]
     private GameObject[] thisPinConfig;
     [SerializeField]
+    private GameObject starterPin;
+    [SerializeField]
     private HackerBug thisButtonBug;
     [SerializeField]
     private GameObject buttonNameText;
@@ -37,6 +39,8 @@ public class UIBugUploadButton : PokeButtonUI
     private GameObject descritionHolder;
     [SerializeField]
     private TextMeshProUGUI descriptionTextObject;
+    [SerializeField]
+    private string descriptionName, descriptionText;
     private Tween descriptionScaleTween;
     private Tween descriptionPositionTween;
     [SerializeField]
@@ -77,7 +81,7 @@ public class UIBugUploadButton : PokeButtonUI
 
     public override void OnButtonPressed()
     {
-        hackerMainDisplay.InitiateTask(thisPinConfig, thisButtonBug);
+        hackerMainDisplay.CallBugDescription(thisPinConfig, starterPin, thisButtonBug, descriptionName, descriptionText);
     }
 
     public override void OnXRUIHover(UIHoverEventArgs enterArgs)

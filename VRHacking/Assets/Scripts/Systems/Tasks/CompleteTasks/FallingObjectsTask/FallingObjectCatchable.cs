@@ -35,6 +35,8 @@ public class FallingObjectCatchable : MonoBehaviour
     {
         if(!physicalDraggable.GetInteractionStatus())
             rb.velocity = transform.up * moveSpeed;
+
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
     }
 
     void LateUpdate()

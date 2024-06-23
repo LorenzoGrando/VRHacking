@@ -7,7 +7,8 @@ public class DialogueManager : MonoBehaviour
 {
     public event Action OnEndDialogue;
     [SerializeField]
-    private DialogueVisualizer visualizer;
+    private DialogueVisualizer hackerVisualizer, systemVisualizer;
+    private DialogueVisualizer activeVisualizer;
 
     [Header("Display Data")]
     [SerializeField]
@@ -29,6 +30,15 @@ public class DialogueManager : MonoBehaviour
         canGenerateMessage = true;
     }
 
+    public void UpdateTargetVisualizer(bool isHacker) {
+        if(isHacker) {
+            activeVisualizer = hackerVisualizer;
+        }
+        else {
+            activeVisualizer = systemVisualizer;
+        }
+    }
+
     public void UpdateHackerDialogue(HackerData hackerData) {
         currentHacker = hackerData;
     }
@@ -36,8 +46,9 @@ public class DialogueManager : MonoBehaviour
     public void OnRequestMessage(DialogueRequestData requestData) {
         if((canGenerateMessage && !isExecuting)|| requestData.isPriority) {
             messages = TryGenerateMessage(requestData);
+            UpdateTargetVisualizer(requestData.type == DialogueAsset.DialogueType.Hacker);
             if(messages != null) {
-                visualizer.StartVisualization(currentHacker, () => BeginDisplaying());
+                activeVisualizer.StartVisualization(currentHacker, () => BeginDisplaying());
                 isExecuting = true;
             }
         }
@@ -76,10 +87,10 @@ public class DialogueManager : MonoBehaviour
 
     private void CheckDisplayMessage() {
         if(messages.Count > 0) {
-            visualizer.DisplayMessage(messages.Dequeue(), () => CheckDisplayMessage());
+            activeVisualizer.DisplayMessage(messages.Dequeue(), () => CheckDisplayMessage());
         }
         else {
-            visualizer.EndVisualization();
+            activeVisualizer.EndVisualization();
             isExecuting = false;
             OnEndDialogue?.Invoke();
         }

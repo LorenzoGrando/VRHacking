@@ -15,6 +15,7 @@ public class HackerMainDisplay : MonoBehaviour
 
     #endregion
     public event Action<DialogueRequestData> OnMessageTrigger;
+    private delegate void OnCompleteSequenceCallback();
 
     [Header("Canvas")]
     [SerializeField]
@@ -46,6 +47,10 @@ public class HackerMainDisplay : MonoBehaviour
     private GameObject buttonsObject;
     [SerializeField]
     private UIBugUploadButton[] buttons;
+    [SerializeField]
+    private GameObject bugDescriptionHolder;
+    [SerializeField]
+    private TextMeshProUGUI bugDescriptionNameText, bugDescriptionText;
     
     [SerializeField]
     private GameObject playerBugUploadObject;
@@ -63,6 +68,10 @@ public class HackerMainDisplay : MonoBehaviour
     private Image backgroundHackerImage;
 
     private HackerBug executingBug;
+
+    private GameObject[] cachedPins;
+    private GameObject cachedStarterPin;
+    private HackerBug cachedBug;
 
     public void InitiateCanvas() {
         ResetValues();
@@ -113,14 +122,38 @@ public class HackerMainDisplay : MonoBehaviour
         backgroundHackerImage.sprite = data.icon;
     }
 
-    public void InitiateTask(GameObject[] referencePoints, HackerBug bug) {
-        referenceAreaPinManager.UpdateActivePins(referencePoints);
+    public void CallBugDescription(GameObject[] referencePoints, GameObject startPoint, HackerBug bug, string name, string description) {
+        Sequence sequence = DOTween.Sequence();
+        float buttonAnimDuration = 0.5f;
+        for(int i = 0; i < buttons.Length; i++) {
+            Tween tween = buttons[i].AnimateButton(true, buttonAnimDuration).SetEase(Ease.InBack);
+
+            buttonAnimDuration += 0.15f;
+            if(i + 1 == buttons.Length) {
+                tween.OnComplete(() => buttonsObject.SetActive(false));
+                sequence.Append(tween);
+            }
+        }
+        bugDescriptionNameText.text = name;
+        bugDescriptionText.text = description;
+        cachedPins = referencePoints;
+        cachedStarterPin = startPoint;
+        cachedBug = bug;
+        sequence.AppendCallback(() => bugDescriptionHolder.SetActive(true));
+        sequence.Append(bugDescriptionHolder.transform.DOScale(1, 0.45f));
+        sequence.Play();
+    }
+
+    public void InitiateTask() {
+        if(cachedPins == null || cachedBug == null)
+            return;
+        referenceAreaPinManager.UpdateActivePins(cachedPins);
         copyAreaPinManager.OnNewPinAdded += CheckPinCompletion;
         copyAreaPinManager.ClearLines();
-        copyAreaPinManager.activeBug = bug;
+        copyAreaPinManager.activeBug = cachedBug;
 
         mainTaskDisplayObject.SetActive(true);
-        DisplayTaskSequence(isInit: true);
+        DisplayTaskSequence(true, () => copyAreaPinManager.AddNewPin(cachedStarterPin));
     }
 
     private void CheckPinCompletion() {
@@ -130,6 +163,20 @@ public class HackerMainDisplay : MonoBehaviour
                 if(copyAreaPinManager.activePoints[i].name != referenceAreaPinManager.activePoints[i].name) {
                     hasCompleted = false;
                     break;
+                }
+            }
+
+            if(!hasCompleted) {
+                int regularIndex = 0;
+                for(int i = copyAreaPinManager.activePoints.Count - 1; i >= 0; i--) {
+                    if(copyAreaPinManager.activePoints[regularIndex].name != referenceAreaPinManager.activePoints[i].name) {
+                        hasCompleted = false;
+                        break;
+                    }
+                    else {
+                        hasCompleted = true;
+                    }
+                    regularIndex++;
                 }
             }
 
@@ -159,20 +206,11 @@ public class HackerMainDisplay : MonoBehaviour
         OnMessageTrigger?.Invoke(requestData);
     }
 
-    private void DisplayTaskSequence(bool isInit) {
+    private void DisplayTaskSequence(bool isInit, OnCompleteSequenceCallback callback = null) {
         Sequence sequence = DOTween.Sequence();
 
         if(isInit) {
-            float buttonAnimDuration = 0.5f;
-            for(int i = 0; i < buttons.Length; i++) {
-                Tween tween = buttons[i].AnimateButton(isInit, buttonAnimDuration).SetEase(Ease.InBack);
-
-                buttonAnimDuration += 0.15f;
-                if(i + 1 == buttons.Length) {
-                    tween.OnComplete(() => buttonsObject.SetActive(false));
-                    sequence.Append(tween);
-                }
-            }
+            sequence.Append(bugDescriptionHolder.transform.DOScale(0, 0.45f).OnComplete(() => bugDescriptionHolder.gameObject.SetActive(false)));   
 
             
             sequence.Append(copyAreaPinManager.AnimatePins(isInit, false));
@@ -193,6 +231,11 @@ public class HackerMainDisplay : MonoBehaviour
                 }
             } 
         }
+
+        if(callback != null) {
+            callback?.Invoke();
+        }
+
         sequence.Play();
     }
 
@@ -211,7 +254,6 @@ public class HackerMainDisplay : MonoBehaviour
             sequence.Append(playerBugUploadObject.transform.DOScale(Vector3.zero, 0.325f).SetEase(Ease.InBack).OnComplete(() => playerBugUploadObject.SetActive(false)));
             sequence.AppendInterval(0.05f).OnComplete(() => DisplayTaskSequence(false));
         }
-
         sequence.Play();
     }
 }
